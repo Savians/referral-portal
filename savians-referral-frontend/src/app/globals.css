@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 17%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 17%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 17%;
+
+    --primary: 222 66% 22%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 42 91% 63%;
+    --secondary-foreground: 222 66% 22%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 17%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 222 66% 22%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-savians-background text-savians-text;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Savians specific styles */
+.savians-gradient {
+  background: linear-gradient(135deg, #14235c 0%, #1e3a8a 100%);
+}
+
+.savians-gradient-yellow {
+  background: linear-gradient(135deg, #f4c64e 0%, #ffd670 100%);
+}
+
+/* Status badge */
+.status-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-lg;
+}
+
+/* Focus ring */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+/* Button variants */
+.btn-primary {
+  @apply bg-savians-navy hover:bg-savians-navy-light text-white font-medium rounded-lg px-4 py-2 transition-colors focus-ring;
+}
+
+.btn-secondary {
+  @apply bg-savians-yellow hover:bg-yellow-400 text-savians-navy font-medium rounded-lg px-4 py-2 transition-colors focus-ring;
+}
+
+.btn-outline {
+  @apply border-2 border-savians-navy text-savians-navy hover:bg-savians-navy hover:text-white font-medium rounded-lg px-4 py-2 transition-colors focus-ring;
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+}
+
+/* Table styles */
+.table-responsive {
+  @apply w-full overflow-x-auto;
+}
+
+.table-base {
+  @apply w-full text-sm text-left;
+}
+
+.table-header {
+  @apply text-xs text-gray-700 uppercase bg-gray-50 border-b;
+}
+
+.table-row {
+  @apply bg-white border-b hover:bg-gray-50 transition-colors;
+}
+
+.table-cell {
+  @apply px-6 py-4;
+}
+
+/* Form styles */
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors;
+}
+
+.form-error {
+  @apply text-sm text-red-600 mt-1;
+}
+
+/* Dashboard card */
+.dashboard-card {
+  @apply bg-white rounded-lg shadow p-6 card-hover;
+}
+
+.dashboard-card-header {
+  @apply text-sm font-medium text-gray-600 mb-1;
+}
+
+.dashboard-card-value {
+  @apply text-3xl font-bold text-savians-navy;
+}
+
+/* Print styles */
+@media print {
+  body {
+    @apply bg-white;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
