@@ -26,7 +26,7 @@ import { useAuth } from '@/providers/AuthProvider';
 const signupSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters').max(200),
   email: z.string().email('Invalid email address'),
-  phone: z.string().regex(/^\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/, 'Invalid phone number').optional().or(z.literal('')),
+  phone: z.string().regex(/^\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/, 'Invalid phone number'),
   businessName: z.string().max(255).optional().or(z.literal('')),
   jobTitle: z.string().max(100).optional().or(z.literal('')),
   password: z.string()
@@ -126,20 +126,23 @@ function SignupForm() {
         email: data.email,
         fullName: data.fullName,
         password: data.password,
-        ...(data.phone && { phone: data.phone }),
+        phone: data.phone,
         ...(data.businessName && { businessName: data.businessName }),
         ...(data.jobTitle && { jobTitle: data.jobTitle }),
       });
 
       toast.success('Account created successfully!');
 
-      // Step 2: Auto-login the user with Cognito
+      // Step 2: Wait 2 seconds for Cognito password to propagate
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Step 3: Auto-login the user with Cognito
       await signIn({
         email: data.email,
         password: data.password,
       });
 
-      // Step 3: Redirect directly to agreement page
+      // Step 4: Redirect directly to agreement page
       router.push('/partner/agreement');
     } catch (error: any) {
       console.error('Signup/login error:', error);
@@ -265,7 +268,7 @@ function SignupForm() {
 
             {/* Phone (read-only if provided) */}
             <div>
-              <label className="form-label">Phone Number</label>
+              <label className="form-label">Phone Number <span className="text-red-500">*</span></label>
               <input
                 {...register('phone')}
                 type="tel"

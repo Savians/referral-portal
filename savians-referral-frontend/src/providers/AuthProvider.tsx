@@ -64,7 +64,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (profile.role === 'PARTNER') {
         console.log('Redirecting to partner dashboard');
         window.location.href = '/partner/dashboard';
-      } else if (profile.role === 'ADMIN' || profile.role === 'SUPER_ADMIN') {
+      } else if (profile.role === 'SUPER_ADMIN') {
+        console.log('Redirecting to superadmin dashboard');
+        window.location.href = '/superadmin/dashboard';
+      } else if (profile.role === 'ADMIN') {
         console.log('Redirecting to admin dashboard');
         window.location.href = '/admin/dashboard';
       } else {

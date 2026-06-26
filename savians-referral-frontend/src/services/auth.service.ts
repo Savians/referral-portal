@@ -32,4 +32,13 @@ export const authService = {
     const response = await api.get<UserProfile>('/api/auth/profile');
     return response.data;
   },
+
+  /**
+   * POST /api/auth/switch-role
+   * Switch between ADMIN and SUPER_ADMIN roles (for users with multiple roles)
+   */
+  switchRole: async (targetRole: 'ADMIN' | 'SUPER_ADMIN'): Promise<UserProfile> => {
+    const response = await api.post<UserProfile>('/api/auth/switch-role', { targetRole });
+    return response.data;
+  },
 };

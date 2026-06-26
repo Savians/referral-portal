@@ -118,7 +118,7 @@ export default function PartnerDashboardPage() {
             className="bg-[#14235C] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#1a2d75] transition-colors flex items-center gap-2 shadow-md"
           >
             <UserPlus className="w-5 h-5" />
-            Add New Client
+            Refer New Client
           </button>
         </div>
 

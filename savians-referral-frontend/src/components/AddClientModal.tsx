@@ -32,6 +32,17 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate phone number
+    const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+    if (!formData.clientPhone || formData.clientPhone.trim() === '') {
+      toast.error('Client phone number is required');
+      return;
+    }
+    if (!phoneRegex.test(formData.clientPhone)) {
+      toast.error('Please enter a valid phone number');
+      return;
+    }
+
     if (!formData.consentGiven) {
       toast.error('Please confirm consent to submit this referral');
       return;
@@ -43,7 +54,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
       const response = await api.post('/api/partner/referrals', {
         clientFullName: formData.clientFullName,
         clientEmail: formData.clientEmail,
-        clientPhone: formData.clientPhone || undefined,
+        clientPhone: formData.clientPhone,
         estimatedIncome: formData.estimatedIncome || undefined,
         serviceNeeded: formData.serviceNeeded || undefined,
         additionalNotes: formData.additionalNotes || undefined,
@@ -138,7 +149,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
           {/* Client Phone */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Client Phone
+              Client Phone <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -146,6 +157,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
               onChange={(e) =>
                 setFormData({ ...formData, clientPhone: e.target.value })
               }
+              required
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
               placeholder="(555) 123-4567"
             />

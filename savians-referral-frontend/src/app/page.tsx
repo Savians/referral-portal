@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, DollarSign, Users, TrendingUp } from 'lucide-react';
+import { useAuth } from '@/providers/AuthProvider';
+import ThemeToggle from '@/components/ThemeToggle';
 
 /**
  * Landing Page
@@ -8,49 +12,75 @@ import { ArrowRight, CheckCircle, DollarSign, Users, TrendingUp } from 'lucide-r
  */
 
 export default function HomePage() {
+  const { user, isLoading } = useAuth();
+
+  // Determine dashboard route based on user role
+  const getDashboardRoute = () => {
+    if (!user) return '/login';
+    
+    switch (user.role) {
+      case 'PARTNER':
+        return '/partner/dashboard';
+      case 'ADMIN':
+        return '/admin/dashboard';
+      case 'SUPER_ADMIN':
+        return '/admin/dashboard'; // SuperAdmin starts at Admin dashboard, can toggle to SuperAdmin
+      default:
+        return '/';
+    }
+  };
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-savians-yellow rounded-lg flex items-center justify-center">
-                <span className="text-savians-navy text-xl font-bold">S</span>
+              <div className="w-10 h-10 bg-savians-yellow dark:bg-yellow-500 rounded-lg flex items-center justify-center">
+                <span className="text-savians-navy dark:text-gray-900 text-xl font-bold">S</span>
               </div>
-              <span className="text-2xl font-bold text-savians-navy">Savians</span>
+              <span className="text-2xl font-bold text-savians-navy dark:text-white">Savians</span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-gray-700 hover:text-savians-navy transition-colors">
+              <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-savians-navy dark:hover:text-white transition-colors">
                 Home
               </Link>
-              <Link href="/apply" className="text-gray-700 hover:text-savians-navy transition-colors">
+              <Link href="/apply" className="text-gray-700 dark:text-gray-300 hover:text-savians-navy dark:hover:text-white transition-colors">
                 Become a Referral Partner
               </Link>
-              <Link href="/login" className="btn-outline text-sm">
-                Sign In
-              </Link>
+              <ThemeToggle />
+              {!isLoading && (
+                user ? (
+                  <Link href={getDashboardRoute()} className="btn-outline text-sm">
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link href="/login" className="btn-outline text-sm">
+                    Sign In
+                  </Link>
+                )
+              )}
             </nav>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-savians-navy to-savians-navy-light text-white py-24">
+      <section className="relative bg-gradient-to-br from-savians-navy to-savians-navy-light dark:from-gray-800 dark:to-gray-900 text-white py-24 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-block bg-savians-yellow/10 text-savians-yellow px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <div className="inline-block bg-savians-yellow/10 dark:bg-yellow-500/10 text-savians-yellow dark:text-yellow-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                 Elite Tax Strategy
               </div>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 Tired of Paying too Much in Taxes?
-                <span className="text-savians-yellow"> You should be.</span>
+                <span className="text-savians-yellow dark:text-yellow-400"> You should be.</span>
               </h1>
-              <p className="text-xl text-gray-300 mb-8">
+              <p className="text-xl text-gray-300 dark:text-gray-400 mb-8">
                 We Turn Tax Problems Into Wealth Solutions.
               </p>
-              <p className="text-gray-300 mb-8">
+              <p className="text-gray-300 dark:text-gray-400 mb-8">
                 With the right strategy, your tax bill can be minimized — without compromising your success.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -58,15 +88,15 @@ export default function HomePage() {
                   Become a Referral Partner
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <button className="bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg px-6 py-3 transition-colors">
+                <button className="bg-white/10 hover:bg-white/20 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium rounded-lg px-6 py-3 transition-colors">
                   Learn More
                 </button>
               </div>
             </div>
             <div className="hidden lg:block">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-white/20 dark:border-gray-700">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-savians-yellow">
+                  <div className="flex items-center gap-3 text-savians-yellow dark:text-yellow-400">
                     <CheckCircle className="w-6 h-6" />
                     <span>Tax Savings 70%</span>
                   </div>
@@ -82,16 +112,16 @@ export default function HomePage() {
       </section>
 
       {/* Why Us Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-sm font-semibold text-savians-yellow uppercase tracking-wide mb-3">
+            <h2 className="text-sm font-semibold text-savians-yellow dark:text-yellow-400 uppercase tracking-wide mb-3">
               Why us?
             </h2>
-            <h3 className="text-4xl font-bold text-savians-navy mb-4">
+            <h3 className="text-4xl font-bold text-savians-navy dark:text-white mb-4">
               Smarter Tax Strategies. Stronger Wealth.
             </h3>
-            <h3 className="text-4xl font-bold text-savians-navy mb-4">
+            <h3 className="text-4xl font-bold text-savians-navy dark:text-white mb-4">
               Complete Compliance.
             </h3>
           </div>
@@ -121,15 +151,15 @@ export default function HomePage() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md dark:shadow-gray-900/50 transition-shadow"
               >
-                <div className="w-12 h-12 bg-savians-yellow/10 rounded-lg flex items-center justify-center mb-4">
-                  <feature.icon className="w-6 h-6 text-savians-navy" />
+                <div className="w-12 h-12 bg-savians-yellow/10 dark:bg-yellow-500/10 rounded-lg flex items-center justify-center mb-4">
+                  <feature.icon className="w-6 h-6 text-savians-navy dark:text-yellow-400" />
                 </div>
-                <h4 className="text-lg font-semibold text-savians-navy mb-2">
+                <h4 className="text-lg font-semibold text-savians-navy dark:text-white mb-2">
                   {feature.title}
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   {feature.description}
                 </p>
               </div>
@@ -139,70 +169,70 @@ export default function HomePage() {
       </section>
 
       {/* Partner Program Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-sm font-semibold text-savians-yellow uppercase tracking-wide mb-3">
+              <h2 className="text-sm font-semibold text-savians-yellow dark:text-yellow-400 uppercase tracking-wide mb-3">
                 Key Facts
               </h2>
-              <h3 className="text-4xl font-bold text-savians-navy mb-6">
+              <h3 className="text-4xl font-bold text-savians-navy dark:text-white mb-6">
                 Your Trusted Tax Strategy Partner.
               </h3>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 dark:text-gray-400 mb-8">
                 At Savians, we don't just file your taxes — we build long-term strategies to protect and grow your wealth. From personalized planning to proactive guidance, we ensure you pay less while staying 100% IRS-compliant.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow flex-shrink-0 mt-0.5" />
-                  <p className="text-gray-700">
+                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-gray-700 dark:text-gray-300">
                     100% IRS-compliant, personalized tax planning
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow flex-shrink-0 mt-0.5" />
-                  <p className="text-gray-700">
+                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-gray-700 dark:text-gray-300">
                     Expertise in business, real estate, and high-income strategies
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow flex-shrink-0 mt-0.5" />
-                  <p className="text-gray-700">
+                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-gray-700 dark:text-gray-300">
                     Year-round guidance — not just during tax season
                   </p>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-2xl p-8">
-              <h4 className="text-2xl font-bold text-savians-navy mb-6">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 transition-colors">
+              <h4 className="text-2xl font-bold text-savians-navy dark:text-white mb-6">
                 Join Our Referral Partner Program
               </h4>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-savians-yellow rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-savians-navy text-sm font-bold">1</span>
+                  <div className="w-6 h-6 bg-savians-yellow dark:bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-savians-navy dark:text-gray-900 text-sm font-bold">1</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-savians-navy">Apply to Become a Partner</p>
-                    <p className="text-sm text-gray-600">Quick and easy application process</p>
+                    <p className="font-semibold text-savians-navy dark:text-white">Apply to Become a Partner</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Quick and easy application process</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-savians-yellow rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-savians-navy text-sm font-bold">2</span>
+                  <div className="w-6 h-6 bg-savians-yellow dark:bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-savians-navy dark:text-gray-900 text-sm font-bold">2</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-savians-navy">Get Your Unique Referral Link</p>
-                    <p className="text-sm text-gray-600">Share with your network</p>
+                    <p className="font-semibold text-savians-navy dark:text-white">Get Your Unique Referral Link</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Share with your network</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-savians-yellow rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-savians-navy text-sm font-bold">3</span>
+                  <div className="w-6 h-6 bg-savians-yellow dark:bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-savians-navy dark:text-gray-900 text-sm font-bold">3</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-savians-navy">Earn Commission on Referrals</p>
-                    <p className="text-sm text-gray-600">Track and manage all referrals in your portal</p>
+                    <p className="font-semibold text-savians-navy dark:text-white">Earn Commission on Referrals</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Track and manage all referrals in your portal</p>
                   </div>
                 </li>
               </ul>
@@ -216,12 +246,12 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-savians-navy text-white">
+      <section className="py-20 bg-savians-navy dark:bg-gray-800 text-white transition-colors">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to save big on taxes?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-gray-300 dark:text-gray-400 mb-8">
             Book Your Tax Advisory Consultation Today!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -229,7 +259,7 @@ export default function HomePage() {
               Schedule a Consultation
               <ArrowRight className="w-4 h-4" />
             </button>
-            <Link href="/apply" className="bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg px-8 py-3 transition-colors">
+            <Link href="/apply" className="bg-white/10 hover:bg-white/20 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium rounded-lg px-8 py-3 transition-colors">
               Become a Referral Partner
             </Link>
           </div>
@@ -237,47 +267,47 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-12">
+      <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 py-12 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-savians-yellow rounded-lg flex items-center justify-center">
-                  <span className="text-savians-navy text-lg font-bold">S</span>
+                <div className="w-8 h-8 bg-savians-yellow dark:bg-yellow-500 rounded-lg flex items-center justify-center">
+                  <span className="text-savians-navy dark:text-gray-900 text-lg font-bold">S</span>
                 </div>
-                <span className="text-xl font-bold text-savians-navy">Savians</span>
+                <span className="text-xl font-bold text-savians-navy dark:text-white">Savians</span>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Savians provides elite, IRS compliant tax strategies tailored for high income earners, business owners, and investors.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-savians-navy mb-4">Quick Links</h4>
+              <h4 className="font-semibold text-savians-navy dark:text-white mb-4">Quick Links</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/" className="text-gray-600 hover:text-savians-navy">About Us</Link></li>
-                <li><Link href="/" className="text-gray-600 hover:text-savians-navy">Plans and Pricing</Link></li>
-                <li><Link href="/" className="text-gray-600 hover:text-savians-navy">Services</Link></li>
+                <li><Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-savians-navy dark:hover:text-white">About Us</Link></li>
+                <li><Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-savians-navy dark:hover:text-white">Plans and Pricing</Link></li>
+                <li><Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-savians-navy dark:hover:text-white">Services</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-savians-navy mb-4">Address</h4>
-              <p className="text-sm text-gray-600">
+              <h4 className="font-semibold text-savians-navy dark:text-white mb-4">Address</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 14520 Old Katy Rd # 136<br />
                 Houston, TX 77079
               </p>
-              <p className="text-sm text-gray-600 mt-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
                 +1(346) 662-0574
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-savians-navy mb-4">Partner Portal</h4>
+              <h4 className="font-semibold text-savians-navy dark:text-white mb-4">Partner Portal</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/login" className="text-gray-600 hover:text-savians-navy">Sign In</Link></li>
-                <li><Link href="/apply" className="text-gray-600 hover:text-savians-navy">Become a Referral Partner</Link></li>
+                <li><Link href="/login" className="text-gray-600 dark:text-gray-400 hover:text-savians-navy dark:hover:text-white">Sign In</Link></li>
+                <li><Link href="/apply" className="text-gray-600 dark:text-gray-400 hover:text-savians-navy dark:hover:text-white">Become a Referral Partner</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
             <p>&copy; {new Date().getFullYear()} Savians. All rights reserved.</p>
           </div>
         </div>

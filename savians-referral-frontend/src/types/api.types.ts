@@ -54,7 +54,7 @@ export const REFERRAL_STATUS_LABELS: Record<ReferralStatus, string> = {
 export interface CreateApplicationInput {
   fullName: string;
   email: string;
-  phone?: string;
+  phone: string;
   companyName?: string;
   businessType?: string;
   message?: string;
@@ -69,7 +69,7 @@ export interface CreateReferralInput {
   partnerId: string; // Format: RP-9271
   clientFullName: string;
   clientEmail: string;
-  clientPhone?: string;
+  clientPhone: string;
   estimatedIncome?: string;
   serviceNeeded?: string;
   additionalNotes?: string;
@@ -115,7 +115,7 @@ export interface SignupInput {
   inviteToken: string;
   email: string;
   fullName: string;
-  phone?: string;
+  phone: string;
   password: string;
   businessName?: string;
   jobTitle?: string;
@@ -128,6 +128,8 @@ export interface UserProfile {
   fullName: string;
   role: UserRole;
   isActive: boolean;
+  availableRoles?: UserRole[]; // All roles this user has access to (same email, different accounts)
+  hasSuperAdminAccess?: boolean; // Quick check if user has SUPER_ADMIN role available
   partnerId?: string; // Present if role is PARTNER (extracted from partner.partnerId)
   partner?: {
     id: string;

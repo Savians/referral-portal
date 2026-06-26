@@ -25,7 +25,7 @@ import type { CreateReferralInput, ReferralFormData } from '@/types/api.types';
 const referralSchema = z.object({
   clientFullName: z.string().min(2, 'Name must be at least 2 characters').max(200),
   clientEmail: z.string().email('Invalid email address'),
-  clientPhone: z.string().regex(/^\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/, 'Invalid phone number').optional().or(z.literal('')),
+  clientPhone: z.string().regex(/^\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/, 'Invalid phone number'),
   estimatedIncome: z.string().max(50).optional().or(z.literal('')),
   serviceNeeded: z.string().max(255).optional().or(z.literal('')),
   additionalNotes: z.string().max(2000).optional().or(z.literal('')),
@@ -110,8 +110,8 @@ export default function PublicReferralFormPage() {
         partnerId: partnerId,
         clientFullName: data.clientFullName,
         clientEmail: data.clientEmail,
+        clientPhone: data.clientPhone,
         consentGiven: true,
-        ...(data.clientPhone && { clientPhone: data.clientPhone }),
         ...(data.estimatedIncome && { estimatedIncome: data.estimatedIncome }),
         ...(data.serviceNeeded && { serviceNeeded: data.serviceNeeded }),
         ...(data.additionalNotes && { additionalNotes: data.additionalNotes }),
@@ -397,7 +397,7 @@ export default function PublicReferralFormPage() {
 
             {/* Phone */}
             <div>
-              <label className="form-label">Phone Number</label>
+              <label className="form-label">Phone Number <span className="text-red-500">*</span></label>
               <input
                 {...register('clientPhone')}
                 type="tel"

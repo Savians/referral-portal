@@ -56,16 +56,16 @@ export const REFERRAL_STATUS_LABELS: Record<ReferralStatus, string> = {
 };
 
 export const REFERRAL_STATUS_COLORS: Record<ReferralStatus, string> = {
-  NEW_REFERRAL: 'bg-blue-100 text-blue-800 border-blue-200',
-  UNDER_REVIEW: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-  CONTACTED: 'bg-purple-100 text-purple-800 border-purple-200',
-  QUALIFIED: 'bg-green-100 text-green-800 border-green-200',
-  NOT_QUALIFIED: 'bg-red-100 text-red-800 border-red-200',
-  CLIENT_AGREEMENT_SIGNED: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-  PAYMENT_RECEIVED: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-  ELIGIBLE_FOR_PAYOUT: 'bg-teal-100 text-teal-800 border-teal-200',
-  DUPLICATE_FLAGGED: 'bg-orange-100 text-orange-800 border-orange-200',
-  LOST: 'bg-gray-100 text-gray-800 border-gray-200',
+  NEW_REFERRAL: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-200 dark:border-blue-700',
+  UNDER_REVIEW: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 border-yellow-200 dark:border-yellow-700',
+  CONTACTED: 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 border-purple-200 dark:border-purple-700',
+  QUALIFIED: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-200 dark:border-green-700',
+  NOT_QUALIFIED: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-200 dark:border-red-700',
+  CLIENT_AGREEMENT_SIGNED: 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 border-indigo-200 dark:border-indigo-700',
+  PAYMENT_RECEIVED: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-700',
+  ELIGIBLE_FOR_PAYOUT: 'bg-teal-100 dark:bg-teal-500 text-teal-800 dark:text-white border-teal-200 dark:border-teal-400',
+  DUPLICATE_FLAGGED: 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 border-orange-200 dark:border-orange-700',
+  LOST: 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-600',
 };
 
 export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
@@ -76,10 +76,10 @@ export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
 };
 
 export const PAYMENT_STATUS_COLORS: Record<PaymentStatus, string> = {
-  PENDING: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-  APPROVED: 'bg-green-100 text-green-800 border-green-200',
-  PAID: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-  REJECTED: 'bg-red-100 text-red-800 border-red-200',
+  PENDING: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 border-yellow-200 dark:border-yellow-700',
+  APPROVED: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-200 dark:border-green-700',
+  PAID: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-700',
+  REJECTED: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-200 dark:border-red-700',
 };
 
 export const APPLICATION_STATUS_LABELS: Record<ApplicationStatus, string> = {
@@ -89,9 +89,9 @@ export const APPLICATION_STATUS_LABELS: Record<ApplicationStatus, string> = {
 };
 
 export const APPLICATION_STATUS_COLORS: Record<ApplicationStatus, string> = {
-  PENDING: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-  APPROVED: 'bg-green-100 text-green-800 border-green-200',
-  REJECTED: 'bg-red-100 text-red-800 border-red-200',
+  PENDING: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 border-yellow-200 dark:border-yellow-700',
+  APPROVED: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-200 dark:border-green-700',
+  REJECTED: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-200 dark:border-red-700',
 };
 
 // ============================================

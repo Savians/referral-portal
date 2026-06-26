@@ -67,7 +67,7 @@ export function middleware(request: NextRequest) {
   );
 
   // Protected routes require authentication
-  if (pathname.startsWith('/partner/') || pathname.startsWith('/admin/')) {
+  if (pathname.startsWith('/partner/') || pathname.startsWith('/admin/') || pathname.startsWith('/superadmin/')) {
     // Don't redirect if already on login page
     if (pathname === '/login') {
       return NextResponse.next();
