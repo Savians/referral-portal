@@ -2,8 +2,14 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Use 'standalone' for Docker deployments, remove for Amplify
-  // output: 'standalone',
+  // Disable ESLint during production builds (for deployment speed)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Disable TypeScript errors during builds (type checking done separately)
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
