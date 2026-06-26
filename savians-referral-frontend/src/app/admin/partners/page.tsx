@@ -32,7 +32,7 @@ export default function AdminPartnersPage() {
   const [partners, setPartners] = useState<any[]>([]);
   const [allPartners, setAllPartners] = useState<any[]>([]); // For stats - all partners regardless of filter
   const [isLoading, setIsLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('ACTIVE');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
