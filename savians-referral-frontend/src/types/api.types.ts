@@ -69,7 +69,7 @@ export interface CreateReferralInput {
   partnerId: string; // Format: RP-9271
   clientFullName: string;
   clientEmail: string;
-  clientPhone: string;
+  clientPhone?: string;
   estimatedIncome?: string;
   serviceNeeded?: string;
   additionalNotes?: string;
