@@ -1,5 +1,6 @@
 # Documentation files (generated for guidance)
 *.md
+!README.md
 !savians-referral-frontend/README.md
 !savians-referral-backend/README.md
 
