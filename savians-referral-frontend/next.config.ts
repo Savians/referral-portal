@@ -2,8 +2,8 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
-  outputFileTracingRoot: __dirname,
+  // Use 'standalone' for Docker deployments, remove for Amplify
+  // output: 'standalone',
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
