@@ -43,10 +43,10 @@ export default function HomePage() {
               />
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-savians-navy dark:hover:text-white transition-colors">
+              <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-savians-navy dark:hover:text-white transition-colors font-medium">
                 Home
               </Link>
-              <Link href="/apply" className="text-gray-700 dark:text-gray-300 hover:text-savians-navy dark:hover:text-white transition-colors">
+              <Link href="/apply" className="text-gray-700 dark:text-gray-300 hover:text-savians-navy dark:hover:text-white transition-colors font-medium">
                 Become a Referral Partner
               </Link>
               <ThemeToggle />

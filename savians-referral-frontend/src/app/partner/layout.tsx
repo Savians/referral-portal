@@ -115,9 +115,13 @@ export default function PartnerLayout({
             {/* Logo */}
             <Link
               href="/partner/dashboard"
-              className="text-2xl font-bold hover:opacity-90 transition-opacity"
+              className="hover:opacity-90 transition-opacity"
             >
-              Savians
+              <img 
+                src="/savians-logo.png" 
+                alt="Savians Logo" 
+                className="h-10 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}

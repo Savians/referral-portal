@@ -16,6 +16,7 @@ import { ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 import { publicService } from '@/services/public.service';
 import { toast } from 'sonner';
 import type { CreateApplicationInput } from '@/types/api.types';
+import ThemeToggle from '@/components/ThemeToggle';
 
 // Validation schema
 const applicationSchema = z.object({
@@ -86,16 +87,20 @@ export default function ApplyPage() {
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-[#F4C64E] rounded-lg flex items-center justify-center">
-                <span className="text-[#14235C] text-xl font-bold">S</span>
-              </div>
-              <span className="text-2xl font-bold text-[#14235C] dark:text-white">Savians</span>
+            <Link href="/" className="flex items-center">
+              <img 
+                src="/savians-logo.png" 
+                alt="Savians Logo" 
+                className="h-12 w-auto"
+              />
             </Link>
-            <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-[#14235C] flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Back
-            </Link>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-[#14235C] dark:hover:text-white flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Link>
+            </div>
           </div>
         </div>
       </header>

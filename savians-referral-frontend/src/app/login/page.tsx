@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { useAuth } from '@/providers/AuthProvider';
 import { toast } from 'sonner';
 import { Eye, EyeOff, LogIn, ArrowRight } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -106,32 +107,37 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col transition-colors">
       {/* Header */}
-      <header className="bg-[#14235C] text-white py-4 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Link href="/" className="text-2xl font-bold hover:opacity-90 transition-opacity">
-            Savians
+      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-4 px-6 transition-colors">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <Link href="/" className="hover:opacity-90 transition-opacity">
+            <img 
+              src="/savians-logo.png" 
+              alt="Savians Logo" 
+              className="h-12 w-auto"
+            />
           </Link>
+          <ThemeToggle />
         </div>
       </header>
 
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors">
             {/* Logo/Icon */}
             <div className="flex justify-center mb-6">
-              <div className="bg-[#14235C] rounded-full p-4">
-                <LogIn className="w-8 h-8 text-white" />
+              <div className="bg-savians-navy dark:bg-yellow-500 rounded-full p-4 transition-colors">
+                <LogIn className="w-8 h-8 text-white dark:text-gray-900" />
               </div>
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl font-bold text-center text-[#2C2C2C] mb-2">
+            <h1 className="text-3xl font-bold text-center text-savians-navy dark:text-white mb-2">
               Welcome Back
             </h1>
-            <p className="text-gray-600 text-center mb-8">
+            <p className="text-gray-600 dark:text-gray-400 text-center mb-8">
               Sign in to access your portal
             </p>
 
@@ -172,7 +178,7 @@ function LoginForm() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                     disabled={isLoading}
                   >
                     {showPassword ? (
@@ -191,7 +197,7 @@ function LoginForm() {
               <div className="flex items-center justify-end">
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-[#14235C] hover:underline"
+                  className="text-sm text-savians-navy dark:text-yellow-400 hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -220,10 +226,10 @@ function LoginForm() {
             {/* Divider */}
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-gray-300 dark:border-gray-600" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">
+                <span className="px-4 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
                   New to Savians?
                 </span>
               </div>
@@ -240,13 +246,13 @@ function LoginForm() {
           </div>
 
           {/* Footer Note */}
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             By signing in, you agree to our{' '}
-            <Link href="/terms" className="text-[#14235C] hover:underline">
+            <Link href="/terms" className="text-savians-navy dark:text-yellow-400 hover:underline">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link href="/privacy" className="text-[#14235C] hover:underline">
+            <Link href="/privacy" className="text-savians-navy dark:text-yellow-400 hover:underline">
               Privacy Policy
             </Link>
           </p>
@@ -260,10 +266,10 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
           <div className="text-center">
-            <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Loading...</p>
+            <div className="w-12 h-12 border-4 border-savians-navy dark:border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-gray-400">Loading...</p>
           </div>
         </div>
       }
