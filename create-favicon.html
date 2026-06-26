@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="32" height="32"></canvas>
+    <br>
+    <canvas id="canvas512" width="512" height="512"></canvas>
+    <br>
+    <button onclick="downloadFavicon()">Download 32x32 Favicon</button>
+    <button onclick="downloadLarge()">Download 512x512 Icon</button>
+    
+    <script>
+        // 32x32 favicon
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Blue background with golden border
+        ctx.fillStyle = '#14235C';
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Golden border
+        ctx.strokeStyle = '#F4C64E';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(1, 1, 30, 30);
+        
+        // Dollar sign
+        ctx.fillStyle = '#F4C64E';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('$', 16, 18);
+        
+        // 512x512 icon
+        const canvas512 = document.getElementById('canvas512');
+        const ctx512 = canvas512.getContext('2d');
+        
+        // Blue background with golden border
+        ctx512.fillStyle = '#14235C';
+        ctx512.fillRect(0, 0, 512, 512);
+        
+        // Golden border with rounded corners
+        ctx512.strokeStyle = '#F4C64E';
+        ctx512.lineWidth = 20;
+        ctx512.roundRect(10, 10, 492, 492, 40);
+        ctx512.stroke();
+        
+        // Dollar sign
+        ctx512.fillStyle = '#F4C64E';
+        ctx512.font = 'bold 320px Arial';
+        ctx512.textAlign = 'center';
+        ctx512.textBaseline = 'middle';
+        ctx512.fillText('$', 256, 280);
+        
+        function downloadFavicon() {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        function downloadLarge() {
+            const link = document.createElement('a');
+            link.download = 'icon-512.png';
+            link.href = canvas512.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

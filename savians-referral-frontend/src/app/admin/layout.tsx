@@ -116,8 +116,8 @@ export default function AdminLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link
-              href="/"
+            <a
+              href="https://savians.com"
               className="flex items-center gap-3 hover:opacity-90 transition-opacity mr-8"
             >
               <img 

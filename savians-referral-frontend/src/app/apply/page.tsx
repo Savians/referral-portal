@@ -87,13 +87,13 @@ export default function ApplyPage() {
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex items-center">
+            <a href="https://savians.com" className="flex items-center hover:opacity-90 transition-opacity">
               <img 
                 src="/savians-logo.png" 
                 alt="Savians Logo" 
                 className="h-12 w-auto"
               />
-            </Link>
+            </a>
             <div className="flex items-center gap-4">
               <ThemeToggle />
               <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-[#14235C] dark:hover:text-white flex items-center gap-2">
