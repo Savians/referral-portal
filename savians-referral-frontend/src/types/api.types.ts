@@ -54,7 +54,7 @@ export const REFERRAL_STATUS_LABELS: Record<ReferralStatus, string> = {
 export interface CreateApplicationInput {
   fullName: string;
   email: string;
-  phone: string;
+  phone?: string;
   companyName?: string;
   businessType?: string;
   message?: string;
