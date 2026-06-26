@@ -1,5 +1,4 @@
-# AWS Amplify Build Specification
-# This file configures the build process for deploying to Amplify
+# AWS Amplify Build Specification for Next.js
 # Monorepo structure: frontend code is in savians-referral-frontend/
 
 version: 1
@@ -9,11 +8,9 @@ applications:
       phases:
         preBuild:
           commands:
-            - echo "Installing dependencies..."
-            - npm ci
+            - npm ci --legacy-peer-deps
         build:
           commands:
-            - echo "Building Next.js application..."
             - npm run build
       artifacts:
         baseDirectory: .next
