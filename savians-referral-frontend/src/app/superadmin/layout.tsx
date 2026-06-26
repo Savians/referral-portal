@@ -113,7 +113,7 @@ export default function SuperAdminLayout({
                   SUPER ADMIN
                 </span>
               </div>
-            </Link>
+            </a>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1 flex-1">

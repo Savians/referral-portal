@@ -137,7 +137,7 @@ export default function AdminLayout({
                   ADMIN
                 </span>
               </div>
-            </Link>
+            </a>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1 flex-1">
