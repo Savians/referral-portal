@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Blue background with golden border -->
-  <rect x="5" y="5" width="90" height="90" fill="#14235C" stroke="#F4C64E" stroke-width="4" rx="8"/>
-  
-  <!-- Dollar sign in golden yellow -->
-  <text x="50" y="72" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#F4C64E" text-anchor="middle">$</text>
-</svg>

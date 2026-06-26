@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: 'Partner Referral Management Platform',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png' },
       { url: '/favicon.ico', sizes: 'any' }
     ],
   },
