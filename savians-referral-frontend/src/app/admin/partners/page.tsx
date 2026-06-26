@@ -45,13 +45,13 @@ export default function AdminPartnersPage() {
     setIsLoading(true);
     try {
       // Load filtered partners for the table
-      const params = statusFilter !== 'ALL' ? { status: statusFilter } : {};
+      const params = statusFilter !== 'ALL' ? { status: statusFilter, limit: 100 } : { limit: 100 };
       const response = await adminService.listPartners(params);
       setPartners(response.data || []);
 
       // Load ALL partners for accurate stats (only on first load or when filter is ALL)
       if (statusFilter === 'ALL' || allPartners.length === 0) {
-        const allResponse = await adminService.listPartners({});
+        const allResponse = await adminService.listPartners({ limit: 100 });
         setAllPartners(allResponse.data || []);
       }
     } catch (error) {
