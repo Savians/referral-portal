@@ -149,7 +149,7 @@ export default function PartnerDashboardPage() {
               ) : (
                 <>
                   <Copy className="w-5 h-5" />
-                  Copy Link
+                  Copy and Share Your Referral Link
                 </>
               )}
             </button>
@@ -236,7 +236,7 @@ export default function PartnerDashboardPage() {
                     Share your referral link to start earning
                   </p>
                   <button onClick={copyReferralLink} className="btn-primary">
-                    Copy Referral Link
+                    Copy and Share Your Referral Link
                   </button>
                 </div>
               ) : (
