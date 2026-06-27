@@ -84,7 +84,8 @@ export default function ApplyPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      {/* Modern Navigation */}
+      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <a href="https://savians.com" className="flex items-center hover:opacity-90 transition-opacity">
@@ -94,27 +95,142 @@ export default function ApplyPage() {
                 className="h-12 w-auto"
               />
             </a>
-            <div className="flex items-center gap-4">
-              <ThemeToggle />
-              <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-[#14235C] dark:hover:text-white flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Back
+            <div className="flex items-center gap-6">
+              <a 
+                href="https://savians.com" 
+                className="text-gray-700 dark:text-gray-300 hover:text-[#14235C] dark:hover:text-white font-medium transition-colors"
+              >
+                Home
+              </a>
+              <Link 
+                href="/login" 
+                className="px-6 py-2.5 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold transition-all shadow-md hover:shadow-lg"
+              >
+                Sign In
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#14235C] dark:text-white mb-4">Become a Referral Partner</h1>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">
-            Tell us about yourself and your business. After approval, you'll receive an invitation to complete your registration.
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left Sidebar - Why Become a Partner (Sticky) */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32 space-y-6">
+              {/* Main Heading */}
+              <div>
+                <h1 className="text-4xl font-bold text-[#14235C] dark:text-white mb-4">
+                  Why Become a Referral Partner?
+                </h1>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Join our network of trusted professionals and unlock new revenue streams while providing exceptional value to your clients.
+                </p>
+              </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* Benefits Cards */}
+              <div className="space-y-4">
+                {/* Benefit 1 */}
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#14235C] dark:bg-[#F4C64E] rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Earn Competitive Commissions</h3>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">
+                        Receive generous referral fees for every qualified client you refer. Our tiered commission structure rewards your success.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Benefit 2 */}
+                <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-6 border border-green-200 dark:border-green-800 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-green-600 dark:bg-green-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Trusted Expertise</h3>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">
+                        Partner with Savians Tax Advisors, a recognized leader in tax consulting. Your clients receive top-tier professional service.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Benefit 3 */}
+                <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl p-6 border border-purple-200 dark:border-purple-800 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600 dark:bg-purple-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Simple & Transparent Process</h3>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">
+                        Easy-to-use dashboard, real-time tracking, and straightforward payment terms. No hidden fees or complicated processes.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Benefit 4 */}
+                <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 rounded-xl p-6 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-yellow-600 dark:bg-yellow-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Dedicated Support</h3>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">
+                        Access to our partner success team, marketing materials, and resources to help you succeed every step of the way.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats Bar */}
+              <div className="bg-gradient-to-r from-[#14235C] to-[#1e3470] dark:from-[#F4C64E] dark:to-[#f5d264] rounded-xl p-6 text-white dark:text-gray-900">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-3xl font-bold mb-1">500+</div>
+                    <div className="text-sm opacity-90">Active Partners</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold mb-1">$2M+</div>
+                    <div className="text-sm opacity-90">Paid Out</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold mb-1">98%</div>
+                    <div className="text-sm opacity-90">Satisfaction</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Application Form */}
+          <div className="lg:col-span-7">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-gray-700">
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-[#14235C] dark:text-white mb-3">Apply Now</h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Fill out the form below and we'll review your application within 2-3 business days.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Full Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -210,7 +326,7 @@ export default function ApplyPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center gap-2 px-8 py-3 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-8 py-3 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
@@ -226,6 +342,33 @@ export default function ApplyPage() {
               </button>
             </div>
           </form>
+
+          {/* Trust Indicators */}
+          <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-center gap-8 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Secure Application</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                <span>2-3 Day Review</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                  <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+                </svg>
+                <span>Dedicated Support</span>
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
