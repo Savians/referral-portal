@@ -120,39 +120,39 @@ export default function AdminApplicationsPage() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading applications...</p>
+          <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-300">Loading applications...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">Applications</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-[#2C2C2C] dark:text-white mb-2">Applications</h1>
+          <p className="text-gray-600 dark:text-gray-300">
             Review and approve partner applications
           </p>
         </div>
 
         {/* Status Filter */}
-        <div className="bg-white rounded-xl shadow-md p-4 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 mb-6">
           <div className="flex items-center gap-2 flex-wrap">
-            <Filter className="w-5 h-5 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Filter by status:</span>
+            <Filter className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filter by status:</span>
             {(['ALL', 'PENDING', 'APPROVED', 'REJECTED'] as StatusFilter[]).map((status) => (
               <button
                 key={status}
                 onClick={() => setStatusFilter(status)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   statusFilter === status
-                    ? 'bg-[#14235C] text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-[#14235C] text-white dark:bg-blue-600'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
                 {status}
@@ -163,10 +163,10 @@ export default function AdminApplicationsPage() {
 
         {/* Applications Grid */}
         {applications.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-md p-12 text-center">
-            <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-600 mb-2">No applications found</p>
-            <p className="text-sm text-gray-500">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center">
+            <FileText className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-gray-300 mb-2">No applications found</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {statusFilter !== 'ALL' ? `No ${statusFilter.toLowerCase()} applications` : 'No applications yet'}
             </p>
           </div>
@@ -175,15 +175,15 @@ export default function AdminApplicationsPage() {
             {applications.map((app) => (
               <div
                 key={app.id}
-                className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-lg font-bold text-[#2C2C2C] mb-1">
+                    <h3 className="text-lg font-bold text-[#2C2C2C] dark:text-white mb-1">
                       {app.fullName}
                     </h3>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
                       Applied {new Date(app.createdAt).toLocaleDateString()}
                     </p>
                   </div>
@@ -199,23 +199,23 @@ export default function AdminApplicationsPage() {
 
                 {/* Contact Info */}
                 <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Mail className="w-4 h-4 text-gray-400" />
-                    <a href={`mailto:${app.email}`} className="hover:text-[#14235C] underline">
+                  <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                    <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                    <a href={`mailto:${app.email}`} className="hover:text-[#14235C] dark:hover:text-blue-400 underline">
                       {app.email}
                     </a>
                   </div>
                   {app.phone && (
-                    <div className="flex items-center gap-2 text-sm text-gray-700">
-                      <Phone className="w-4 h-4 text-gray-400" />
-                      <a href={`tel:${app.phone}`} className="hover:text-[#14235C]">
+                    <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                      <Phone className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                      <a href={`tel:${app.phone}`} className="hover:text-[#14235C] dark:hover:text-blue-400">
                         {app.phone}
                       </a>
                     </div>
                   )}
                   {app.companyName && (
-                    <div className="flex items-center gap-2 text-sm text-gray-700">
-                      <Building2 className="w-4 h-4 text-gray-400" />
+                    <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                      <Building2 className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                       <span>{app.companyName}</span>
                     </div>
                   )}
@@ -224,16 +224,16 @@ export default function AdminApplicationsPage() {
                 {/* Business Type */}
                 {app.businessType && (
                   <div className="mb-4">
-                    <p className="text-xs text-gray-500 mb-1">Business Type</p>
-                    <p className="text-sm text-gray-900">{app.businessType}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Business Type</p>
+                    <p className="text-sm text-gray-900 dark:text-white">{app.businessType}</p>
                   </div>
                 )}
 
                 {/* Message */}
                 {app.message && (
                   <div className="mb-4">
-                    <p className="text-xs text-gray-500 mb-1">Message</p>
-                    <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Message</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
                       {app.message}
                     </p>
                   </div>
@@ -242,8 +242,8 @@ export default function AdminApplicationsPage() {
                 {/* Admin Notes */}
                 {app.adminNotes && (
                   <div className="mb-4">
-                    <p className="text-xs text-gray-500 mb-1">Admin Notes</p>
-                    <p className="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Admin Notes</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800">
                       {app.adminNotes}
                     </p>
                   </div>
@@ -251,7 +251,7 @@ export default function AdminApplicationsPage() {
 
                 {/* Review Info */}
                 {app.reviewedBy && app.reviewedAt && (
-                  <div className="text-xs text-gray-500 mb-4">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-4">
                     Reviewed on {new Date(app.reviewedAt).toLocaleDateString()}
                   </div>
                 )}
@@ -263,7 +263,7 @@ export default function AdminApplicationsPage() {
                       setAgreementToView(app);
                       setShowAgreementModal(true);
                     }}
-                    className="w-full mb-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg px-4 py-2 transition-colors flex items-center justify-center gap-2"
+                    className="w-full mb-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg px-4 py-2 transition-colors flex items-center justify-center gap-2"
                   >
                     <FileSignature className="w-4 h-4" />
                     View Signed Agreement
@@ -272,7 +272,7 @@ export default function AdminApplicationsPage() {
 
                 {/* Action Buttons */}
                 {app.status === 'PENDING' && (
-                  <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <button
                       onClick={() => handleApprove(app.id)}
                       disabled={isProcessing}
@@ -308,16 +308,16 @@ export default function AdminApplicationsPage() {
 
       {/* Agreement Viewer Modal */}
       {showAgreementModal && agreementToView && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-gray-200 dark:border-gray-700">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
               <div>
-                <h2 className="text-2xl font-bold text-[#2C2C2C] flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-[#2C2C2C] dark:text-white flex items-center gap-2">
                   <FileSignature className="w-6 h-6" />
                   Signed Agreement
                 </h2>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {agreementToView.fullName} • {new Date(agreementToView.agreementAcceptedAt || agreementToView.createdAt).toLocaleDateString()}
                 </p>
               </div>
@@ -326,7 +326,7 @@ export default function AdminApplicationsPage() {
                   setShowAgreementModal(false);
                   setAgreementToView(null);
                 }}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -336,9 +336,9 @@ export default function AdminApplicationsPage() {
             <div className="flex-1 overflow-y-auto p-6">
               {/* Agreement Text */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Agreement Content</h3>
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 max-h-96 overflow-y-auto">
-                  <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Agreement Content</h3>
+                <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 max-h-96 overflow-y-auto">
+                  <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                     {agreementToView.agreementText || 'No agreement text available'}
                   </pre>
                 </div>
