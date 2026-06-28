@@ -7,7 +7,7 @@
  * Agreement signature will be collected during signup after approval.
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -23,31 +23,87 @@ const applicationSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters').max(200),
   email: z.string().email('Invalid email address'),
   phone: z.string().regex(/^\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/, 'Invalid phone number'),
+  street: z.string().min(5, 'Street address is required').max(500),
+  zipCode: z.string().regex(/^\d{5}$/, 'ZIP code must be 5 digits'),
   companyName: z.string().max(255).optional().or(z.literal('')),
-  businessType: z.string().max(100).optional().or(z.literal('')),
   message: z.string().max(2000).optional().or(z.literal('')),
 });
 
 type ApplicationFormData = z.infer<typeof applicationSchema>;
 
+interface ZipCodeData {
+  city: string;
+  state: string;
+}
+
 
 export default function ApplyPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [zipCodeData, setZipCodeData] = useState<ZipCodeData | null>(null);
+  const [isLookingUpZip, setIsLookingUpZip] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ApplicationFormData>({
+  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
   });
+
+  const zipCode = watch('zipCode');
+
+  // ZIP code lookup function
+  const lookupZipCode = async (zip: string) => {
+    if (!/^\d{5}$/.test(zip)) {
+      setZipCodeData(null);
+      return;
+    }
+
+    setIsLookingUpZip(true);
+    try {
+      const response = await fetch(`https://api.zippopotam.us/us/${zip}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.places && data.places.length > 0) {
+          setZipCodeData({
+            city: data.places[0]['place name'],
+            state: data.places[0]['state abbreviation']
+          });
+        } else {
+          setZipCodeData(null);
+          toast.error('Invalid ZIP code');
+        }
+      } else {
+        setZipCodeData(null);
+        toast.error('ZIP code not found');
+      }
+    } catch (error) {
+      console.error('ZIP lookup error:', error);
+      setZipCodeData(null);
+      toast.error('Error looking up ZIP code');
+    } finally {
+      setIsLookingUpZip(false);
+    }
+  };
+
+  // Watch ZIP code and lookup when it changes
+  useEffect(() => {
+    if (zipCode && zipCode.length === 5) {
+      lookupZipCode(zipCode);
+    } else {
+      setZipCodeData(null);
+    }
+  }, [zipCode]);
 
   const onSubmit = async (data: ApplicationFormData) => {
     setIsSubmitting(true);
     try {
+      // Construct address string
+      const addressString = `${data.street}, ${zipCodeData?.city || ''}, ${zipCodeData?.state || ''} ${data.zipCode}, USA`;
+      
       const cleanData: CreateApplicationInput = {
         fullName: data.fullName,
         email: data.email,
         phone: data.phone,
+        address: addressString,
         ...(data.companyName && { companyName: data.companyName }),
-        ...(data.businessType && { businessType: data.businessType }),
         ...(data.message && { message: data.message }),
       };
 
@@ -378,6 +434,76 @@ export default function ApplyPage() {
               )}
             </div>
 
+            {/* Address Section with Alert */}
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mb-2">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
+                    US Citizenship Required
+                  </p>
+                  <p className="text-xs text-blue-700 dark:text-blue-300">
+                    You need to be a US Citizen to become a part of this program!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Street Address */}
+            <div className="group">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Street Address <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                {...register('street')}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent transition-all duration-200 group-hover:border-gray-400 dark:group-hover:border-gray-500"
+                placeholder="123 Main Street, Apt 4B"
+              />
+              {errors.street && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                  <span className="text-xs">⚠</span> {errors.street.message}
+                </p>
+              )}
+            </div>
+
+            {/* ZIP Code with City/State Display */}
+            <div className="group">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                ZIP Code <span className="text-red-500">*</span>
+              </label>
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    {...register('zipCode')}
+                    maxLength={5}
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent transition-all duration-200 group-hover:border-gray-400 dark:group-hover:border-gray-500"
+                    placeholder="12345"
+                  />
+                  {errors.zipCode && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                      <span className="text-xs">⚠</span> {errors.zipCode.message}
+                    </p>
+                  )}
+                </div>
+                {/* City and State Display */}
+                {zipCodeData && (
+                  <div className="flex-1 flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                    <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                      <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+                      <span className="font-medium">{zipCodeData.city}, {zipCodeData.state}</span>
+                    </div>
+                  </div>
+                )}
+                {isLookingUpZip && (
+                  <div className="flex-1 flex items-center justify-center px-4 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                    <Loader2 className="w-4 h-4 animate-spin text-gray-600 dark:text-gray-400" />
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Company Name */}
             <div className="group">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -388,19 +514,6 @@ export default function ApplyPage() {
                 {...register('companyName')}
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent transition-all duration-200 group-hover:border-gray-400 dark:group-hover:border-gray-500"
                 placeholder="Acme Corp"
-              />
-            </div>
-
-            {/* Business Type */}
-            <div className="group">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Business Type
-              </label>
-              <input
-                type="text"
-                {...register('businessType')}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent transition-all duration-200 group-hover:border-gray-400 dark:group-hover:border-gray-500"
-                placeholder="e.g., Financial Advisory, CPA Firm, Insurance"
               />
             </div>
 

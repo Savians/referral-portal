@@ -55,6 +55,7 @@ export interface CreateApplicationInput {
   fullName: string;
   email: string;
   phone?: string;
+  address?: string;
   companyName?: string;
   businessType?: string;
   message?: string;
