@@ -56,6 +56,14 @@ export const partnerService = {
   },
 
   /**
+   * POST /api/partner/referrals/{referralId}/resend-email
+   * Resend welcome email to client
+   */
+  resendReferralEmail: async (referralId: string): Promise<void> => {
+    await api.post(`/api/partner/referrals/${referralId}/resend-email`);
+  },
+
+  /**
    * GET /api/partner/payments
    * List partner's payments
    */
