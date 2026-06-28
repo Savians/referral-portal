@@ -85,7 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await cognitoSignOut();
       setUser(null);
-      router.push('/login');
+      window.location.href = '/';
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {
