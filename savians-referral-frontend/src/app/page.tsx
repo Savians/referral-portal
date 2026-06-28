@@ -174,87 +174,84 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-sm font-semibold text-savians-yellow dark:text-yellow-400 uppercase tracking-wide mb-3">
-                Why Become a Referral Partner?
-              </h2>
-              <h3 className="text-4xl font-bold text-savians-navy dark:text-white mb-6">
-                Create Value. Earn Rewards. Build Relationships.
+              <h3 className="text-3xl font-bold text-savians-navy dark:text-white mb-6">
+                Benefits of Becoming a Savians Referral Partner
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Help your network access proactive, year-round tax planning.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Be the reason your referral may discover meaningful, legally supported tax savings they did not know were available.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Refer high-income earners, business owners, real estate investors, and professionals who may be paying more taxes than necessary.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Create value for your referrals by connecting them with a tax advisory team focused on legal tax-saving strategies.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Help your referrals move beyond basic tax filing and start planning before the tax year is over.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Earn referral rewards for qualified clients who enroll in the Savians Tax Assessment Program.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Earn $500, $600, or $700 per qualified referral based on your referral tier.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Receive an additional $1,000 annual bonus when you reach 10 qualified referrals in a calendar year.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     No tax expertise or selling is required from you.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Savians handles the client assessment, advisory process, and tax strategy review.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Build stronger relationships by offering a high-value referral to people who need better tax planning.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Create an additional income opportunity through trusted introductions.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-savians-yellow dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-savians-yellow dark:text-yellow-400 font-bold flex-shrink-0">•</span>
                   <p className="text-gray-700 dark:text-gray-300">
                     Partner with a professional tax advisory brand focused on compliance, strategy, and client value.
                   </p>
