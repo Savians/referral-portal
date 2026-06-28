@@ -27,6 +27,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
     serviceNeeded: '',
     additionalNotes: '',
     consentGiven: false,
+    sendEmailToClient: true, // Default to sending email
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,6 +60,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
         serviceNeeded: formData.serviceNeeded || undefined,
         additionalNotes: formData.additionalNotes || undefined,
         consentGiven: formData.consentGiven,
+        sendEmailToClient: formData.sendEmailToClient,
       });
 
       toast.success(
@@ -76,6 +78,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
         serviceNeeded: '',
         additionalNotes: '',
         consentGiven: false,
+        sendEmailToClient: true,
       });
 
       onSuccess();
@@ -216,6 +219,29 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
               placeholder="Any additional information about this client..."
             />
+          </div>
+
+          {/* Send Email to Client Checkbox */}
+          <div className="bg-gray-50 dark:bg-gray-900/20 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.sendEmailToClient}
+                onChange={(e) =>
+                  setFormData({ ...formData, sendEmailToClient: e.target.checked })
+                }
+                className="mt-1 w-4 h-4 text-[#14235C] border-gray-300 rounded focus:ring-[#14235C]"
+              />
+              <div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
+                  Send welcome email to client
+                </span>
+                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
+                  If checked, the client will receive an email with next steps and Calendly booking link. 
+                  Uncheck this for pre-existing clients who don't need the initial email.
+                </span>
+              </div>
+            </label>
           </div>
 
           {/* Consent Checkbox */}
