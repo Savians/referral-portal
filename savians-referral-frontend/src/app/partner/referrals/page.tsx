@@ -24,6 +24,7 @@ import {
   Calendar,
   AlertCircle,
   Mail,
+  Check,
 } from 'lucide-react';
 import {
   REFERRAL_STATUS_COLORS,
@@ -42,6 +43,7 @@ export default function PartnerReferralsPage() {
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [resendingEmailFor, setResendingEmailFor] = useState<string | null>(null);
+  const [emailSentFor, setEmailSentFor] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && user) {
@@ -80,14 +82,14 @@ export default function PartnerReferralsPage() {
   };
 
   const handleResendEmail = async (referralId: string, clientName: string) => {
-    if (!confirm(`Send welcome email to ${clientName}?`)) {
-      return;
-    }
-
     setResendingEmailFor(referralId);
     try {
       await partnerService.resendReferralEmail(referralId);
-      toast.success(`Email sent to ${clientName} successfully!`);
+      setEmailSentFor(referralId);
+      // Show green checkmark for 2 seconds, then hide
+      setTimeout(() => {
+        setEmailSentFor(null);
+      }, 2000);
     } catch (error: any) {
       console.error('Failed to resend email:', error);
       toast.error(error.message || 'Failed to send email');
@@ -293,24 +295,28 @@ export default function PartnerReferralsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button
-                              onClick={() => handleResendEmail(referral.referralId, referral.clientFullName)}
-                              disabled={resendingEmailFor === referral.referralId}
-                              className="text-[#14235C] dark:text-blue-400 hover:underline text-sm font-medium inline-flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                              title="Resend welcome email to client"
-                            >
-                              {resendingEmailFor === referral.referralId ? (
-                                <>
-                                  <div className="w-4 h-4 border-2 border-[#14235C] dark:border-blue-400 border-t-transparent rounded-full animate-spin" />
-                                  Sending...
-                                </>
-                              ) : (
-                                <>
-                                  <Mail className="w-4 h-4" />
-                                  Resend Email
-                                </>
-                              )}
-                            </button>
+                            {emailSentFor === referral.referralId ? (
+                              // Green checkmark after successful send
+                              <div className="inline-flex items-center gap-1 text-green-600 dark:text-green-400 text-sm font-medium">
+                                <Check className="w-5 h-5" />
+                                Sent
+                              </div>
+                            ) : resendingEmailFor === referral.referralId ? (
+                              // Loading spinner during send
+                              <div className="inline-flex items-center gap-2 text-[#14235C] dark:text-blue-400 text-sm font-medium">
+                                <div className="w-5 h-5 border-2 border-[#14235C] dark:border-blue-400 border-t-transparent rounded-full animate-spin" />
+                              </div>
+                            ) : (
+                              // Normal button
+                              <button
+                                onClick={() => handleResendEmail(referral.referralId, referral.clientFullName)}
+                                className="text-[#14235C] dark:text-blue-400 hover:underline text-sm font-medium inline-flex items-center gap-1"
+                                title="Resend welcome email to client"
+                              >
+                                <Mail className="w-4 h-4" />
+                                Resend Email
+                              </button>
+                            )}
                             <span className="text-gray-300 dark:text-gray-600">|</span>
                             <Link
                               href={`/partner/referrals/${referral.referralId}`}
