@@ -519,6 +519,285 @@ export default function ApplyPage() {
           </div>
         </div>
       </div>
+
+      {/* Full Content Section - From Document */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 border border-gray-200 dark:border-gray-700">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl sm:text-5xl font-bold text-[#14235C] dark:text-white mb-4">
+              Become a Savians Referral Partner
+            </h2>
+            <p className="text-xl text-gray-700 dark:text-gray-300 font-semibold mb-2">
+              Help People Save on Taxes. Get Rewarded for Trusted Referrals.
+            </p>
+          </div>
+
+          {/* Introduction */}
+          <div className="prose prose-lg max-w-none mb-12">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+              Many high-income earners, business owners, investors, and professionals are paying more in taxes than they may need to — not because they are doing anything wrong, but because they do not have proactive tax planning in place.
+            </p>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+              As a Savians Referral Partner, you can help connect your network with a tax advisory team focused on legal, strategic, and year-round tax planning. When your referral becomes a qualified client, you earn referral rewards — and your referral gets the opportunity to identify tax-saving strategies that may help them keep more of what they earn.
+            </p>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed font-semibold">
+              This is more than a referral program. It is a way to create value for your network while building an additional income opportunity for yourself.
+            </p>
+          </div>
+
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-12"></div>
+
+          {/* Main Content Sections */}
+          <div className="space-y-12">
+            {/* Section 1 */}
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#14235C] dark:text-white mb-6">
+                Why Become a Savians Referral Partner?
+              </h3>
+              
+              <div className="space-y-8">
+                <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                  <h4 className="text-xl font-bold text-[#14235C] dark:text-white mb-4">
+                    1. Help Your Network Access Advanced Tax Planning
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    Most people only think about taxes during filing season, when many planning opportunities are already gone. Savians helps qualified clients look at the bigger picture — income, entities, real estate, investments, retirement planning, deductions, and long-term tax strategy.
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    By referring someone to Savians, you may help them move from reactive tax filing to proactive tax planning.
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                  <h4 className="text-xl font-bold text-[#14235C] dark:text-white mb-4">
+                    2. Your Referral May Benefit from Real Tax-Saving Opportunities
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    The people you refer may be strong candidates for tax planning if they are:
+                  </p>
+                  <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>High-income W-2 earners</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Business owners</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Real estate investors</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Self-employed professionals</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Families with complex income sources</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Individuals paying significant federal taxes each year</span>
+                    </li>
+                  </ul>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+                    Through the Savians Tax Assessment Program, they receive a detailed review of their tax situation and potential planning opportunities based on their facts and eligibility.
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                  <h4 className="text-xl font-bold text-[#14235C] dark:text-white mb-4">
+                    3. Earn Referral Rewards for Qualified Referrals
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    Savians rewards approved referral partners when referred clients enroll in and pay for the Tax Assessment Program.
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 font-semibold mb-3">
+                    Referral reward structure:
+                  </p>
+                  <ul className="space-y-2 text-gray-700 dark:text-gray-300 mb-4">
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Referrals 1–3: $500 per qualified referral</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Referrals 4–7: $600 per qualified referral</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>Referrals 8 and above: $700 per qualified referral</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                      <span>10 qualified referrals in a calendar year: Additional $1,000 annual bonus</span>
+                    </li>
+                  </ul>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    The more qualified clients you refer, the more your rewards can grow.
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                  <h4 className="text-xl font-bold text-[#14235C] dark:text-white mb-4">
+                    4. Build Trust by Referring a High-Value Service
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    A tax problem is often one of the biggest financial pain points for successful people. When you introduce them to Savians, you are not just referring a service — you are offering them access to a professional advisory process that may help reduce stress, improve planning, and create better financial clarity.
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    A good referral can strengthen your relationship with clients, friends, business contacts, and professional networks.
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                  <h4 className="text-xl font-bold text-[#14235C] dark:text-white mb-4">
+                    5. Simple Referral Process
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    The Savians referral process is designed to be simple and trackable.
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                    Here is how it works:
+                  </p>
+                  <ol className="space-y-2 text-gray-700 dark:text-gray-300 mb-4">
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] font-bold">1.</span>
+                      <span>You submit the referral using the official Savians referral process.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] font-bold">2.</span>
+                      <span>Savians reviews the referral and connects with the prospective client.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] font-bold">3.</span>
+                      <span>The client enrolls in the Tax Assessment Program.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#14235C] dark:text-[#F4C64E] font-bold">4.</span>
+                      <span>Once the client's payment is received, cleared, and the referral is verified, your referral reward becomes eligible for payment.</span>
+                    </li>
+                  </ol>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    No tax advice, selling, or technical explanation is required from you. Your role is simply to make a trusted introduction.
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                  <h4 className="text-xl font-bold text-[#14235C] dark:text-white mb-4">
+                    6. Partner with a Brand Built Around Compliance and Strategy
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    Savians Tax Advisors focuses on proactive, IRS-compliant tax planning. Our goal is to help clients identify legal strategies based on their specific income, structure, assets, and goals.
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Referral Partners are expected to represent Savians professionally and ethically. We do not allow misleading claims, unrealistic promises, or unauthorized marketing. This protects the client, the partner, and the Savians brand.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
+
+            {/* Who Should You Refer */}
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#14235C] dark:text-white mb-6">
+                Who Should You Refer?
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                You may know someone who is a good fit if they say things like:
+              </p>
+              <ul className="space-y-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                <li className="flex items-start gap-3">
+                  <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                  <span>"I pay too much in taxes."</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                  <span>"My CPA only files my return."</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                  <span>"I made good income, but I don't know where the money went."</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                  <span>"I own rental properties and need better tax planning."</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                  <span>"My business is growing, but my tax bill is growing too."</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#14235C] dark:text-[#F4C64E] mt-1">•</span>
+                  <span>"I want to plan before year-end instead of waiting until tax season."</span>
+                </li>
+              </ul>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+                These are often signs that the person may benefit from a deeper tax strategy assessment.
+              </p>
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
+
+            {/* Partner Benefit + Client Benefit */}
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#14235C] dark:text-white mb-6">
+                Partner Benefit + Client Benefit
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                The Savians Referral Partner Program is designed to create value on both sides.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-700">
+                  <h4 className="text-lg font-bold text-[#14235C] dark:text-white mb-3">
+                    For the Referral Partner:
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    You earn referral rewards for qualified referrals and create an additional income opportunity through your network.
+                  </p>
+                </div>
+                <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 border border-green-200 dark:border-green-700">
+                  <h4 className="text-lg font-bold text-[#14235C] dark:text-white mb-3">
+                    For the Referred Client:
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    They receive access to a professional tax assessment process that may help identify legal tax-saving opportunities, reduce tax stress, and improve long-term planning.
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-6 font-semibold text-center">
+                That is the power of a good referral: you get rewarded, and your referral may get meaningful financial value.
+              </p>
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
+
+            {/* Final CTA */}
+            <div className="text-center">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#14235C] dark:text-white mb-4">
+                Take the S.T.E.P. to Success with Savians
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 max-w-3xl mx-auto">
+                The Savians Tax Expert Partners Program is built for people who believe in relationships, trust, and value creation.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+                If you know high-income earners, business owners, real estate investors, or professionals who may need proactive tax planning, becoming a Savians Referral Partner gives you a simple way to help them — while being rewarded for qualified introductions.
+              </p>
+              <div className="bg-gradient-to-r from-[#14235C] to-[#1e3470] dark:from-[#F4C64E] dark:to-[#f5d264] rounded-2xl p-8 text-center">
+                <h4 className="text-2xl font-bold text-white dark:text-gray-900 mb-3">
+                  Become a Savians Referral Partner Today
+                </h4>
+                <p className="text-white/90 dark:text-gray-900/90 text-lg font-medium">
+                  Start referring. Help your network. Earn rewards.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
