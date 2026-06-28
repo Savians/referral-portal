@@ -138,104 +138,105 @@ export default function ApplyPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           {/* Left Sidebar - Why Become a Partner (Sticky on Desktop) */}
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-24 space-y-4 sm:space-y-6">
-              {/* Main Heading */}
+            <div className="lg:sticky lg:top-24 space-y-6">
+              {/* Section 1 */}
               <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#14235C] dark:text-white mb-3 sm:mb-4">
-                  Why Become a Referral Partner?
-                </h1>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-                  Join our network of trusted professionals and unlock new revenue streams while providing exceptional value to your clients.
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Help Your Network Save More on Taxes
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Introduce your clients, friends, and professional contacts to proactive tax planning that may help them discover meaningful, legally supported tax savings.
                 </p>
               </div>
 
-              {/* Benefits Cards */}
-              <div className="space-y-3 sm:space-y-4">
-                {/* Benefit 1 */}
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-[#14235C] dark:bg-[#F4C64E] rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Earn Competitive Commissions</h3>
-                      <p className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm">
-                        Receive generous referral fees for every qualified client you refer. Our tiered commission structure rewards your success.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Benefit 2 */}
-                <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-green-200 dark:border-green-800 hover:shadow-lg transition-shadow">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-600 dark:bg-green-500 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Trusted Expertise</h3>
-                      <p className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm">
-                        Partner with Savians Tax Advisors, a recognized leader in tax consulting. Your clients receive top-tier professional service.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Benefit 3 */}
-                <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-purple-200 dark:border-purple-800 hover:shadow-lg transition-shadow">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 dark:bg-purple-500 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Simple & Transparent Process</h3>
-                      <p className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm">
-                        Easy-to-use dashboard, real-time tracking, and straightforward payment terms. No hidden fees or complicated processes.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Benefit 4 */}
-                <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-shadow">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-yellow-600 dark:bg-yellow-500 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Dedicated Support</h3>
-                      <p className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm">
-                        Access to our partner success team, marketing materials, and resources to help you succeed every step of the way.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              {/* Section 2 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Create Value Through Trusted Referrals
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  A good referral is more than an introduction. You may help someone reduce tax stress, plan before year-end, and keep more of what they earn.
+                </p>
               </div>
 
-              {/* Stats Bar */}
-              <div className="bg-gradient-to-r from-[#14235C] to-[#1e3470] dark:from-[#F4C64E] dark:to-[#f5d264] rounded-lg sm:rounded-xl p-4 sm:p-6 text-white dark:text-gray-900">
-                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
-                  <div>
-                    <div className="text-2xl sm:text-3xl font-bold mb-1">500+</div>
-                    <div className="text-xs sm:text-sm opacity-90">Active Partners</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl sm:text-3xl font-bold mb-1">$2M+</div>
-                    <div className="text-xs sm:text-sm opacity-90">Paid Out</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl sm:text-3xl font-bold mb-1">98%</div>
-                    <div className="text-xs sm:text-sm opacity-90">Satisfaction</div>
-                  </div>
-                </div>
+              {/* Section 3 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Earn Rewards for Qualified Referrals
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Get rewarded when your referral enrolls in the Savians Tax Assessment Program and becomes a qualified client.
+                </p>
+              </div>
+
+              {/* Section 4 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Grow Your Referral Income
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Earn $500, $600, or $700 per qualified referral based on your referral tier.
+                </p>
+              </div>
+
+              {/* Section 5 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Unlock an Annual Bonus
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Earn an additional $1,000 annual bonus when you reach 10 qualified referrals in a calendar year.
+                </p>
+              </div>
+
+              {/* Section 6 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  No Tax Expertise Required
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  You do not need to explain tax strategies, provide tax advice, or sell anything. Simply make the introduction.
+                </p>
+              </div>
+
+              {/* Section 7 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  We Handle the Advisory Process
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Savians handles the client assessment, tax strategy review, and advisory process from start to finish.
+                </p>
+              </div>
+
+              {/* Section 8 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Strengthen Your Relationships
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  By connecting people with high-value tax advisory support, you position yourself as a trusted resource in your network.
+                </p>
+              </div>
+
+              {/* Section 9 */}
+              <div>
+                <h3 className="text-xl font-bold text-[#14235C] dark:text-white mb-3">
+                  Partner With a Compliance-Focused Tax Advisory Firm
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Savians focuses on proactive, IRS-compliant tax planning designed around each client's facts, income, structure, and goals.
+                </p>
+              </div>
+
+              {/* Section 10 - Final CTA */}
+              <div className="bg-gradient-to-r from-[#14235C] to-[#1e3470] dark:from-[#F4C64E] dark:to-[#f5d264] rounded-xl p-6 text-center">
+                <h3 className="text-2xl font-bold text-white dark:text-gray-900 mb-2">
+                  Take the S.T.E.P. to Success With Savians
+                </h3>
+                <p className="text-white/90 dark:text-gray-900/90 text-sm">
+                  Start referring. Help your network. Earn rewards.
+                </p>
               </div>
             </div>
           </div>
