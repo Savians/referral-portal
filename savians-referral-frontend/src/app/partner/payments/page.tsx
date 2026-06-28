@@ -98,22 +98,22 @@ export default function PartnerPaymentsPage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading...</p>
+          <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">Payments</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-[#2C2C2C] dark:text-white mb-2">Payments</h1>
+          <p className="text-gray-600 dark:text-gray-300">
             Track your earnings and payment history
           </p>
         </div>
@@ -121,56 +121,56 @@ export default function PartnerPaymentsPage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Total Earnings */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#14235C]">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#14235C] dark:border-blue-500">
             <div className="flex items-center justify-between mb-2">
-              <div className="bg-blue-100 rounded-full p-3">
-                <DollarSign className="w-6 h-6 text-[#14235C]" />
+              <div className="bg-blue-100 dark:bg-blue-900 rounded-full p-3">
+                <DollarSign className="w-6 h-6 text-[#14235C] dark:text-blue-400" />
               </div>
               <TrendingUp className="w-5 h-5 text-green-500" />
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Total Earnings</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Total Earnings</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               ${totalEarnings.toLocaleString()}
             </p>
           </div>
 
           {/* Paid Amount */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-green-500">
             <div className="flex items-center justify-between mb-2">
-              <div className="bg-green-100 rounded-full p-3">
-                <CheckCircle className="w-6 h-6 text-green-600" />
+              <div className="bg-green-100 dark:bg-green-900 rounded-full p-3">
+                <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
               </div>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Paid Out</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Paid Out</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               ${paidAmount.toLocaleString()}
             </p>
           </div>
 
           {/* Pending Amount */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-yellow-500">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-yellow-500">
             <div className="flex items-center justify-between mb-2">
               <div className="bg-yellow-100 rounded-full p-3">
                 <Clock className="w-6 h-6 text-yellow-600" />
               </div>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Pending</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Pending</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               ${pendingAmount.toLocaleString()}
             </p>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
             {/* Status Filter */}
             <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-gray-500" />
+              <Filter className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               <select
                 value={statusFilter}
                 onChange={(e) => handleStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">All Statuses</option>
                 {Object.entries(PAYMENT_STATUS_LABELS).map(([value, label]) => (
@@ -191,7 +191,7 @@ export default function PartnerPaymentsPage() {
                   setSortOrder(order as 'asc' | 'desc');
                   setCurrentPage(1);
                 }}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="createdAt-desc">Newest First</option>
                 <option value="createdAt-asc">Oldest First</option>
@@ -203,7 +203,7 @@ export default function PartnerPaymentsPage() {
             {statusFilter && (
               <button
                 onClick={() => handleStatusFilter('')}
-                className="text-sm text-[#14235C] hover:underline"
+                className="text-sm text-[#14235C] dark:text-blue-400 hover:underline"
               >
                 Clear Filter
               </button>
@@ -212,21 +212,21 @@ export default function PartnerPaymentsPage() {
         </div>
 
         {/* Payments List */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-gray-600">Loading payments...</p>
+              <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-300">Loading payments...</p>
             </div>
           ) : !filteredPayments || filteredPayments.length === 0 ? (
             <div className="text-center py-12">
-              <DollarSign className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-600 mb-2">
+              <DollarSign className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
                 {statusFilter
                   ? `No payments with status "${PAYMENT_STATUS_LABELS[statusFilter as PaymentStatus]}"`
                   : 'No payments yet'}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Payments will appear once your referrals are eligible for payout
               </p>
             </div>
@@ -235,51 +235,51 @@ export default function PartnerPaymentsPage() {
               {/* Table - Desktop */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                  <thead className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Referral ID
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Client Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Amount
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Payment Date
                       </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Action
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {filteredPayments.map((payment) => (
-                      <tr key={payment.id} className="hover:bg-gray-50 transition-colors">
+                      <tr key={payment.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <Link
                             href={`/partner/referrals/${payment.referral.referralId}`}
-                            className="text-sm font-medium text-[#14235C] hover:underline"
+                            className="text-sm font-medium text-[#14235C] dark:text-blue-400 hover:underline"
                           >
                             {payment.referral.referralId}
                           </Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900">
+                          <span className="text-sm text-gray-900 dark:text-gray-100">
                             {payment.referral.clientFullName}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {payment.approvedAmount !== null ? (
-                            <span className="text-sm font-semibold text-[#14235C]">
+                            <span className="text-sm font-semibold text-[#14235C] dark:text-blue-400">
                               ${payment.approvedAmount.toLocaleString()}
                             </span>
                           ) : (
-                            <span className="text-sm text-gray-400">-</span>
+                            <span className="text-sm text-gray-400 dark:text-gray-500">-</span>
                           )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -293,7 +293,7 @@ export default function PartnerPaymentsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {payment.paymentDate ? (
-                            <span className="text-sm text-gray-600">
+                            <span className="text-sm text-gray-600 dark:text-gray-400">
                               {new Date(payment.paymentDate).toLocaleDateString('en-US', {
                                 month: 'short',
                                 day: 'numeric',
@@ -301,13 +301,13 @@ export default function PartnerPaymentsPage() {
                               })}
                             </span>
                           ) : (
-                            <span className="text-sm text-gray-400">Not paid yet</span>
+                            <span className="text-sm text-gray-400 dark:text-gray-500">Not paid yet</span>
                           )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
                           <Link
                             href={`/partner/referrals/${payment.referral.referralId}`}
-                            className="text-[#14235C] hover:underline text-sm font-medium inline-flex items-center gap-1"
+                            className="text-[#14235C] dark:text-blue-400 hover:underline text-sm font-medium inline-flex items-center gap-1"
                           >
                             View
                             <ExternalLink className="w-4 h-4" />
@@ -320,18 +320,18 @@ export default function PartnerPaymentsPage() {
               </div>
 
               {/* Cards - Mobile */}
-              <div className="md:hidden divide-y divide-gray-200">
+              <div className="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredPayments.map((payment) => (
                   <div key={payment.id} className="p-4">
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <Link
                           href={`/partner/referrals/${payment.referral.referralId}`}
-                          className="text-sm font-medium text-[#14235C] hover:underline block mb-1"
+                          className="text-sm font-medium text-[#14235C] dark:text-blue-400 hover:underline block mb-1"
                         >
                           {payment.referral.referralId}
                         </Link>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
                           {payment.referral.clientFullName}
                         </p>
                       </div>
@@ -345,14 +345,14 @@ export default function PartnerPaymentsPage() {
                     </div>
                     <div className="flex items-center justify-between">
                       {payment.approvedAmount !== null ? (
-                        <span className="text-lg font-bold text-[#14235C]">
+                        <span className="text-lg font-bold text-[#14235C] dark:text-blue-400">
                           ${payment.approvedAmount.toLocaleString()}
                         </span>
                       ) : (
-                        <span className="text-sm text-gray-400">Amount pending</span>
+                        <span className="text-sm text-gray-400 dark:text-gray-500">Amount pending</span>
                       )}
                       {payment.paymentDate && (
-                        <span className="text-xs text-gray-500 flex items-center gap-1">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           {new Date(payment.paymentDate).toLocaleDateString('en-US', {
                             month: 'short',
@@ -367,9 +367,9 @@ export default function PartnerPaymentsPage() {
 
               {/* Pagination */}
               {(payments?.meta?.totalPages ?? 0) > 1 && (
-                <div className="border-t border-gray-200 bg-gray-50 px-6 py-4">
+                <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 px-6 py-4">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
                       Showing {((payments?.meta?.page ?? 1) - 1) * (payments?.meta?.limit ?? 10) + 1} to{' '}
                       {Math.min((payments?.meta?.page ?? 1) * (payments?.meta?.limit ?? 10), payments?.meta?.total ?? 0)}{' '}
                       of {payments?.meta?.total ?? 0} payments
@@ -378,17 +378,17 @@ export default function PartnerPaymentsPage() {
                       <button
                         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                         disabled={!(payments?.meta?.hasPreviousPage ?? false)}
-                        className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
                         Page {payments?.meta?.page ?? 1} of {payments?.meta?.totalPages ?? 1}
                       </span>
                       <button
                         onClick={() => setCurrentPage((p) => p + 1)}
                         disabled={!(payments?.meta?.hasNextPage ?? false)}
-                        className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>

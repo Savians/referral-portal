@@ -103,65 +103,65 @@ export default function PartnerProfilePage() {
 
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading profile...</p>
+          <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-300">Loading profile...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">My Profile</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-[#2C2C2C] dark:text-white mb-2">My Profile</h1>
+          <p className="text-gray-600 dark:text-gray-300">
             Manage your account information and preferences
           </p>
         </div>
 
         {/* Account Information - Read Only */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-          <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+          <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" />
             Account Information
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium text-gray-600 block mb-1 flex items-center gap-1">
+              <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1 flex items-center gap-1">
                 <Mail className="w-4 h-4" />
                 Email
               </label>
-              <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">
+              <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
                 {user.email}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Contact support to change your email
               </p>
             </div>
             {user.partner?.partnerId && (
               <div>
-                <label className="text-sm font-medium text-gray-600 block mb-1">
+                <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                   Partner ID
                 </label>
-                <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg font-mono">
+                <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg font-mono">
                   {user.partner.partnerId}
                 </p>
               </div>
             )}
             <div>
-              <label className="text-sm font-medium text-gray-600 block mb-1">
+              <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                 Role
               </label>
-              <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">
+              <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
                 {user.role}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-600 block mb-1">
+              <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                 Status
               </label>
               <p
@@ -180,8 +180,8 @@ export default function PartnerProfilePage() {
         {/* Editable Profile Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Personal Information */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-            <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+            <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
               <User className="w-5 h-5" />
               Personal Information
             </h2>
@@ -220,8 +220,8 @@ export default function PartnerProfilePage() {
           </div>
 
           {/* Business Information */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-            <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+            <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
               <Briefcase className="w-5 h-5" />
               Business Information
             </h2>
@@ -326,8 +326,8 @@ export default function PartnerProfilePage() {
           </div>
 
           {/* Address Information */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-            <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+            <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
               <MapPin className="w-5 h-5" />
               Address Information
             </h2>

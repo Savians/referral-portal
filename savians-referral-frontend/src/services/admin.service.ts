@@ -94,6 +94,22 @@ export const adminService = {
   },
 
   /**
+   * DELETE /api/admin/partners/{id}
+   * Delete a partner (soft delete with 24-hour restoration window)
+   */
+  deletePartner: async (id: string) => {
+    return api.delete(`/api/admin/partners/${id}`);
+  },
+
+  /**
+   * POST /api/admin/partners/{id}/restore
+   * Restore a deleted partner (within 24 hours)
+   */
+  restorePartner: async (id: string) => {
+    return api.post(`/api/admin/partners/${id}/restore`);
+  },
+
+  /**
    * GET /api/admin/referrals
    * List all referrals
    */

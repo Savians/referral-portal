@@ -87,50 +87,50 @@ export default function PartnerReferralsPage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading...</p>
+          <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">My Referrals</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-[#2C2C2C] dark:text-white mb-2">My Referrals</h1>
+          <p className="text-gray-600 dark:text-gray-300">
             Track and manage all your referrals in one place
           </p>
         </div>
 
         {/* Filters & Search */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
             <form onSubmit={handleSearch} className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
                 <input
                   type="text"
                   placeholder="Search by name, email, or referral ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </form>
 
             {/* Status Filter */}
             <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-gray-500" />
+              <Filter className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               <select
                 value={statusFilter}
                 onChange={(e) => handleStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">All Statuses</option>
                 {Object.entries(REFERRAL_STATUS_LABELS).map(([value, label]) => (
@@ -151,7 +151,7 @@ export default function PartnerReferralsPage() {
                   setSortOrder(order as 'asc' | 'desc');
                   setCurrentPage(1);
                 }}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="createdAt-desc">Newest First</option>
                 <option value="createdAt-asc">Oldest First</option>
@@ -164,23 +164,23 @@ export default function PartnerReferralsPage() {
         </div>
 
         {/* Referrals List */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-gray-600">Loading referrals...</p>
+              <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-300">Loading referrals...</p>
             </div>
           ) : !filteredReferrals || filteredReferrals.length === 0 ? (
             <div className="text-center py-12">
-              <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-600 mb-2">
+              <Users className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
                 {statusFilter
                   ? `No referrals with status "${REFERRAL_STATUS_LABELS[statusFilter as ReferralStatus]}"`
                   : searchQuery
                   ? 'No referrals match your search'
                   : 'No referrals yet'}
               </p>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 {!statusFilter && !searchQuery && 'Share your referral link to start earning'}
               </p>
               {statusFilter && (
@@ -197,37 +197,37 @@ export default function PartnerReferralsPage() {
               {/* Table - Desktop */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                  <thead className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Referral ID
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Client Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Email
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Source
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Date
                       </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Action
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {filteredReferrals.map((referral) => (
-                      <tr key={referral.id} className="hover:bg-gray-50 transition-colors">
+                      <tr key={referral.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[#14235C]">
+                            <span className="text-sm font-medium text-[#14235C] dark:text-blue-400">
                               {referral.referralId}
                             </span>
                             {referral.isDuplicate && (
@@ -238,12 +238,12 @@ export default function PartnerReferralsPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900">
+                          <span className="text-sm text-gray-900 dark:text-gray-100">
                             {referral.clientFullName}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
                             {referral.clientEmail}
                           </span>
                         </td>
@@ -264,7 +264,7 @@ export default function PartnerReferralsPage() {
                           />
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
                             {new Date(referral.createdAt).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
@@ -275,7 +275,7 @@ export default function PartnerReferralsPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-right">
                           <Link
                             href={`/partner/referrals/${referral.referralId}`}
-                            className="text-[#14235C] hover:underline text-sm font-medium inline-flex items-center gap-1"
+                            className="text-[#14235C] dark:text-blue-400 hover:underline text-sm font-medium inline-flex items-center gap-1"
                           >
                             View
                             <ExternalLink className="w-4 h-4" />
@@ -288,19 +288,19 @@ export default function PartnerReferralsPage() {
               </div>
 
               {/* Cards - Mobile */}
-              <div className="md:hidden divide-y divide-gray-200">
+              <div className="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredReferrals.map((referral) => (
                   <Link
                     key={referral.id}
                     href={`/partner/referrals/${referral.referralId}`}
-                    className="block p-4 hover:bg-gray-50 transition-colors"
+                    className="block p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h3 className="font-semibold text-[#2C2C2C] mb-1">
+                        <h3 className="font-semibold text-[#2C2C2C] dark:text-white mb-1">
                           {referral.clientFullName}
                         </h3>
-                        <p className="text-sm text-gray-600">{referral.referralId}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{referral.referralId}</p>
                       </div>
                       {referral.isDuplicate && (
                         <AlertCircle className="w-4 h-4 text-orange-500" />
@@ -321,7 +321,7 @@ export default function PartnerReferralsPage() {
                           size="sm"
                         />
                       </div>
-                      <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         {new Date(referral.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
@@ -335,9 +335,9 @@ export default function PartnerReferralsPage() {
 
               {/* Pagination */}
               {(referrals?.meta?.totalPages ?? 0) > 1 && (
-                <div className="border-t border-gray-200 bg-gray-50 px-6 py-4">
+                <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 px-6 py-4">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
                       Showing {((referrals?.meta?.page ?? 1) - 1) * (referrals?.meta?.limit ?? 10) + 1} to{' '}
                       {Math.min((referrals?.meta?.page ?? 1) * (referrals?.meta?.limit ?? 10), referrals?.meta?.total ?? 0)}{' '}
                       of {referrals?.meta?.total ?? 0} referrals
@@ -346,17 +346,17 @@ export default function PartnerReferralsPage() {
                       <button
                         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                         disabled={!(referrals?.meta?.hasPreviousPage ?? false)}
-                        className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
                         Page {referrals?.meta?.page ?? 1} of {referrals?.meta?.totalPages ?? 1}
                       </span>
                       <button
                         onClick={() => setCurrentPage((p) => p + 1)}
                         disabled={!(referrals?.meta?.hasNextPage ?? false)}
-                        className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>

@@ -67,10 +67,10 @@ export default function PartnerDashboardPage() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading dashboard...</p>
+          <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-300">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -78,9 +78,9 @@ export default function PartnerDashboardPage() {
 
   if (!dashboard) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">Failed to load dashboard</p>
+          <p className="text-gray-600 dark:text-gray-300">Failed to load dashboard</p>
           <button onClick={loadDashboard} className="btn-primary mt-4">
             Retry
           </button>
@@ -92,23 +92,23 @@ export default function PartnerDashboardPage() {
   const referralLink = `${typeof window !== 'undefined' ? window.location.origin : ''}/partner/${dashboard.partner.partnerId}`;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8 flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">
+            <h1 className="text-3xl font-bold text-[#2C2C2C] dark:text-white mb-2">
               Welcome back, {dashboard.partner.fullName}!
             </h1>
-            <div className="flex items-center gap-4 text-gray-600">
+            <div className="flex items-center gap-4 text-gray-600 dark:text-gray-300">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 <span className="text-sm">
                   Member since {new Date(dashboard.partner.memberSince).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
               </div>
-              <span className="text-gray-300">•</span>
-              <span className="text-sm font-medium text-[#14235C]">
+              <span className="text-gray-300 dark:text-gray-600">•</span>
+              <span className="text-sm font-medium text-[#14235C] dark:text-blue-400">
                 Partner ID: {dashboard.partner.partnerId}
               </span>
             </div>
@@ -159,54 +159,54 @@ export default function PartnerDashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Referrals */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#14235C]">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#14235C] dark:border-blue-500">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-blue-100 rounded-full p-3">
                 <Users className="w-6 h-6 text-[#14235C]" />
               </div>
               <TrendingUp className="w-5 h-5 text-green-500" />
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Total Referrals</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Total Referrals</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               {dashboard.referrals.total}
             </p>
           </div>
 
           {/* Qualified Referrals */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-green-500">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-green-100 rounded-full p-3">
                 <CheckCircle className="w-6 h-6 text-green-600" />
               </div>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Qualified</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Qualified</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               {dashboard.referrals.byStatus['QUALIFIED']?.count || 0}
             </p>
           </div>
 
           {/* Total Payments */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#F4C64E]">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#F4C64E]">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-yellow-100 rounded-full p-3">
                 <DollarSign className="w-6 h-6 text-yellow-600" />
               </div>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Total Earnings</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Total Earnings</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               ${dashboard.payments.totalApprovedAmount?.toLocaleString() || '0'}
             </p>
           </div>
 
           {/* Documents */}
-          <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-500">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-purple-500">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-purple-100 rounded-full p-3">
                 <FileText className="w-6 h-6 text-purple-600" />
               </div>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-1">Documents</h3>
-            <p className="text-3xl font-bold text-[#2C2C2C]">
+            <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Documents</h3>
+            <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               {dashboard.documents.total}
             </p>
           </div>
@@ -216,12 +216,12 @@ export default function PartnerDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Recent Referrals */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-[#2C2C2C]">Recent Referrals</h2>
+                <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white">Recent Referrals</h2>
                 <Link
                   href="/partner/referrals"
-                  className="text-[#14235C] hover:underline text-sm font-medium flex items-center gap-1"
+                  className="text-[#14235C] dark:text-blue-400 hover:underline text-sm font-medium flex items-center gap-1"
                 >
                   View All
                   <ArrowRight className="w-4 h-4" />
@@ -230,9 +230,9 @@ export default function PartnerDashboardPage() {
 
               {dashboard.recentReferrals.length === 0 ? (
                 <div className="text-center py-12">
-                  <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">No referrals yet</p>
-                  <p className="text-sm text-gray-500 mb-4">
+                  <Users className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-600 dark:text-gray-300 mb-2">No referrals yet</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                     Share your referral link to start earning
                   </p>
                   <button onClick={copyReferralLink} className="btn-primary">
@@ -245,14 +245,14 @@ export default function PartnerDashboardPage() {
                     <Link
                       key={referral.id}
                       href={`/partner/referrals/${referral.referralId}`}
-                      className="block border border-gray-200 rounded-lg p-4 hover:border-[#14235C] hover:shadow-md transition-all"
+                      className="block border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-[#14235C] dark:hover:border-blue-500 hover:shadow-md transition-all"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <h3 className="font-semibold text-[#2C2C2C] mb-1">
+                          <h3 className="font-semibold text-[#2C2C2C] dark:text-white mb-1">
                             {referral.clientFullName}
                           </h3>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
                             {referral.referralId}
                           </p>
                         </div>
@@ -264,7 +264,7 @@ export default function PartnerDashboardPage() {
                           {referral.statusLabel}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {new Date(referral.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
@@ -280,8 +280,8 @@ export default function PartnerDashboardPage() {
 
           {/* Referral Status Breakdown */}
           <div>
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-bold text-[#2C2C2C] mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+              <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-6">
                 Referral Status
               </h2>
               <div className="space-y-3">
@@ -294,16 +294,16 @@ export default function PartnerDashboardPage() {
                             ?.split(' ')[0] || 'bg-gray-300'
                         }`}
                       />
-                      <span className="text-sm text-gray-700">{data.label}</span>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">{data.label}</span>
                     </div>
-                    <span className="text-sm font-semibold text-[#2C2C2C]">
+                    <span className="text-sm font-semibold text-[#2C2C2C] dark:text-white">
                       {data.count}
                     </span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <Link href="/partner/referrals" className="btn-outline w-full">
                   View All Referrals
                 </Link>
@@ -311,26 +311,26 @@ export default function PartnerDashboardPage() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-              <h2 className="text-xl font-bold text-[#2C2C2C] mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mt-6">
+              <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4">
                 Quick Actions
               </h2>
               <div className="space-y-3">
                 <Link
                   href="/partner/payments"
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700"
                 >
-                  <DollarSign className="w-5 h-5 text-[#14235C]" />
-                  <span className="text-sm font-medium text-gray-700">
+                  <DollarSign className="w-5 h-5 text-[#14235C] dark:text-blue-400" />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     View Payments
                   </span>
                 </Link>
                 <Link
                   href="/partner/profile"
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700"
                 >
-                  <Users className="w-5 h-5 text-[#14235C]" />
-                  <span className="text-sm font-medium text-gray-700">
+                  <Users className="w-5 h-5 text-[#14235C] dark:text-blue-400" />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Edit Profile
                   </span>
                 </Link>

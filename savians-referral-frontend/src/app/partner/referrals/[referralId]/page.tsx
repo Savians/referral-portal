@@ -70,10 +70,10 @@ export default function ReferralDetailPage() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading referral...</p>
+          <div className="w-12 h-12 border-4 border-[#14235C] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-300">Loading referral...</p>
         </div>
       </div>
     );
@@ -84,36 +84,36 @@ export default function ReferralDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <Link
           href="/partner/referrals"
-          className="inline-flex items-center gap-2 text-[#14235C] hover:underline mb-6"
+          className="inline-flex items-center gap-2 text-[#14235C] dark:text-blue-400 hover:underline mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Referrals
         </Link>
 
         {/* Header */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-[#2C2C2C]">
+                <h1 className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
                   {referral.clientFullName}
                 </h1>
                 {referral.isDuplicate && (
-                  <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium flex items-center gap-1">
+                  <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-xs font-medium flex items-center gap-1">
                     <AlertCircle className="w-4 h-4" />
                     Duplicate
                   </span>
                 )}
               </div>
-              <p className="text-gray-600 text-sm mb-1">
-                Referral ID: <span className="font-mono font-semibold text-[#14235C]">{referral.referralId}</span>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">
+                Referral ID: <span className="font-mono font-semibold text-[#14235C] dark:text-blue-400">{referral.referralId}</span>
               </p>
-              <p className="text-gray-500 text-sm flex items-center gap-1">
+              <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 Submitted on {new Date(referral.createdAt).toLocaleDateString('en-US', {
                   month: 'long',
@@ -136,39 +136,39 @@ export default function ReferralDetailPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Client Information */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+              <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
                 <User className="w-5 h-5" />
                 Client Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-600 block mb-1">
+                  <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                     Full Name
                   </label>
-                  <p className="text-gray-900">{referral.clientFullName}</p>
+                  <p className="text-gray-900 dark:text-gray-100">{referral.clientFullName}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-600 block mb-1 flex items-center gap-1">
+                  <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1 flex items-center gap-1">
                     <Mail className="w-4 h-4" />
                     Email
                   </label>
                   <a
                     href={`mailto:${referral.clientEmail}`}
-                    className="text-[#14235C] hover:underline"
+                    className="text-[#14235C] dark:text-blue-400 hover:underline"
                   >
                     {referral.clientEmail}
                   </a>
                 </div>
                 {referral.clientPhone && (
                   <div>
-                    <label className="text-sm font-medium text-gray-600 block mb-1 flex items-center gap-1">
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1 flex items-center gap-1">
                       <Phone className="w-4 h-4" />
                       Phone
                     </label>
                     <a
                       href={`tel:${referral.clientPhone}`}
-                      className="text-[#14235C] hover:underline"
+                      className="text-[#14235C] dark:text-blue-400 hover:underline"
                     >
                       {referral.clientPhone}
                     </a>
@@ -176,26 +176,26 @@ export default function ReferralDetailPage() {
                 )}
                 {referral.estimatedIncome && (
                   <div>
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                       Estimated Income
                     </label>
-                    <p className="text-gray-900">{referral.estimatedIncome}</p>
+                    <p className="text-gray-900 dark:text-gray-100">{referral.estimatedIncome}</p>
                   </div>
                 )}
                 {referral.serviceNeeded && (
                   <div className="md:col-span-2">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                       Service Needed
                     </label>
-                    <p className="text-gray-900">{referral.serviceNeeded}</p>
+                    <p className="text-gray-900 dark:text-gray-100">{referral.serviceNeeded}</p>
                   </div>
                 )}
                 {referral.additionalNotes && (
                   <div className="md:col-span-2">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                       Additional Notes
                     </label>
-                    <p className="text-gray-700 bg-gray-50 p-3 rounded-lg">
+                    <p className="text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
                       {referral.additionalNotes}
                     </p>
                   </div>
@@ -204,32 +204,32 @@ export default function ReferralDetailPage() {
             </div>
 
             {/* Status Timeline */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-bold text-[#2C2C2C] mb-6 flex items-center gap-2">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+              <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-6 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5" />
                 Status History
               </h2>
               
               {referral.statusHistory.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">No status updates yet</p>
+                <p className="text-gray-500 dark:text-gray-400 text-center py-4">No status updates yet</p>
               ) : (
                 <div className="relative">
                   {/* Timeline Line */}
-                  <div className="absolute left-4 top-8 bottom-8 w-0.5 bg-gray-200" />
+                  <div className="absolute left-4 top-8 bottom-8 w-0.5 bg-gray-200 dark:bg-gray-700" />
                   
                   <div className="space-y-6">
                     {referral.statusHistory.map((history, index) => (
                       <div key={history.id} className="relative pl-10">
                         {/* Timeline Dot */}
-                        <div className="absolute left-0 top-1 w-8 h-8 bg-white border-4 border-[#14235C] rounded-full flex items-center justify-center">
-                          <div className="w-2 h-2 bg-[#14235C] rounded-full" />
+                        <div className="absolute left-0 top-1 w-8 h-8 bg-white dark:bg-gray-800 border-4 border-[#14235C] dark:border-blue-500 rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-[#14235C] dark:bg-blue-500 rounded-full" />
                         </div>
                         
-                        <div className="bg-gray-50 rounded-lg p-4">
+                        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
                             <div>
                               {history.oldStatus && (
-                                <span className="text-sm text-gray-600">
+                                <span className="text-sm text-gray-600 dark:text-gray-400">
                                   {history.oldStatusLabel} →{' '}
                                 </span>
                               )}
@@ -241,7 +241,7 @@ export default function ReferralDetailPage() {
                                 {history.newStatusLabel}
                               </span>
                             </div>
-                            <span className="text-xs text-gray-500 flex items-center gap-1">
+                            <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               {new Date(history.changedAt).toLocaleDateString('en-US', {
                                 month: 'short',
@@ -253,7 +253,7 @@ export default function ReferralDetailPage() {
                             </span>
                           </div>
                           {history.notes && (
-                            <p className="text-sm text-gray-700 mt-2">
+                            <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
                               <span className="font-medium">Note:</span> {history.notes}
                             </p>
                           )}
@@ -270,14 +270,14 @@ export default function ReferralDetailPage() {
           <div className="space-y-6">
             {/* Payment Information */}
             {referral.payment ? (
-              <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
                   <DollarSign className="w-5 h-5" />
                   Payment
                 </h2>
                 <div className="space-y-3">
                   <div>
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                       Status
                     </label>
                     <span
@@ -291,10 +291,10 @@ export default function ReferralDetailPage() {
                   
                   {referral.payment.approvedAmount !== null && (
                     <div>
-                      <label className="text-sm font-medium text-gray-600 block mb-1">
+                      <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                         Amount
                       </label>
-                      <p className="text-2xl font-bold text-[#14235C]">
+                      <p className="text-2xl font-bold text-[#14235C] dark:text-blue-400">
                         ${referral.payment.approvedAmount.toLocaleString()}
                       </p>
                     </div>
@@ -302,10 +302,10 @@ export default function ReferralDetailPage() {
                   
                   {referral.payment.paymentDate && (
                     <div>
-                      <label className="text-sm font-medium text-gray-600 block mb-1">
+                      <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
                         Payment Date
                       </label>
-                      <p className="text-gray-900 flex items-center gap-1">
+                      <p className="text-gray-900 dark:text-gray-100 flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         {new Date(referral.payment.paymentDate).toLocaleDateString('en-US', {
                           month: 'short',
@@ -345,14 +345,14 @@ export default function ReferralDetailPage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
                   <DollarSign className="w-5 h-5" />
                   Payment
                 </h2>
                 <div className="text-center py-6">
-                  <Clock className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">
+                  <Clock className="w-8 h-8 text-gray-300 dark:text-gray-600 mx-auto mb-2" />
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     Payment information will appear once the referral is eligible for payout
                   </p>
                 </div>
@@ -360,15 +360,15 @@ export default function ReferralDetailPage() {
             )}
 
             {/* Quick Info */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+              <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5" />
                 Details
               </h2>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Created</span>
-                  <span className="text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Created</span>
+                  <span className="text-gray-900 dark:text-gray-100">
                     {new Date(referral.createdAt).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',
@@ -377,8 +377,8 @@ export default function ReferralDetailPage() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Last Updated</span>
-                  <span className="text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Last Updated</span>
+                  <span className="text-gray-900 dark:text-gray-100">
                     {new Date(referral.updatedAt).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',
@@ -387,8 +387,8 @@ export default function ReferralDetailPage() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Consent Given</span>
-                  <span className="text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Consent Given</span>
+                  <span className="text-gray-900 dark:text-gray-100">
                     {referral.consentGiven ? (
                       <CheckCircle className="w-5 h-5 text-green-500" />
                     ) : (
