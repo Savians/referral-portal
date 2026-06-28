@@ -163,10 +163,10 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
             />
           </div>
 
-          {/* Estimated Income */}
+          {/* Annual Taxable Income */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Estimated Annual Income
+              Annual Taxable Income
             </label>
             <select
               value={formData.estimatedIncome}
@@ -176,11 +176,13 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             >
               <option value="">Select income range</option>
-              <option value="Under $50,000">Under $50,000</option>
-              <option value="$50,000 - $100,000">$50,000 - $100,000</option>
-              <option value="$100,000 - $250,000">$100,000 - $250,000</option>
-              <option value="$250,000 - $500,000">$250,000 - $500,000</option>
-              <option value="Over $500,000">Over $500,000</option>
+              <option value="Less than $200,000">Less than $200,000</option>
+              <option value="$200,000 - $300,000">$200,000 - $300,000</option>
+              <option value="$300,000 - $400,000">$300,000 - $400,000</option>
+              <option value="$400,000 - $500,000">$400,000 - $500,000</option>
+              <option value="$500,000 - $750,000">$500,000 - $750,000</option>
+              <option value="$750,000 - $1,000,000">$750,000 - $1,000,000</option>
+              <option value="Over $1,000,000">Over $1,000,000</option>
             </select>
           </div>
 
