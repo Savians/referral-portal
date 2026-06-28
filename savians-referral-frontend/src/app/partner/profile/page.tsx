@@ -26,6 +26,8 @@ import {
   Save,
   Shield,
   Calendar,
+  CheckCircle,
+  Loader2,
 } from 'lucide-react';
 import { PARTNER_TYPES, US_STATES, PHONE_REGEX } from '@/lib/constants';
 
@@ -36,9 +38,8 @@ const profileSchema = z.object({
     .regex(PHONE_REGEX, 'Invalid phone number format')
     .optional()
     .or(z.literal('')),
-  address: z.string().optional().or(z.literal('')),
-  city: z.string().optional().or(z.literal('')),
-  state: z.string().optional().or(z.literal('')),
+  street: z.string().optional().or(z.literal('')),
+  zipCode: z.string().regex(/^\d{5}$/, 'ZIP code must be 5 digits').optional().or(z.literal('')),
   businessName: z.string().optional().or(z.literal('')),
   jobTitle: z.string().optional().or(z.literal('')),
   partnerType: z.string().optional().or(z.literal('')),
@@ -50,39 +51,139 @@ const profileSchema = z.object({
 
 type ProfileFormData = z.infer<typeof profileSchema>;
 
+interface ZipCodeData {
+  city: string;
+  state: string;
+}
+
 export default function PartnerProfilePage() {
   const { user, isLoading: authLoading, refreshUser } = useAuth();
   const { user: protectedUser } = useProtectedRoute(['PARTNER']);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [zipCodeData, setZipCodeData] = useState<ZipCodeData | null>(null);
+  const [isLookingUpZip, setIsLookingUpZip] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
     reset,
+    watch,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
   });
 
+  const zipCode = watch('zipCode');
+
+  // ZIP code lookup function
+  const lookupZipCode = async (zip: string) => {
+    if (!zip || !/^\d{5}$/.test(zip)) {
+      setZipCodeData(null);
+      return;
+    }
+
+    setIsLookingUpZip(true);
+    try {
+      const response = await fetch(`https://api.zippopotam.us/us/${zip}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.places && data.places.length > 0) {
+          setZipCodeData({
+            city: data.places[0]['place name'],
+            state: data.places[0]['state abbreviation']
+          });
+        } else {
+          setZipCodeData(null);
+        }
+      } else {
+        setZipCodeData(null);
+      }
+    } catch (error) {
+      console.error('ZIP lookup error:', error);
+      setZipCodeData(null);
+    } finally {
+      setIsLookingUpZip(false);
+    }
+  };
+
+  // Watch ZIP code and lookup when it changes
   useEffect(() => {
-    if (user) {
+    if (zipCode && zipCode.length === 5) {
+      lookupZipCode(zipCode);
+    } else {
+      setZipCodeData(null);
+    }
+  }, [zipCode]);
+
+  useEffect(() => {
+    if (user && user.partner) {
+      // Parse address if it exists to extract street and ZIP
+      let street = '';
+      let zipCode = '';
+      
+      if (user.partner.address) {
+        // Parse format: "street, city, state zipCode, USA"
+        const parts = user.partner.address.split(',').map(p => p.trim());
+        if (parts.length >= 1) {
+          street = parts[0]; // First part is street
+        }
+        // Extract ZIP code from the second-to-last part
+        if (parts.length >= 3) {
+          const stateZipPart = parts[parts.length - 2]; // e.g., "NY 10001"
+          const zipMatch = stateZipPart.match(/\d{5}$/);
+          if (zipMatch) {
+            zipCode = zipMatch[0];
+          }
+        }
+      }
+
       // Pre-fill form with user data
       reset({
         fullName: user.fullName || '',
-        // Other fields will be empty initially since we don't fetch partner details
-        // In a real app, you'd fetch full partner details here
+        phone: user.partner.phone || '',
+        street: street,
+        zipCode: zipCode,
+        businessName: user.partner.businessName || '',
+        jobTitle: user.partner.jobTitle || '',
+        partnerType: user.partner.partnerType || '',
+        referralAudience: user.partner.referralAudience || '',
+        estimatedVolume: user.partner.estimatedVolume || '',
+        paymentMethod: user.partner.paymentMethod || '',
+        legalName: user.partner.legalName || '',
       });
+
+      // If we have a ZIP code, lookup city/state
+      if (zipCode) {
+        lookupZipCode(zipCode);
+      }
     }
   }, [user, reset]);
 
   const onSubmit = async (data: ProfileFormData) => {
     setIsSaving(true);
     try {
-      // Filter out empty strings
-      const cleanedData: UpdateProfileInput = Object.fromEntries(
-        Object.entries(data).filter(([_, value]) => value !== '')
-      );
+      // Construct address string if street and zipCode are provided
+      let addressString = '';
+      if (data.street && data.zipCode && zipCodeData) {
+        addressString = `${data.street}, ${zipCodeData.city}, ${zipCodeData.state} ${data.zipCode}, USA`;
+      }
+
+      // Filter out empty strings and prepare update data
+      const cleanedData: UpdateProfileInput = {
+        ...(data.fullName && { fullName: data.fullName }),
+        ...(data.phone && { phone: data.phone }),
+        ...(addressString && { address: addressString }),
+        ...(zipCodeData?.city && { city: zipCodeData.city }),
+        ...(zipCodeData?.state && { state: zipCodeData.state }),
+        ...(data.businessName && { businessName: data.businessName }),
+        ...(data.jobTitle && { jobTitle: data.jobTitle }),
+        ...(data.partnerType && { partnerType: data.partnerType }),
+        ...(data.referralAudience && { referralAudience: data.referralAudience }),
+        ...(data.estimatedVolume && { estimatedVolume: data.estimatedVolume }),
+        ...(data.paymentMethod && { paymentMethod: data.paymentMethod }),
+        ...(data.legalName && { legalName: data.legalName }),
+      };
 
       await partnerService.updateProfile(cleanedData);
       
@@ -331,48 +432,84 @@ export default function PartnerProfilePage() {
               <MapPin className="w-5 h-5" />
               Address Information
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="md:col-span-2">
-                <label htmlFor="address" className="form-label">
+            <div className="space-y-4">
+              {/* Street Address */}
+              <div>
+                <label htmlFor="street" className="form-label">
                   Street Address
                 </label>
                 <input
-                  {...register('address')}
+                  {...register('street')}
                   type="text"
-                  id="address"
+                  id="street"
                   className="form-input"
-                  placeholder="123 Main Street"
+                  placeholder="123 Main Street, Apt 4B"
                 />
+                {errors.street && (
+                  <p className="form-error">{errors.street.message}</p>
+                )}
               </div>
-              <div>
-                <label htmlFor="city" className="form-label">
-                  City
-                </label>
-                <input
-                  {...register('city')}
-                  type="text"
-                  id="city"
-                  className="form-input"
-                  placeholder="New York"
-                />
+
+              {/* ZIP Code with City/State Display */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="zipCode" className="form-label">
+                    ZIP Code
+                  </label>
+                  <input
+                    {...register('zipCode')}
+                    type="text"
+                    id="zipCode"
+                    maxLength={5}
+                    className="form-input"
+                    placeholder="12345"
+                  />
+                  {errors.zipCode && (
+                    <p className="form-error">{errors.zipCode.message}</p>
+                  )}
+                </div>
+
+                {/* City and State Display (Read-only) */}
+                <div>
+                  <label className="form-label">
+                    City, State
+                  </label>
+                  <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg min-h-[46px]">
+                    {isLookingUpZip && (
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span className="text-sm">Looking up...</span>
+                      </div>
+                    )}
+                    {!isLookingUpZip && zipCodeData && (
+                      <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                        <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        <span className="font-medium">{zipCodeData.city}, {zipCodeData.state}</span>
+                      </div>
+                    )}
+                    {!isLookingUpZip && !zipCodeData && (
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        Enter ZIP code above
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    City and State are automatically fetched from ZIP code
+                  </p>
+                </div>
               </div>
-              <div>
-                <label htmlFor="state" className="form-label">
-                  State
-                </label>
-                <select
-                  {...register('state')}
-                  id="state"
-                  className="form-input"
-                >
-                  <option value="">Select state...</option>
-                  {US_STATES.map((state) => (
-                    <option key={state.value} value={state.value}>
-                      {state.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+
+              {/* Current Address Display */}
+              {user?.partner?.address && (
+                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+                  <p className="text-sm font-medium text-blue-900 dark:text-blue-200 mb-1">
+                    Current Address on File:
+                  </p>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    {user.partner.address}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

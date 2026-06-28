@@ -440,10 +440,10 @@ export default function ApplyPage() {
                 <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
-                    US Citizenship Required
+                    US Residence Is Required
                   </p>
                   <p className="text-xs text-blue-700 dark:text-blue-300">
-                    You need to be a US Citizen to become a part of this program!
+                    You need to be a US Resident to become a part of this program!
                   </p>
                 </div>
               </div>
