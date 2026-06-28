@@ -130,9 +130,12 @@ export default function ApplyPage() {
             Thank you for your interest! Our team will review your application and contact you within 2-3 business days.
             If approved, you'll receive an invitation email with a signup link where you'll complete your registration and sign the partner agreement.
           </p>
-          <Link href="/" className="block px-6 py-3 w-full bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold">
+          <button 
+            onClick={() => window.location.href = '/'} 
+            className="block px-6 py-3 w-full bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold"
+          >
             Return to Home
-          </Link>
+          </button>
         </div>
       </div>
     );
