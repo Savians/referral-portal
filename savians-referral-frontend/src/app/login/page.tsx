@@ -57,7 +57,7 @@ function LoginForm() {
     setIsLoading(true);
     try {
       await login(data.email, data.password);
-      
+
       toast.success('Logged in successfully!');
 
       // AuthProvider handles redirect based on role
@@ -67,13 +67,13 @@ function LoginForm() {
       }
     } catch (error: any) {
       console.error('Login error:', error);
-      
+
       let errorMessage = 'Login failed. Please try again.';
       let isSuspension = false;
-      
+
       // Check for API error (from axios interceptor - structure: { code, message, statusCode })
       if (error.code === 'FORBIDDEN' || error.message?.includes('suspended')) {
-        errorMessage = error.message || 
+        errorMessage = error.message ||
           'Your account has been suspended by the administrator. Please contact support at admin@savians.com for more information.';
         isSuspension = true;
       }
@@ -87,7 +87,7 @@ function LoginForm() {
       } else if (error.message) {
         errorMessage = error.message;
       }
-      
+
       // Show error with appropriate styling
       if (isSuspension) {
         toast.error(errorMessage, {
@@ -112,9 +112,9 @@ function LoginForm() {
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-4 px-6 transition-colors">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <a href="https://savians.com" className="hover:opacity-90 transition-opacity">
-            <img 
-              src="/savians-logo.png" 
-              alt="Savians Logo" 
+            <img
+              src="/savians-logo.png"
+              alt="Savians Logo"
               className="h-12 w-auto"
             />
           </a>
@@ -237,7 +237,7 @@ function LoginForm() {
 
             {/* Apply Link */}
             <Link
-              href="/apply"
+              href="/"
               className="btn-outline w-full flex items-center justify-center gap-2"
             >
               Become a Partner
