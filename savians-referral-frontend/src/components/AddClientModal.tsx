@@ -63,11 +63,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
         sendEmailToClient: formData.sendEmailToClient,
       });
 
-      toast.success(
-        response.data.isDuplicate
-          ? 'Referral submitted (flagged as potential duplicate)'
-          : 'Referral submitted successfully!'
-      );
+      toast.success('Referral submitted successfully!');
 
       // Reset form
       setFormData({
