@@ -25,6 +25,7 @@ import {
   CheckCircle,
   Clock,
   TrendingUp,
+  Check,
 } from 'lucide-react';
 import {
   REFERRAL_STATUS_COLORS,
@@ -40,6 +41,8 @@ export default function ReferralDetailPage() {
   
   const [referral, setReferral] = useState<PartnerReferralDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isResending, setIsResending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     if (!authLoading && user && referralId) {
@@ -65,6 +68,23 @@ export default function ReferralDetailPage() {
       setTimeout(() => router.push('/partner/referrals'), 2000);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResendEmail = async () => {
+    setIsResending(true);
+    try {
+      await partnerService.resendReferralEmail(referralId);
+      setEmailSent(true);
+      // Show success indicator for 2 seconds
+      setTimeout(() => {
+        setEmailSent(false);
+      }, 2000);
+    } catch (error: any) {
+      console.error('Failed to resend email:', error);
+      toast.error(error.message || 'Failed to send email');
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -122,18 +142,40 @@ export default function ReferralDetailPage() {
                 })}
               </p>
             </div>
-            <span
-              className={`px-4 py-2 rounded-lg text-sm font-semibold border ${
-                REFERRAL_STATUS_COLORS[referral.status]
-              }`}
-            >
-              {referral.statusLabel}
-            </span>
+            <div className="flex flex-col gap-2">
+              <span
+                className={`px-4 py-2 rounded-lg text-sm font-semibold border ${
+                  REFERRAL_STATUS_COLORS[referral.status]
+                }`}
+              >
+                {referral.statusLabel}
+              </span>
+              
+              {/* Resend Email Button */}
+              {emailSent ? (
+                <div className="flex items-center justify-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg border border-green-200">
+                  <Check className="w-5 h-5" />
+                  <span className="text-sm font-medium">Email Sent</span>
+                </div>
+              ) : isResending ? (
+                <div className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="w-5 h-5 border-2 border-[#14235C] border-t-transparent rounded-full animate-spin" />
+                  <span className="text-sm font-medium text-gray-600">Sending...</span>
+                </div>
+              ) : (
+                <button
+                  onClick={handleResendEmail}
+                  className="flex items-center justify-center gap-2 px-4 py-2 bg-[#14235C] text-white rounded-lg hover:bg-[#1a2d75] transition-colors"
+                >
+                  <Mail className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Resend Email</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">{/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Client Information */}
             <div className="bg-white rounded-xl shadow-md p-6">
