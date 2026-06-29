@@ -164,18 +164,11 @@ export default function ApplyPage() {
       {/* Modern Navigation - Fully Responsive */}
       <header className="bg-white/10 dark:bg-gray-900/20 backdrop-blur-md border-b border-white/10 dark:border-gray-700/30 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20">
-            {/* Logo */}
-            <a href="https://savians.com" className="flex items-center hover:opacity-90 transition-opacity flex-shrink-0">
-              <img
-                src="/savians-logo.png"
-                alt="Savians Logo"
-                className="h-10 sm:h-12 w-auto"
-              />
-            </a>
+          <div className="flex justify-end items-center h-16 sm:h-20">
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation — ThemeToggle | Home | Sign In | Logo */}
             <div className="hidden sm:flex items-center gap-4 md:gap-6">
+              <ThemeToggle />
               <a
                 href="https://savians.com"
                 className="text-white/80 hover:text-white font-medium transition-colors"
@@ -188,7 +181,13 @@ export default function ApplyPage() {
               >
                 Sign In
               </Link>
-              <ThemeToggle />
+              <a href="https://savians.com" className="flex items-center hover:opacity-90 transition-opacity flex-shrink-0 ml-1">
+                <img
+                  src="/savians-logo.png"
+                  alt="Savians Logo"
+                  className="h-9 sm:h-11 w-auto"
+                />
+              </a>
             </div>
 
             {/* Mobile Navigation */}
@@ -426,6 +425,7 @@ export default function ApplyPage() {
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent transition-all duration-200 group-hover:border-gray-400 dark:group-hover:border-gray-500"
                       placeholder="+1 (555) 123-4567"
                     />
+
                     {errors.phone && (
                       <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
                         <span className="text-xs">⚠</span> {errors.phone.message}
