@@ -41,6 +41,7 @@ const updateStatusSchema = z.object({
     'CLIENT_AGREEMENT_SIGNED',
     'PAYMENT_RECEIVED',
     'ELIGIBLE_FOR_PAYOUT',
+    'COMMISSION_PAID',
     'DUPLICATE_FLAGGED',
     'LOST',
   ]),

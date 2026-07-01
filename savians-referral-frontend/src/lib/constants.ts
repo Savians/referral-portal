@@ -51,6 +51,7 @@ export const REFERRAL_STATUS_LABELS: Record<ReferralStatus, string> = {
   CLIENT_AGREEMENT_SIGNED: 'Agreement Signed',
   PAYMENT_RECEIVED: 'Payment Received',
   ELIGIBLE_FOR_PAYOUT: 'Eligible for Payout',
+  COMMISSION_PAID: 'Commission Paid',
   DUPLICATE_FLAGGED: 'Duplicate Flagged',
   LOST: 'Lost',
 };
@@ -64,6 +65,7 @@ export const REFERRAL_STATUS_COLORS: Record<ReferralStatus, string> = {
   CLIENT_AGREEMENT_SIGNED: 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 border-indigo-200 dark:border-indigo-700',
   PAYMENT_RECEIVED: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-700',
   ELIGIBLE_FOR_PAYOUT: 'bg-teal-100 dark:bg-teal-500 text-teal-800 dark:text-white border-teal-200 dark:border-teal-400',
+  COMMISSION_PAID: 'bg-green-50 dark:bg-green-800 text-green-900 dark:text-green-100 border-green-300 dark:border-green-600',
   DUPLICATE_FLAGGED: 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 border-orange-200 dark:border-orange-700',
   LOST: 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-600',
 };

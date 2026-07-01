@@ -35,6 +35,7 @@ const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
   { value: 'CLIENT_AGREEMENT_SIGNED', label: 'Agreement Signed' },
   { value: 'PAYMENT_RECEIVED', label: 'Payment Received' },
   { value: 'ELIGIBLE_FOR_PAYOUT', label: 'Eligible for Payout' },
+  { value: 'COMMISSION_PAID', label: 'Commission Paid' },
   { value: 'DUPLICATE_FLAGGED', label: 'Duplicate' },
   { value: 'LOST', label: 'Lost' },
 ];

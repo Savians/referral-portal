@@ -24,6 +24,7 @@ export type ReferralStatus =
   | 'CLIENT_AGREEMENT_SIGNED'
   | 'PAYMENT_RECEIVED'
   | 'ELIGIBLE_FOR_PAYOUT'
+  | 'COMMISSION_PAID'
   | 'DUPLICATE_FLAGGED'
   | 'LOST';
 
@@ -42,6 +43,7 @@ export const REFERRAL_STATUS_LABELS: Record<ReferralStatus, string> = {
   CLIENT_AGREEMENT_SIGNED: 'Agreement Signed',
   PAYMENT_RECEIVED: 'Payment Received',
   ELIGIBLE_FOR_PAYOUT: 'Eligible for Payout',
+  COMMISSION_PAID: 'Commission Paid',
   DUPLICATE_FLAGGED: 'Duplicate Flagged',
   LOST: 'Lost',
 };
