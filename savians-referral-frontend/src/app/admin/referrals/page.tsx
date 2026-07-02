@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
  * Full referral management with filters
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
@@ -42,7 +42,7 @@ const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
   { value: 'LOST', label: 'Lost' },
 ];
 
-export default function AdminReferralsPage() {
+function AdminReferralsContent() {
   const { user, isLoading: authLoading } = useProtectedRoute(['ADMIN', 'SUPER_ADMIN']);
   const searchParams = useSearchParams();
   const partnerIdFilter = searchParams.get('partnerId');
@@ -293,5 +293,22 @@ export default function AdminReferralsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AdminReferralsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Loading referrals...</p>
+          </div>
+        </div>
+      }
+    >
+      <AdminReferralsContent />
+    </Suspense>
   );
 }
