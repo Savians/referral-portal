@@ -20,6 +20,8 @@ export const dynamic = 'force-dynamic';
  */
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 import { adminService } from '@/services/admin.service';
 import type { PaymentStatus, AdminPayment } from '@/types/api.types';
@@ -34,6 +36,7 @@ import {
   Award,
   AlertTriangle,
   RefreshCw,
+  ArrowLeft,
 } from 'lucide-react';
 import { PAYMENT_STATUS_COLORS, PAYMENT_STATUS_LABELS } from '@/lib/constants';
 import TabNavigation, { type Tab } from '@/components/TabNavigation';
@@ -65,10 +68,14 @@ export default function AdminPaymentsPage() {
     'SUPER_ADMIN',
   ]);
 
+  const searchParams = useSearchParams();
+  const partnerIdFilter = searchParams.get('partnerId');
+
   // Data state
   const [payments, setPayments] = useState<AdminPayment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [partnerName, setPartnerName] = useState<string>('');
 
   // Filter state
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('PENDING');
@@ -87,15 +94,27 @@ export default function AdminPaymentsPage() {
     if (!authLoading && user) {
       loadPayments();
     }
-  }, [authLoading, user, statusFilter]);
+  }, [authLoading, user, statusFilter, partnerIdFilter]);
 
   const loadPayments = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const params = statusFilter !== 'ALL' ? { status: statusFilter } : {};
+      const params: any = {};
+      if (statusFilter !== 'ALL') {
+        params.status = statusFilter;
+      }
+      if (partnerIdFilter) {
+        params.partnerId = partnerIdFilter;
+      }
       const response = await adminService.listPayments(params);
-      setPayments(response.data || []);
+      const loadedPayments = response.data || [];
+      setPayments(loadedPayments);
+      
+      // Set partner name from first payment if filtering by partner
+      if (partnerIdFilter && loadedPayments.length > 0 && loadedPayments[0].partner) {
+        setPartnerName(loadedPayments[0].partner.fullName);
+      }
     } catch (error: any) {
       console.error('Failed to load payments:', error);
       const errorMessage = error.response?.data?.error?.message || 'Failed to load payments';
@@ -249,8 +268,23 @@ export default function AdminPaymentsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">Payment Management</h1>
-          <p className="text-gray-600">Manage partner payments and payouts</p>
+          {partnerIdFilter && (
+            <Link
+              href="/admin/partners"
+              className="text-[#14235C] hover:underline flex items-center gap-2 mb-4"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Partners
+            </Link>
+          )}
+          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">
+            {partnerIdFilter ? `Payments - ${partnerName || partnerIdFilter}` : 'Payment Management'}
+          </h1>
+          <p className="text-gray-600">
+            {partnerIdFilter
+              ? `Viewing payments for ${partnerName || partnerIdFilter}`
+              : 'Manage partner payments and payouts'}
+          </p>
         </div>
 
         {/* Summary Cards */}

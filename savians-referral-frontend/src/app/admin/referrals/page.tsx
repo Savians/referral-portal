@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 import { adminService } from '@/services/admin.service';
 import type { ReferralStatus } from '@/types/api.types';
@@ -20,6 +21,7 @@ import {
   Search,
   ExternalLink,
   AlertCircle,
+  ArrowLeft,
 } from 'lucide-react';
 import { REFERRAL_STATUS_COLORS } from '@/lib/constants';
 
@@ -42,23 +44,38 @@ const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
 
 export default function AdminReferralsPage() {
   const { user, isLoading: authLoading } = useProtectedRoute(['ADMIN', 'SUPER_ADMIN']);
+  const searchParams = useSearchParams();
+  const partnerIdFilter = searchParams.get('partnerId');
   const [referrals, setReferrals] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [partnerName, setPartnerName] = useState<string>('');
 
   useEffect(() => {
     if (!authLoading && user) {
       loadReferrals();
     }
-  }, [authLoading, user, statusFilter]);
+  }, [authLoading, user, statusFilter, partnerIdFilter]);
 
   const loadReferrals = async () => {
     setIsLoading(true);
     try {
-      const params = statusFilter !== 'ALL' ? { status: statusFilter } : {};
+      const params: any = {};
+      if (statusFilter !== 'ALL') {
+        params.status = statusFilter;
+      }
+      if (partnerIdFilter) {
+        params.partnerId = partnerIdFilter;
+      }
       const response = await adminService.listReferrals(params);
-      setReferrals(response.data || []);
+      const loadedReferrals = response.data || [];
+      setReferrals(loadedReferrals);
+      
+      // Set partner name from first referral if filtering by partner
+      if (partnerIdFilter && loadedReferrals.length > 0 && loadedReferrals[0].partner) {
+        setPartnerName(loadedReferrals[0].partner.fullName);
+      }
     } catch (error) {
       console.error('Failed to load referrals:', error);
       toast.error('Failed to load referrals');
@@ -95,9 +112,22 @@ export default function AdminReferralsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">Referrals</h1>
+          {partnerIdFilter && (
+            <Link
+              href="/admin/partners"
+              className="text-[#14235C] hover:underline flex items-center gap-2 mb-4"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Partners
+            </Link>
+          )}
+          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">
+            {partnerIdFilter ? `Referrals - ${partnerName || partnerIdFilter}` : 'Referrals'}
+          </h1>
           <p className="text-gray-600">
-            Manage and track all referrals
+            {partnerIdFilter 
+              ? `Viewing referrals for ${partnerName || partnerIdFilter}`
+              : 'Manage and track all referrals'}
           </p>
         </div>
 
