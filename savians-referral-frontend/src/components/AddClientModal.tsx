@@ -26,6 +26,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
     estimatedIncome: '',
     serviceNeeded: '',
     additionalNotes: '',
+    referralYear: new Date().getFullYear(),
     consentGiven: false,
     sendEmailToClient: true, // Default to sending email
   });
@@ -59,6 +60,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
         estimatedIncome: formData.estimatedIncome || undefined,
         serviceNeeded: formData.serviceNeeded || undefined,
         additionalNotes: formData.additionalNotes || undefined,
+        referralYear: formData.referralYear,
         consentGiven: formData.consentGiven,
         sendEmailToClient: formData.sendEmailToClient,
       });
@@ -73,6 +75,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
         estimatedIncome: '',
         serviceNeeded: '',
         additionalNotes: '',
+        referralYear: new Date().getFullYear(),
         consentGiven: false,
         sendEmailToClient: true,
       });
@@ -199,6 +202,32 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
               placeholder="Tax planning, bookkeeping, etc."
             />
+          </div>
+
+          {/* Referral Year */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Referral Year
+            </label>
+            <select
+              value={formData.referralYear}
+              onChange={(e) =>
+                setFormData({ ...formData, referralYear: parseInt(e.target.value) })
+              }
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+            >
+              {[...Array(5)].map((_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Select the year this referral should be counted towards
+            </p>
           </div>
 
           {/* Additional Notes */}
