@@ -378,14 +378,14 @@ export default function AdminPartnerDetailPage() {
               <h2 className="text-lg font-bold text-[#2C2C2C] mb-4">Quick Actions</h2>
               <div className="space-y-3">
                 <Link
-                  href={`/admin/referrals?partnerId=${partner.partnerId}`}
+                  href={`/admin/referrals?partnerId=${partner.id}`}
                   className="btn-primary w-full block text-center"
                 >
                   <TrendingUp className="w-4 h-4 inline mr-2" />
                   View Referrals
                 </Link>
                 <Link
-                  href={`/admin/payments?partnerId=${partner.partnerId}`}
+                  href={`/admin/payments?partnerId=${partner.id}`}
                   className="btn-outline w-full block text-center"
                 >
                   <DollarSign className="w-4 h-4 inline mr-2" />
