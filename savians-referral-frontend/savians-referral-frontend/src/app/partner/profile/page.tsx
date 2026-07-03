@@ -132,13 +132,21 @@ export default function PartnerProfilePage() {
       if (user?.partner?.hasAcceptedAgreement) {
         setIsLoadingAgreement(true);
         try {
+          console.log('🔍 Fetching agreement data...');
           const response = await partnerService.getCurrentAgreement();
+          console.log('📦 Agreement API Response:', response);
+          
           // Response structure: { success: true, data: { latestAcceptedAgreement: {...} } }
           if (response.data?.latestAcceptedAgreement) {
+            console.log('✅ Agreement data found:', response.data.latestAcceptedAgreement);
             setAgreementData(response.data.latestAcceptedAgreement);
+          } else {
+            console.warn('⚠️ No latestAcceptedAgreement in response:', response);
+            toast.error('Failed to load agreement information');
           }
         } catch (error) {
-          console.error('Failed to fetch agreement data:', error);
+          console.error('❌ Failed to fetch agreement data:', error);
+          toast.error('Failed to load agreement information');
         } finally {
           setIsLoadingAgreement(false);
         }
