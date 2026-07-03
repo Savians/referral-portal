@@ -28,6 +28,9 @@ import {
   Calendar,
   CheckCircle,
   Loader2,
+  FileText,
+  Download,
+  ExternalLink,
 } from 'lucide-react';
 import { PARTNER_TYPES, US_STATES, PHONE_REGEX } from '@/lib/constants';
 
@@ -63,6 +66,13 @@ export default function PartnerProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [zipCodeData, setZipCodeData] = useState<ZipCodeData | null>(null);
   const [isLookingUpZip, setIsLookingUpZip] = useState(false);
+  const [isLoadingAgreement, setIsLoadingAgreement] = useState(false);
+  const [agreementData, setAgreementData] = useState<{
+    id: string;
+    version: string;
+    acceptedAt: string;
+    hasPdf: boolean;
+  } | null>(null);
 
   const {
     register,
@@ -115,6 +125,27 @@ export default function PartnerProfilePage() {
       setZipCodeData(null);
     }
   }, [zipCode]);
+
+  // Fetch agreement data if partner has accepted agreement
+  useEffect(() => {
+    const fetchAgreementData = async () => {
+      if (user?.partner?.hasAcceptedAgreement) {
+        setIsLoadingAgreement(true);
+        try {
+          const response = await partnerService.getCurrentAgreement();
+          if (response.latestAcceptedAgreement) {
+            setAgreementData(response.latestAcceptedAgreement);
+          }
+        } catch (error) {
+          console.error('Failed to fetch agreement data:', error);
+        } finally {
+          setIsLoadingAgreement(false);
+        }
+      }
+    };
+
+    fetchAgreementData();
+  }, [user?.partner?.hasAcceptedAgreement]);
 
   useEffect(() => {
     if (user && user.partner) {
@@ -202,6 +233,44 @@ export default function PartnerProfilePage() {
     }
   };
 
+  const handleViewAgreement = async () => {
+    if (!agreementData?.id) {
+      toast.error('Agreement not found');
+      return;
+    }
+
+    try {
+      const response = await partnerService.getAgreementPdf(agreementData.id);
+      // Open PDF in new tab
+      window.open(response.downloadUrl, '_blank');
+    } catch (error: any) {
+      console.error('Failed to fetch agreement PDF:', error);
+      toast.error(error.response?.data?.error?.message || 'Failed to load agreement');
+    }
+  };
+
+  const handleDownloadAgreement = async () => {
+    if (!agreementData?.id) {
+      toast.error('Agreement not found');
+      return;
+    }
+
+    try {
+      const response = await partnerService.getAgreementPdf(agreementData.id);
+      // Create a temporary link and trigger download
+      const link = document.createElement('a');
+      link.href = response.downloadUrl;
+      link.download = response.fileName || `savians-agreement-v${agreementData.version}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success('Agreement download started');
+    } catch (error: any) {
+      console.error('Failed to download agreement:', error);
+      toast.error(error.response?.data?.error?.message || 'Failed to download agreement');
+    }
+  };
+
   if (authLoading || !user) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
@@ -277,6 +346,81 @@ export default function PartnerProfilePage() {
             </div>
           </div>
         </div>
+
+        {/* Agreement Section */}
+        {user.partner?.hasAcceptedAgreement && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+            <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
+              <FileText className="w-5 h-5" />
+              Partner Agreement
+            </h2>
+            
+            {isLoadingAgreement ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="w-8 h-8 animate-spin text-[#14235C] dark:text-blue-500" />
+              </div>
+            ) : agreementData ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
+                      Agreement Version
+                    </label>
+                    <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                      v{agreementData.version}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1 flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      Accepted On
+                    </label>
+                    <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                      {new Date(agreementData.acceptedAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                </div>
+
+                {agreementData.hasPdf && (
+                  <div className="flex items-center gap-3 pt-2">
+                    <button
+                      onClick={handleViewAgreement}
+                      className="btn-primary flex items-center gap-2"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      View Agreement
+                    </button>
+                    <button
+                      onClick={handleDownloadAgreement}
+                      className="btn-outline flex items-center gap-2"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download PDF
+                    </button>
+                  </div>
+                )}
+
+                {!agreementData.hasPdf && (
+                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                      Your signed agreement is being processed. Please check back later or contact support if this persists.
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  No agreement information available.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Editable Profile Form */}
         <form onSubmit={handleSubmit(onSubmit)}>

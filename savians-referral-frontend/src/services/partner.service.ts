@@ -118,4 +118,22 @@ export const partnerService = {
   listDocuments: async () => {
     return api.get('/api/partner/documents');
   },
+
+  /**
+   * GET /api/partner/agreement/current
+   * Get current agreement status and details
+   */
+  getCurrentAgreement: async () => {
+    const response = await api.get('/api/partner/agreement/current');
+    return response.data;
+  },
+
+  /**
+   * GET /api/partner/agreement/pdf/{agreementId}
+   * Get signed agreement PDF download URL
+   */
+  getAgreementPdf: async (agreementId: string) => {
+    const response = await api.get(`/api/partner/agreement/pdf/${agreementId}`);
+    return response.data;
+  },
 };
