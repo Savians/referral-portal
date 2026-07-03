@@ -258,6 +258,9 @@ export default function PartnerReferralsPage() {
                         Status
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        Year
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Source
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -300,6 +303,11 @@ export default function PartnerReferralsPage() {
                             }`}
                           >
                             {referral.statusLabel}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="text-sm font-semibold text-[#14235C] dark:text-blue-400">
+                            {referral.referralYear || new Date(referral.createdAt).getFullYear()}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

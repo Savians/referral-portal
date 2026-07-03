@@ -249,6 +249,9 @@ function AdminReferralsContent() {
                       Partner
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      Year
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                       Status
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
@@ -285,6 +288,11 @@ function AdminReferralsContent() {
                           <p className="text-sm text-gray-900">{referral.partner?.fullName}</p>
                           <p className="text-xs text-gray-500">{referral.partner?.partnerId}</p>
                         </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm font-semibold text-[#14235C]">
+                          {referral.referralYear || new Date(referral.createdAt).getFullYear()}
+                        </span>
                       </td>
                       <td className="px-6 py-4">
                         <span
