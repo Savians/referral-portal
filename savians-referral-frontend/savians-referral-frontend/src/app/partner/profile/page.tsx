@@ -265,11 +265,16 @@ export default function PartnerProfilePage() {
       const response = await partnerService.getAgreementPdf(agreementData.id);
       console.log('📄 PDF Response:', response);
       
-      if (response.downloadUrl) {
+      // Use viewUrl for modal display (inline)
+      if (response.viewUrl) {
+        setPdfUrl(response.viewUrl);
+        setIsPdfModalOpen(true);
+      } else if (response.downloadUrl) {
+        // Fallback to downloadUrl if viewUrl not available
         setPdfUrl(response.downloadUrl);
         setIsPdfModalOpen(true);
       } else {
-        console.error('No downloadUrl in response:', response);
+        console.error('No viewUrl or downloadUrl in response:', response);
         toast.error('Agreement PDF URL not available');
       }
     } catch (error: any) {
@@ -288,6 +293,7 @@ export default function PartnerProfilePage() {
       const response = await partnerService.getAgreementPdf(agreementData.id);
       console.log('📥 Download Response:', response);
       
+      // Use downloadUrl for file download (attachment)
       if (response.downloadUrl) {
         const link = document.createElement('a');
         link.href = response.downloadUrl;
