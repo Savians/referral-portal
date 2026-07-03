@@ -281,34 +281,6 @@ export default function AdminPartnerDetailPage() {
                 </div>
               </div>
             )}
-
-            {/* Payment Information */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-bold text-[#2C2C2C] mb-4 flex items-center gap-2">
-                <DollarSign className="w-5 h-5" />
-                Payment Information
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {partner.paymentMethod && (
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1">Payment Method</p>
-                    <p className="text-sm text-gray-900">{partner.paymentMethod}</p>
-                  </div>
-                )}
-                {partner.legalName && (
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1">Legal Name</p>
-                    <p className="text-sm text-gray-900">{partner.legalName}</p>
-                  </div>
-                )}
-                {partner.w9Status && (
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1">W-9 Status</p>
-                    <p className="text-sm text-gray-900">{partner.w9Status}</p>
-                  </div>
-                )}
-              </div>
-            </div>
           </div>
 
           {/* Sidebar */}
