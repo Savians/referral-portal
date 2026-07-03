@@ -257,7 +257,7 @@ export default function AdminReferralDetailPage() {
                   ) : (
                     <>
                       <CheckCircle className="w-4 h-4" />
-                      Update Status
+                      Confirm Changes
                     </>
                   )}
                 </button>

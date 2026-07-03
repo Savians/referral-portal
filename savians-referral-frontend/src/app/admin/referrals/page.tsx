@@ -264,7 +264,11 @@ function AdminReferralsContent() {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {filteredReferrals.map((referral) => (
-                    <tr key={referral.id} className="hover:bg-gray-50">
+                    <tr 
+                      key={referral.id} 
+                      onClick={() => window.location.href = `/admin/referrals/${referral.referralId}`}
+                      className="hover:bg-gray-50 cursor-pointer"
+                    >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <span className="font-mono text-sm font-semibold text-[#2C2C2C]">
@@ -311,6 +315,7 @@ function AdminReferralsContent() {
                       <td className="px-6 py-4">
                         <Link
                           href={`/admin/referrals/${referral.referralId}`}
+                          onClick={(e) => e.stopPropagation()}
                           className="text-[#14235C] hover:underline text-sm font-medium inline-flex items-center gap-1"
                         >
                           View Details
