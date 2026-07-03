@@ -77,8 +77,8 @@ function AdminPaymentsContent() {
   const [error, setError] = useState<string | null>(null);
   const [partnerName, setPartnerName] = useState<string>('');
 
-  // Filter state
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('PENDING');
+  // Filter state - Default to 'ALL' when filtering by partner, otherwise 'PENDING'
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>(partnerIdFilter ? 'ALL' : 'PENDING');
   const [searchQuery, setSearchQuery] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
