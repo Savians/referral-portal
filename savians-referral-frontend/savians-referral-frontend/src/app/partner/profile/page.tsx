@@ -133,36 +133,18 @@ export default function PartnerProfilePage() {
   useEffect(() => {
     const fetchAgreementData = async () => {
       if (user?.partner?.hasAcceptedAgreement) {
-        console.log('🚀 Starting agreement fetch, hasAcceptedAgreement:', user.partner.hasAcceptedAgreement);
         setIsLoadingAgreement(true);
         try {
-          console.log('📡 Calling partnerService.getCurrentAgreement()...');
           const response = await partnerService.getCurrentAgreement();
-          console.log('📦 Raw response received:', response);
-          console.log('📦 Response type:', typeof response);
-          console.log('📦 Response keys:', response ? Object.keys(response) : 'null');
           
           if (response && response.latestAcceptedAgreement) {
-            console.log('✅ Found latestAcceptedAgreement:', response.latestAcceptedAgreement);
             setAgreementData(response.latestAcceptedAgreement);
-          } else if (response) {
-            console.error('⚠️ Response exists but no latestAcceptedAgreement. Full response:', JSON.stringify(response, null, 2));
-          } else {
-            console.error('❌ Response is null or undefined');
           }
         } catch (error: any) {
-          console.error('❌ Error caught:', error);
-          console.error('❌ Error type:', typeof error);
-          console.error('❌ Error keys:', error ? Object.keys(error) : 'null');
-          console.error('❌ Error.message:', error?.message);
-          console.error('❌ Error.code:', error?.code);
-          console.error('❌ Error stack:', error?.stack);
+          console.error('Failed to fetch agreement data:', error);
         } finally {
           setIsLoadingAgreement(false);
-          console.log('🏁 Agreement fetch completed');
         }
-      } else {
-        console.log('⏭️ Skipping agreement fetch - hasAcceptedAgreement is false');
       }
     };
 
@@ -263,7 +245,6 @@ export default function PartnerProfilePage() {
 
     try {
       const response = await partnerService.getAgreementPdf(agreementData.id);
-      console.log('📄 PDF Response:', response);
       
       // Use viewUrl for modal display (inline)
       if (response.viewUrl) {
@@ -274,7 +255,6 @@ export default function PartnerProfilePage() {
         setPdfUrl(response.downloadUrl);
         setIsPdfModalOpen(true);
       } else {
-        console.error('No viewUrl or downloadUrl in response:', response);
         toast.error('Agreement PDF URL not available');
       }
     } catch (error: any) {
@@ -291,7 +271,6 @@ export default function PartnerProfilePage() {
 
     try {
       const response = await partnerService.getAgreementPdf(agreementData.id);
-      console.log('📥 Download Response:', response);
       
       // Use downloadUrl for file download (attachment)
       if (response.downloadUrl) {
@@ -303,7 +282,6 @@ export default function PartnerProfilePage() {
         document.body.removeChild(link);
         toast.success('Agreement download started');
       } else {
-        console.error('No downloadUrl in response:', response);
         toast.error('Agreement PDF URL not available');
       }
     } catch (error: any) {
