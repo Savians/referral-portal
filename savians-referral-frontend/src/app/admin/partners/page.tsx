@@ -415,7 +415,8 @@ export default function AdminPartnersPage() {
                     return (
                       <tr
                         key={partner.id}
-                        className={`hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                        onClick={() => window.location.href = `/admin/partners/${partner.id}`}
+                        className={`hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer ${
                           isDeleted ? 'bg-red-50 dark:bg-red-900/20' : ''
                         }`}
                       >
@@ -504,9 +505,10 @@ export default function AdminPartnersPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-4">
                             <Link
                               href={`/admin/partners/${partner.id}`}
+                              onClick={(e) => e.stopPropagation()}
                               className="text-[#14235C] dark:text-blue-400 hover:underline text-sm font-medium"
                             >
                               View
@@ -514,7 +516,10 @@ export default function AdminPartnersPage() {
                             {isDeleted ? (
                               hoursRemaining > 0 ? (
                                 <button
-                                  onClick={() => setRestoreModal({ partner })}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setRestoreModal({ partner });
+                                  }}
                                   className="flex items-center gap-1 px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
                                   title={`Restore (${hoursRemaining}h remaining)`}
                                 >
@@ -528,12 +533,14 @@ export default function AdminPartnersPage() {
                               )
                             ) : (
                               <button
-                                onClick={() => setDeleteModal({ partner })}
-                                className="flex items-center gap-1 px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setDeleteModal({ partner });
+                                }}
+                                className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                                 title="Delete partner"
                               >
-                                <Trash2 className="w-3 h-3" />
-                                Delete
+                                <Trash2 className="w-4 h-4" />
                               </button>
                             )}
                           </div>
