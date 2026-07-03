@@ -49,14 +49,19 @@ function AdminReferralsContent() {
   const [referrals, setReferrals] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
+  const [yearFilter, setYearFilter] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
   const [partnerName, setPartnerName] = useState<string>('');
+
+  // Generate year options (2025 to current year)
+  const currentYear = new Date().getFullYear();
+  const yearOptions = Array.from({ length: currentYear - 2024 }, (_, i) => 2025 + i).reverse();
 
   useEffect(() => {
     if (!authLoading && user) {
       loadReferrals();
     }
-  }, [authLoading, user, statusFilter, partnerIdFilter]);
+  }, [authLoading, user, statusFilter, yearFilter, partnerIdFilter]);
 
   const loadReferrals = async () => {
     setIsLoading(true);
@@ -64,6 +69,9 @@ function AdminReferralsContent() {
       const params: any = {};
       if (statusFilter !== 'ALL') {
         params.status = statusFilter;
+      }
+      if (yearFilter) {
+        params.year = yearFilter;
       }
       if (partnerIdFilter) {
         params.partnerId = partnerIdFilter;
@@ -165,6 +173,23 @@ function AdminReferralsContent() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Year Filter */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">Year:</span>
+              <select
+                value={yearFilter}
+                onChange={(e) => setYearFilter(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent text-sm"
+              >
+                <option value="">All Years</option>
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>

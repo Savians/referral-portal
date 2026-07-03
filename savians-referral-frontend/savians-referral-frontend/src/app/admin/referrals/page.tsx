@@ -8,8 +8,9 @@ export const dynamic = 'force-dynamic';
  * Full referral management with filters
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 import { adminService } from '@/services/admin.service';
 import type { ReferralStatus } from '@/types/api.types';
@@ -20,6 +21,7 @@ import {
   Search,
   ExternalLink,
   AlertCircle,
+  ArrowLeft,
 } from 'lucide-react';
 import { REFERRAL_STATUS_COLORS } from '@/lib/constants';
 
@@ -35,29 +37,53 @@ const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
   { value: 'CLIENT_AGREEMENT_SIGNED', label: 'Agreement Signed' },
   { value: 'PAYMENT_RECEIVED', label: 'Payment Received' },
   { value: 'ELIGIBLE_FOR_PAYOUT', label: 'Eligible for Payout' },
+  { value: 'COMMISSION_PAID', label: 'Commission Paid' },
   { value: 'DUPLICATE_FLAGGED', label: 'Duplicate' },
   { value: 'LOST', label: 'Lost' },
 ];
 
-export default function AdminReferralsPage() {
+function AdminReferralsContent() {
   const { user, isLoading: authLoading } = useProtectedRoute(['ADMIN', 'SUPER_ADMIN']);
+  const searchParams = useSearchParams();
+  const partnerIdFilter = searchParams.get('partnerId');
   const [referrals, setReferrals] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
+  const [yearFilter, setYearFilter] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [partnerName, setPartnerName] = useState<string>('');
+
+  // Generate year options (2025 to current year)
+  const currentYear = new Date().getFullYear();
+  const yearOptions = Array.from({ length: currentYear - 2024 }, (_, i) => 2025 + i).reverse();
 
   useEffect(() => {
     if (!authLoading && user) {
       loadReferrals();
     }
-  }, [authLoading, user, statusFilter]);
+  }, [authLoading, user, statusFilter, yearFilter, partnerIdFilter]);
 
   const loadReferrals = async () => {
     setIsLoading(true);
     try {
-      const params = statusFilter !== 'ALL' ? { status: statusFilter } : {};
+      const params: any = {};
+      if (statusFilter !== 'ALL') {
+        params.status = statusFilter;
+      }
+      if (yearFilter) {
+        params.year = yearFilter;
+      }
+      if (partnerIdFilter) {
+        params.partnerId = partnerIdFilter;
+      }
       const response = await adminService.listReferrals(params);
-      setReferrals(response.data || []);
+      const loadedReferrals = response.data || [];
+      setReferrals(loadedReferrals);
+      
+      // Set partner name from first referral if filtering by partner
+      if (partnerIdFilter && loadedReferrals.length > 0 && loadedReferrals[0].partner) {
+        setPartnerName(loadedReferrals[0].partner.fullName);
+      }
     } catch (error) {
       console.error('Failed to load referrals:', error);
       toast.error('Failed to load referrals');
@@ -94,9 +120,22 @@ export default function AdminReferralsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">Referrals</h1>
+          {partnerIdFilter && (
+            <Link
+              href="/admin/partners"
+              className="text-[#14235C] hover:underline flex items-center gap-2 mb-4"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Partners
+            </Link>
+          )}
+          <h1 className="text-3xl font-bold text-[#2C2C2C] mb-2">
+            {partnerIdFilter ? `Referrals - ${partnerName || partnerIdFilter}` : 'Referrals'}
+          </h1>
           <p className="text-gray-600">
-            Manage and track all referrals
+            {partnerIdFilter 
+              ? `Viewing referrals for ${partnerName || partnerIdFilter}`
+              : 'Manage and track all referrals'}
           </p>
         </div>
 
@@ -134,6 +173,23 @@ export default function AdminReferralsPage() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Year Filter */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">Year:</span>
+              <select
+                value={yearFilter}
+                onChange={(e) => setYearFilter(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent text-sm"
+              >
+                <option value="">All Years</option>
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -262,5 +318,22 @@ export default function AdminReferralsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AdminReferralsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-[#14235C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Loading referrals...</p>
+          </div>
+        </div>
+      }
+    >
+      <AdminReferralsContent />
+    </Suspense>
   );
 }

@@ -39,17 +39,22 @@ export default function PartnerReferralsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('');
+  const [yearFilter, setYearFilter] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [resendingEmailFor, setResendingEmailFor] = useState<string | null>(null);
   const [emailSentFor, setEmailSentFor] = useState<string | null>(null);
 
+  // Generate year options (2025 to current year)
+  const currentYear = new Date().getFullYear();
+  const yearOptions = Array.from({ length: currentYear - 2024 }, (_, i) => 2025 + i).reverse();
+
   useEffect(() => {
     if (!authLoading && user) {
       loadReferrals();
     }
-  }, [authLoading, user, currentPage, statusFilter, sortBy, sortOrder]);
+  }, [authLoading, user, currentPage, statusFilter, yearFilter, sortBy, sortOrder]);
 
   const loadReferrals = async () => {
     setIsLoading(true);
@@ -60,6 +65,7 @@ export default function PartnerReferralsPage() {
         sort: sortBy,
         order: sortOrder,
         status: statusFilter || undefined,
+        year: yearFilter || undefined,
       });
       setReferrals(data);
     } catch (error) {
@@ -157,6 +163,25 @@ export default function PartnerReferralsPage() {
                 {Object.entries(REFERRAL_STATUS_LABELS).map(([value, label]) => (
                   <option key={value} value={value}>
                     {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Year Filter */}
+            <div className="flex items-center gap-2">
+              <select
+                value={yearFilter}
+                onChange={(e) => {
+                  setYearFilter(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">All Years</option>
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
                   </option>
                 ))}
               </select>
