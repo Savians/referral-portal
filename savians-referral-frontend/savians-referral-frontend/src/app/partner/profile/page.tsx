@@ -130,25 +130,36 @@ export default function PartnerProfilePage() {
   useEffect(() => {
     const fetchAgreementData = async () => {
       if (user?.partner?.hasAcceptedAgreement) {
+        console.log('🚀 Starting agreement fetch, hasAcceptedAgreement:', user.partner.hasAcceptedAgreement);
         setIsLoadingAgreement(true);
         try {
+          console.log('📡 Calling partnerService.getCurrentAgreement()...');
           const response = await partnerService.getCurrentAgreement();
-          console.log('📦 Agreement API Response:', response);
+          console.log('📦 Raw response received:', response);
+          console.log('📦 Response type:', typeof response);
+          console.log('📦 Response keys:', response ? Object.keys(response) : 'null');
           
-          // The API interceptor unwraps response.data twice:
-          // Backend: { success: true, data: { latestAcceptedAgreement: {...} } }
-          // After interceptor: { latestAcceptedAgreement: {...} }
-          if (response.latestAcceptedAgreement) {
-            console.log('✅ Agreement data found:', response.latestAcceptedAgreement);
+          if (response && response.latestAcceptedAgreement) {
+            console.log('✅ Found latestAcceptedAgreement:', response.latestAcceptedAgreement);
             setAgreementData(response.latestAcceptedAgreement);
+          } else if (response) {
+            console.error('⚠️ Response exists but no latestAcceptedAgreement. Full response:', JSON.stringify(response, null, 2));
           } else {
-            console.warn('⚠️ No latestAcceptedAgreement in response');
+            console.error('❌ Response is null or undefined');
           }
-        } catch (error) {
-          console.error('❌ Failed to fetch agreement data:', error);
+        } catch (error: any) {
+          console.error('❌ Error caught:', error);
+          console.error('❌ Error type:', typeof error);
+          console.error('❌ Error keys:', error ? Object.keys(error) : 'null');
+          console.error('❌ Error.message:', error?.message);
+          console.error('❌ Error.code:', error?.code);
+          console.error('❌ Error stack:', error?.stack);
         } finally {
           setIsLoadingAgreement(false);
+          console.log('🏁 Agreement fetch completed');
         }
+      } else {
+        console.log('⏭️ Skipping agreement fetch - hasAcceptedAgreement is false');
       }
     };
 
