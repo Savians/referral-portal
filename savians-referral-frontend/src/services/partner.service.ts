@@ -124,7 +124,7 @@ export const partnerService = {
    * Get current agreement status and details
    */
   getCurrentAgreement: async () => {
-    const response = await api.get('/api/partner/agreement/current');
+    const response = await api.get(`/api/partner/agreement/current?t=${Date.now()}`);
     return response.data;
   },
 
@@ -133,7 +133,7 @@ export const partnerService = {
    * Get signed agreement PDF download URL
    */
   getAgreementPdf: async (agreementId: string) => {
-    const response = await api.get(`/api/partner/agreement/pdf/${agreementId}`);
+    const response = await api.get(`/api/partner/agreement/pdf/${agreementId}?t=${Date.now()}`);
     return response.data;
   },
 };
