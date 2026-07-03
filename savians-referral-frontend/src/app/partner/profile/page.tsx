@@ -136,10 +136,14 @@ export default function PartnerProfilePage() {
           const response = await partnerService.getCurrentAgreement();
           console.log('📦 Agreement API Response:', response);
           
-          // Response structure: { success: true, data: { latestAcceptedAgreement: {...} } }
+          // The API interceptor unwraps response.data, so we get the data directly
+          // Response structure: { currentVersion: '2.0', latestAcceptedAgreement: {...}, ... }
           if (response.data?.latestAcceptedAgreement) {
-            console.log('✅ Agreement data found:', response.data.latestAcceptedAgreement);
+            console.log('✅ Agreement data found (nested):', response.data.latestAcceptedAgreement);
             setAgreementData(response.data.latestAcceptedAgreement);
+          } else if (response.latestAcceptedAgreement) {
+            console.log('✅ Agreement data found (direct):', response.latestAcceptedAgreement);
+            setAgreementData(response.latestAcceptedAgreement);
           } else {
             console.warn('⚠️ No latestAcceptedAgreement in response:', response);
             toast.error('Failed to load agreement information');
@@ -250,11 +254,16 @@ export default function PartnerProfilePage() {
 
     try {
       const response = await partnerService.getAgreementPdf(agreementData.id);
-      // Response structure: { success: true, data: { downloadUrl: '...', ... } }
-      if (response.data?.downloadUrl) {
+      console.log('📄 PDF Response:', response);
+      
+      // The API interceptor unwraps response.data, so check both levels
+      const downloadUrl = response.data?.downloadUrl || response.downloadUrl;
+      
+      if (downloadUrl) {
         // Open PDF in new tab
-        window.open(response.data.downloadUrl, '_blank');
+        window.open(downloadUrl, '_blank');
       } else {
+        console.error('No downloadUrl in response:', response);
         toast.error('Agreement PDF URL not available');
       }
     } catch (error: any) {
@@ -271,17 +280,23 @@ export default function PartnerProfilePage() {
 
     try {
       const response = await partnerService.getAgreementPdf(agreementData.id);
-      // Response structure: { success: true, data: { downloadUrl: '...', fileName: '...', ... } }
-      if (response.data?.downloadUrl) {
+      console.log('📥 Download Response:', response);
+      
+      // The API interceptor unwraps response.data, so check both levels
+      const downloadUrl = response.data?.downloadUrl || response.downloadUrl;
+      const fileName = response.data?.fileName || response.fileName || `savians-agreement-v${agreementData.version}.pdf`;
+      
+      if (downloadUrl) {
         // Create a temporary link and trigger download
         const link = document.createElement('a');
-        link.href = response.data.downloadUrl;
-        link.download = response.data.fileName || `savians-agreement-v${agreementData.version}.pdf`;
+        link.href = downloadUrl;
+        link.download = fileName;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         toast.success('Agreement download started');
       } else {
+        console.error('No downloadUrl in response:', response);
         toast.error('Agreement PDF URL not available');
       }
     } catch (error: any) {
