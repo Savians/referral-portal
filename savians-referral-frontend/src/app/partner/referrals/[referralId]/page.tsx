@@ -43,6 +43,9 @@ export default function ReferralDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isResending, setIsResending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [isEditingYear, setIsEditingYear] = useState(false);
+  const [editedYear, setEditedYear] = useState<number | null>(null);
+  const [isSavingYear, setIsSavingYear] = useState(false);
 
   useEffect(() => {
     if (!authLoading && user && referralId) {
@@ -55,6 +58,7 @@ export default function ReferralDetailPage() {
     try {
       const data = await partnerService.getReferral(referralId);
       setReferral(data);
+      setEditedYear(data.referralYear || new Date().getFullYear());
     } catch (error: any) {
       console.error('Failed to load referral:', error);
       
@@ -86,6 +90,31 @@ export default function ReferralDetailPage() {
     } finally {
       setIsResending(false);
     }
+  };
+
+  const handleSaveYear = async () => {
+    if (editedYear === null || editedYear === referral?.referralYear) {
+      setIsEditingYear(false);
+      return;
+    }
+
+    setIsSavingYear(true);
+    try {
+      await partnerService.updateReferralYear(referralId, editedYear);
+      toast.success('Referral year updated successfully');
+      setIsEditingYear(false);
+      loadReferral();
+    } catch (error: any) {
+      console.error('Failed to update referral year:', error);
+      toast.error(error.message || 'Failed to update referral year');
+    } finally {
+      setIsSavingYear(false);
+    }
+  };
+
+  const handleCancelEditYear = () => {
+    setEditedYear(referral?.referralYear || new Date().getFullYear());
+    setIsEditingYear(false);
   };
 
   if (authLoading || isLoading) {
@@ -437,6 +466,55 @@ export default function ReferralDetailPage() {
                       <AlertCircle className="w-5 h-5 text-red-500" />
                     )}
                   </span>
+                </div>
+                <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-gray-600 dark:text-gray-400 font-medium">Referral Year</span>
+                    {!isEditingYear && (
+                      <button
+                        onClick={() => setIsEditingYear(true)}
+                        className="text-[#14235C] dark:text-blue-400 hover:underline text-sm"
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
+                  {isEditingYear ? (
+                    <div className="space-y-2">
+                      <select
+                        value={editedYear || new Date().getFullYear()}
+                        onChange={(e) => setEditedYear(parseInt(e.target.value))}
+                        disabled={isSavingYear}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#14235C] dark:focus:ring-[#F4C64E] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                      >
+                        {Array.from({ length: new Date().getFullYear() - 2024 }, (_, i) => 2025 + i).map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={handleSaveYear}
+                          disabled={isSavingYear}
+                          className="flex-1 px-3 py-1.5 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                        >
+                          {isSavingYear ? 'Saving...' : 'Save'}
+                        </button>
+                        <button
+                          onClick={handleCancelEditYear}
+                          disabled={isSavingYear}
+                          className="flex-1 px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                      {referral.referralYear || new Date().getFullYear()}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

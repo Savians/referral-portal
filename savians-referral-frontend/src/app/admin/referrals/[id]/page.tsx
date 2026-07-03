@@ -60,6 +60,9 @@ export default function AdminReferralDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [isEditingYear, setIsEditingYear] = useState(false);
+  const [editedYear, setEditedYear] = useState<number | null>(null);
+  const [isSavingYear, setIsSavingYear] = useState(false);
 
   const {
     register,
@@ -80,6 +83,7 @@ export default function AdminReferralDetailPage() {
     try {
       const data = await adminService.getReferral(referralId);
       setReferral(data);
+      setEditedYear(data.referralYear || new Date().getFullYear());
       reset({
         status: data.status,
         visibleToPartner: true,
@@ -104,6 +108,31 @@ export default function AdminReferralDetailPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSaveYear = async () => {
+    if (editedYear === null || editedYear === referral?.referralYear) {
+      setIsEditingYear(false);
+      return;
+    }
+
+    setIsSavingYear(true);
+    try {
+      await adminService.updateReferralYear(referralId, editedYear);
+      toast.success('Referral year updated successfully');
+      setIsEditingYear(false);
+      loadReferral();
+    } catch (error: any) {
+      console.error('Failed to update referral year:', error);
+      toast.error(error.message || 'Failed to update referral year');
+    } finally {
+      setIsSavingYear(false);
+    }
+  };
+
+  const handleCancelEditYear = () => {
+    setEditedYear(referral?.referralYear || new Date().getFullYear());
+    setIsEditingYear(false);
   };
 
   if (authLoading || isLoading) {
@@ -343,6 +372,55 @@ export default function AdminReferralDetailPage() {
                   <p className="text-sm text-gray-900">
                     {referral.consentGiven ? 'Yes' : 'No'}
                   </p>
+                </div>
+                <div className="pt-3 border-t border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs text-gray-500 font-medium">Referral Year</p>
+                    {!isEditingYear && (
+                      <button
+                        onClick={() => setIsEditingYear(true)}
+                        className="text-[#14235C] hover:underline text-xs"
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
+                  {isEditingYear ? (
+                    <div className="space-y-2">
+                      <select
+                        value={editedYear || new Date().getFullYear()}
+                        onChange={(e) => setEditedYear(parseInt(e.target.value))}
+                        disabled={isSavingYear}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
+                      >
+                        {Array.from({ length: new Date().getFullYear() - 2024 }, (_, i) => 2025 + i).map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={handleSaveYear}
+                          disabled={isSavingYear}
+                          className="flex-1 px-3 py-1.5 bg-[#14235C] text-white rounded-lg hover:bg-[#1a2d75] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                        >
+                          {isSavingYear ? 'Saving...' : 'Save'}
+                        </button>
+                        <button
+                          onClick={handleCancelEditYear}
+                          disabled={isSavingYear}
+                          className="flex-1 px-3 py-1.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-lg font-bold text-[#14235C]">
+                      {referral.referralYear || new Date().getFullYear()}
+                    </p>
+                  )}
                 </div>
                 {referral.ipAddress && (
                   <div>

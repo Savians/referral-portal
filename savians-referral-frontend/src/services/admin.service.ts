@@ -140,6 +140,14 @@ export const adminService = {
   },
 
   /**
+   * PUT /api/admin/referrals/{referralId}/year
+   * Update referral year
+   */
+  updateReferralYear: async (referralId: string, year: number): Promise<void> => {
+    await api.put(`/api/admin/referrals/${referralId}/year`, { year });
+  },
+
+  /**
    * GET /api/payments
    * List all payments
    */

@@ -64,6 +64,14 @@ export const partnerService = {
   },
 
   /**
+   * PUT /api/partner/referrals/{referralId}/year
+   * Update referral year
+   */
+  updateReferralYear: async (referralId: string, year: number): Promise<void> => {
+    await api.put(`/api/partner/referrals/${referralId}/year`, { year });
+  },
+
+  /**
    * GET /api/partner/payments
    * List partner's payments
    */

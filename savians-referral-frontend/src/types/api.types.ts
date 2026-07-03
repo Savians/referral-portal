@@ -228,6 +228,7 @@ export interface PartnerReferralDetail {
   statusLabel: string;
   isDuplicate: boolean;
   submissionSource: SubmissionSource;
+  referralYear: number; // Year this referral counts towards
   createdAt: string;
   updatedAt: string;
   statusHistory: Array<{
@@ -569,6 +570,7 @@ export interface AdminReferralDetail {
   status: ReferralStatus;
   isDuplicate: boolean;
   submissionSource: SubmissionSource;
+  referralYear: number; // Year this referral counts towards
   utmSource: string | null;
   utmMedium: string | null;
   utmCampaign: string | null;

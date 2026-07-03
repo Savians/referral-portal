@@ -24,6 +24,7 @@ export type ReferralStatus =
   | 'CLIENT_AGREEMENT_SIGNED'
   | 'PAYMENT_RECEIVED'
   | 'ELIGIBLE_FOR_PAYOUT'
+  | 'COMMISSION_PAID'
   | 'DUPLICATE_FLAGGED'
   | 'LOST';
 
@@ -42,6 +43,7 @@ export const REFERRAL_STATUS_LABELS: Record<ReferralStatus, string> = {
   CLIENT_AGREEMENT_SIGNED: 'Agreement Signed',
   PAYMENT_RECEIVED: 'Payment Received',
   ELIGIBLE_FOR_PAYOUT: 'Eligible for Payout',
+  COMMISSION_PAID: 'Commission Paid',
   DUPLICATE_FLAGGED: 'Duplicate Flagged',
   LOST: 'Lost',
 };
@@ -55,6 +57,7 @@ export interface CreateApplicationInput {
   fullName: string;
   email: string;
   phone?: string;
+  address?: string;
   companyName?: string;
   businessType?: string;
   message?: string;
@@ -115,7 +118,7 @@ export interface SignupInput {
   inviteToken: string;
   email: string;
   fullName: string;
-  phone?: string;
+  phone: string;
   password: string;
   businessName?: string;
   jobTitle?: string;
@@ -128,6 +131,8 @@ export interface UserProfile {
   fullName: string;
   role: UserRole;
   isActive: boolean;
+  availableRoles?: UserRole[]; // All roles this user has access to (same email, different accounts)
+  hasSuperAdminAccess?: boolean; // Quick check if user has SUPER_ADMIN role available
   partnerId?: string; // Present if role is PARTNER (extracted from partner.partnerId)
   partner?: {
     id: string;
@@ -223,6 +228,7 @@ export interface PartnerReferralDetail {
   statusLabel: string;
   isDuplicate: boolean;
   submissionSource: SubmissionSource;
+  referralYear: number; // Year this referral counts towards
   createdAt: string;
   updatedAt: string;
   statusHistory: Array<{
@@ -564,6 +570,7 @@ export interface AdminReferralDetail {
   status: ReferralStatus;
   isDuplicate: boolean;
   submissionSource: SubmissionSource;
+  referralYear: number; // Year this referral counts towards
   utmSource: string | null;
   utmMedium: string | null;
   utmCampaign: string | null;
