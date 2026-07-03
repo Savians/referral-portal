@@ -31,6 +31,7 @@ import {
   FileText,
   Download,
   ExternalLink,
+  X,
 } from 'lucide-react';
 import { PARTNER_TYPES, US_STATES, PHONE_REGEX } from '@/lib/constants';
 
@@ -73,6 +74,8 @@ export default function PartnerProfilePage() {
     acceptedAt: string;
     hasPdf: boolean;
   } | null>(null);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -262,9 +265,9 @@ export default function PartnerProfilePage() {
       const response = await partnerService.getAgreementPdf(agreementData.id);
       console.log('📄 PDF Response:', response);
       
-      // Response after interceptor: { downloadUrl: '...', fileName: '...', ... }
       if (response.downloadUrl) {
-        window.open(response.downloadUrl, '_blank');
+        setPdfUrl(response.downloadUrl);
+        setIsPdfModalOpen(true);
       } else {
         console.error('No downloadUrl in response:', response);
         toast.error('Agreement PDF URL not available');
@@ -285,7 +288,6 @@ export default function PartnerProfilePage() {
       const response = await partnerService.getAgreementPdf(agreementData.id);
       console.log('📥 Download Response:', response);
       
-      // Response after interceptor: { downloadUrl: '...', fileName: '...', ... }
       if (response.downloadUrl) {
         const link = document.createElement('a');
         link.href = response.downloadUrl;
@@ -302,6 +304,11 @@ export default function PartnerProfilePage() {
       console.error('Failed to download agreement:', error);
       toast.error(error.message || 'Failed to download agreement');
     }
+  };
+
+  const closePdfModal = () => {
+    setIsPdfModalOpen(false);
+    setPdfUrl(null);
   };
 
   if (authLoading || !user) {
@@ -722,6 +729,37 @@ export default function PartnerProfilePage() {
           </div>
         </form>
       </div>
+
+      {/* PDF Modal */}
+      {isPdfModalOpen && pdfUrl && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" onClick={closePdfModal}>
+          <div className="relative w-full h-full max-w-7xl max-h-[90vh] m-4" onClick={(e) => e.stopPropagation()}>
+            {/* Modal Header */}
+            <div className="absolute top-0 left-0 right-0 bg-gray-900 text-white px-6 py-4 flex items-center justify-between z-10 rounded-t-lg">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <FileText className="w-5 h-5" />
+                Partner Agreement - v{agreementData?.version}
+              </h3>
+              <button
+                onClick={closePdfModal}
+                className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* PDF Viewer */}
+            <div className="w-full h-full pt-16 pb-4">
+              <iframe
+                src={pdfUrl}
+                className="w-full h-full border-0 rounded-b-lg"
+                title="Agreement PDF"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
