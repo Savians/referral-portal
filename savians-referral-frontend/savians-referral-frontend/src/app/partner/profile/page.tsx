@@ -133,8 +133,9 @@ export default function PartnerProfilePage() {
         setIsLoadingAgreement(true);
         try {
           const response = await partnerService.getCurrentAgreement();
-          if (response.latestAcceptedAgreement) {
-            setAgreementData(response.latestAcceptedAgreement);
+          // Response structure: { success: true, data: { latestAcceptedAgreement: {...} } }
+          if (response.data?.latestAcceptedAgreement) {
+            setAgreementData(response.data.latestAcceptedAgreement);
           }
         } catch (error) {
           console.error('Failed to fetch agreement data:', error);
@@ -241,11 +242,16 @@ export default function PartnerProfilePage() {
 
     try {
       const response = await partnerService.getAgreementPdf(agreementData.id);
-      // Open PDF in new tab
-      window.open(response.downloadUrl, '_blank');
+      // Response structure: { success: true, data: { downloadUrl: '...', ... } }
+      if (response.data?.downloadUrl) {
+        // Open PDF in new tab
+        window.open(response.data.downloadUrl, '_blank');
+      } else {
+        toast.error('Agreement PDF URL not available');
+      }
     } catch (error: any) {
       console.error('Failed to fetch agreement PDF:', error);
-      toast.error(error.response?.data?.error?.message || 'Failed to load agreement');
+      toast.error(error.message || 'Failed to load agreement');
     }
   };
 
@@ -257,17 +263,22 @@ export default function PartnerProfilePage() {
 
     try {
       const response = await partnerService.getAgreementPdf(agreementData.id);
-      // Create a temporary link and trigger download
-      const link = document.createElement('a');
-      link.href = response.downloadUrl;
-      link.download = response.fileName || `savians-agreement-v${agreementData.version}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast.success('Agreement download started');
+      // Response structure: { success: true, data: { downloadUrl: '...', fileName: '...', ... } }
+      if (response.data?.downloadUrl) {
+        // Create a temporary link and trigger download
+        const link = document.createElement('a');
+        link.href = response.data.downloadUrl;
+        link.download = response.data.fileName || `savians-agreement-v${agreementData.version}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.success('Agreement download started');
+      } else {
+        toast.error('Agreement PDF URL not available');
+      }
     } catch (error: any) {
       console.error('Failed to download agreement:', error);
-      toast.error(error.response?.data?.error?.message || 'Failed to download agreement');
+      toast.error(error.message || 'Failed to download agreement');
     }
   };
 
