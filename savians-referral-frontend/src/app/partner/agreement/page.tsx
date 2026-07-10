@@ -45,10 +45,41 @@ export default function PartnerAgreementPage() {
 
       const response = await api.get('/api/partner/agreement/current');
       
-      // If already accepted, redirect to dashboard
+      // If already accepted, check W-9 and banking status
       if (response.data.hasAccepted) {
-        router.push('/partner/dashboard');
-        return;
+        // Check W-9 status
+        try {
+          const w9Response = await api.get('/api/partner/w9/status');
+          
+          if (!w9Response.data.w9Completed) {
+            // Has agreement but no W-9, go to W-9
+            router.push('/activate/w9');
+            return;
+          }
+          
+          // Has W-9, check banking
+          try {
+            const bankingResponse = await api.get('/api/partner/banking/details');
+            
+            if (!bankingResponse.data.hasBankingDetails) {
+              // Has W-9 but no banking, go to banking
+              router.push('/activate/banking');
+              return;
+            }
+            
+            // Has everything, go to dashboard
+            router.push('/partner/dashboard');
+            return;
+          } catch (bankingError) {
+            // No banking details, go to banking
+            router.push('/activate/banking');
+            return;
+          }
+        } catch (w9Error) {
+          // No W-9, go to W-9
+          router.push('/activate/w9');
+          return;
+        }
       }
 
       setAgreement(response.data);
@@ -96,11 +127,9 @@ export default function PartnerAgreementPage() {
 
       toast.success('Agreement accepted successfully!');
       
-      // Small delay to show success message, then redirect to dashboard
+      // Small delay to show success message, then redirect to W-9 form
       setTimeout(() => {
-        router.push('/partner/dashboard');
-        // Force page reload to refresh user data with updated agreement status
-        window.location.href = '/partner/dashboard';
+        router.push('/activate/w9');
       }, 1000);
     } catch (error: any) {
       console.error('Failed to accept agreement:', error);

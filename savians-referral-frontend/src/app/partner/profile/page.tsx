@@ -32,8 +32,340 @@ import {
   Download,
   ExternalLink,
   X,
+  Building2,
+  Edit,
 } from 'lucide-react';
 import { PARTNER_TYPES, US_STATES, PHONE_REGEX } from '@/lib/constants';
+
+// W-9 Section Component
+function W9Section() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [w9Data, setW9Data] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchW9Data = async () => {
+      try {
+        const response = await partnerService.getW9Status();
+        if (response.w9Completed) {
+          const profile = await partnerService.getProfile();
+          setW9Data(profile);
+        }
+      } catch (error) {
+        console.error('Failed to fetch W-9 data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchW9Data();
+  }, []);
+
+  const handleDownloadW9 = async () => {
+    try {
+      const response = await partnerService.downloadW9();
+      window.open(response.downloadUrl, '_blank');
+      toast.success('W-9 download started');
+    } catch (error: any) {
+      toast.error('Failed to download W-9');
+    }
+  };
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!w9Data?.w9CompletedAt) {
+    return null;
+  }
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+      <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
+        <FileText className="w-5 h-5" />
+        W-9 Tax Information
+      </h2>
+      
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
+              Tax Classification
+            </label>
+            <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg capitalize">
+              {w9Data.w9TaxClassification?.replace('_', ' ')}
+            </p>
+          </div>
+          <div>
+            <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
+              TIN/EIN
+            </label>
+            <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg font-mono">
+              ***-**-{w9Data.w9TinEin?.slice(-4) || '****'}
+            </p>
+          </div>
+          <div>
+            <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1 flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              Completed On
+            </label>
+            <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
+              {new Date(w9Data.w9CompletedAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 pt-2">
+          <button
+            onClick={handleDownloadW9}
+            className="btn-primary flex items-center gap-2"
+          >
+            <Download className="w-4 h-4" />
+            Download W-9 Form
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Banking Section Component
+function BankingSection() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [bankingData, setBankingData] = useState<any>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editForm, setEditForm] = useState({
+    bankName: '',
+    routingNumber: '',
+    accountNumber: '',
+    zelleId: '',
+  });
+
+  useEffect(() => {
+    fetchBankingData();
+  }, []);
+
+  const fetchBankingData = async () => {
+    try {
+      const response = await partnerService.getBankingDetails();
+      if (response.hasBankingDetails) {
+        setBankingData(response);
+      }
+    } catch (error) {
+      console.error('Failed to fetch banking data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEdit = () => {
+    setEditForm({
+      bankName: bankingData.bankName || '',
+      routingNumber: bankingData.routingNumber || '',
+      accountNumber: '',
+      zelleId: bankingData.zelleId || '',
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateBanking = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!editForm.bankName || !editForm.routingNumber || !editForm.accountNumber || !editForm.zelleId) {
+      toast.error('All fields are required');
+      return;
+    }
+
+    if (editForm.routingNumber.length !== 9) {
+      toast.error('Routing number must be 9 digits');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await partnerService.updateBankingDetails(editForm);
+      toast.success('Banking details updated successfully');
+      setIsEditModalOpen(false);
+      fetchBankingData();
+    } catch (error: any) {
+      toast.error(error.response?.data?.error?.message || 'Failed to update banking details');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!bankingData) {
+    return null;
+  }
+
+  return (
+    <>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+        <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
+          <Building2 className="w-5 h-5" />
+          Banking Details
+        </h2>
+        
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
+                Bank Name
+              </label>
+              <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                {bankingData.bankName}
+              </p>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
+                Account Number
+              </label>
+              <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg font-mono">
+                ****{bankingData.accountNumberLast4}
+              </p>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
+                Zelle ID
+              </label>
+              <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                {bankingData.zelleId}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 pt-2">
+            <button
+              onClick={handleEdit}
+              className="btn-outline flex items-center gap-2"
+            >
+              <Edit className="w-4 h-4" />
+              Edit Banking Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Edit Banking Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={() => setIsEditModalOpen(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl m-4 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <Building2 className="w-5 h-5" />
+                  Edit Banking Details
+                </h3>
+                <button
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <form onSubmit={handleUpdateBanking} className="p-6 space-y-4">
+              <div>
+                <label htmlFor="edit-bankName" className="form-label">
+                  Bank Name *
+                </label>
+                <input
+                  id="edit-bankName"
+                  type="text"
+                  value={editForm.bankName}
+                  onChange={(e) => setEditForm({ ...editForm, bankName: e.target.value })}
+                  className="form-input"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="edit-routingNumber" className="form-label">
+                  Routing Number (ABA) *
+                </label>
+                <input
+                  id="edit-routingNumber"
+                  type="text"
+                  value={editForm.routingNumber}
+                  onChange={(e) => setEditForm({ ...editForm, routingNumber: e.target.value.replace(/\D/g, '').slice(0, 9) })}
+                  className="form-input font-mono"
+                  maxLength={9}
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="edit-accountNumber" className="form-label">
+                  Account Number *
+                </label>
+                <input
+                  id="edit-accountNumber"
+                  type="text"
+                  value={editForm.accountNumber}
+                  onChange={(e) => setEditForm({ ...editForm, accountNumber: e.target.value })}
+                  className="form-input font-mono"
+                  placeholder="Enter your full account number"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="edit-zelleId" className="form-label">
+                  Zelle ID *
+                </label>
+                <input
+                  id="edit-zelleId"
+                  type="text"
+                  value={editForm.zelleId}
+                  onChange={(e) => setEditForm({ ...editForm, zelleId: e.target.value })}
+                  className="form-input"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="btn-outline"
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn-primary flex items-center gap-2"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Updating...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4" />
+                      Update Banking Details
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 const profileSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters').optional(),
@@ -445,6 +777,12 @@ export default function PartnerProfilePage() {
             )}
           </div>
         )}
+
+        {/* W-9 Information Section */}
+        <W9Section />
+
+        {/* Banking Details Section */}
+        <BankingSection />
 
         {/* Editable Profile Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
