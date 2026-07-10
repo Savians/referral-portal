@@ -160,7 +160,7 @@ export default function W9FormPage() {
             {/* Line 1: Name (Pre-filled) */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                1. Name of entity/individual <span className="text-red-500">*</span>
+                1. Name (as shown on your income tax return). Name is required on this line; do not leave this line blank. <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -173,20 +173,21 @@ export default function W9FormPage() {
             {/* Line 2: Business name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                2. Business name/disregarded entity name (if different from above)
+                2. Business name/disregarded entity name, if different from above
               </label>
               <input
                 type="text"
                 value={partnerData?.businessName || ''}
                 disabled
+                placeholder="Leave blank if same as line 1"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
               />
             </div>
 
-            {/* Line 3a: Tax Classification */}
+            {/* Line 3: Federal tax classification */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
-                3a. Federal tax classification <span className="text-red-500">*</span>
+                3. Federal tax classification (Check only one of the following seven boxes.) <span className="text-red-500">*</span>
               </label>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -198,7 +199,7 @@ export default function W9FormPage() {
                     onChange={(e) => setTaxClassification(e.target.value)}
                     className="w-4 h-4 text-[#14235C]"
                   />
-                  <span>Individual/sole proprietor</span>
+                  <span>Individual/sole proprietor or single-member LLC</span>
                 </label>
                 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -210,7 +211,7 @@ export default function W9FormPage() {
                     onChange={(e) => setTaxClassification(e.target.value)}
                     className="w-4 h-4 text-[#14235C]"
                   />
-                  <span>C corporation</span>
+                  <span>C Corporation</span>
                 </label>
                 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -222,7 +223,7 @@ export default function W9FormPage() {
                     onChange={(e) => setTaxClassification(e.target.value)}
                     className="w-4 h-4 text-[#14235C]"
                   />
-                  <span>S corporation</span>
+                  <span>S Corporation</span>
                 </label>
                 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -259,19 +260,34 @@ export default function W9FormPage() {
                       onChange={(e) => setTaxClassification(e.target.value)}
                       className="w-4 h-4 text-[#14235C]"
                     />
-                    <span>LLC - Enter tax classification:</span>
+                    <span>Limited liability company. Enter the tax classification (C=C corporation, S=S corporation, P=Partnership) ▶</span>
                   </label>
                   {taxClassification === 'llc' && (
                     <input
                       type="text"
                       value={llcTaxClass}
-                      onChange={(e) => setLlcTaxClass(e.target.value)}
-                      placeholder="C, S, or P"
+                      onChange={(e) => setLlcTaxClass(e.target.value.toUpperCase())}
+                      placeholder="Enter C, S, or P"
                       maxLength={1}
-                      className="ml-6 w-20 px-3 py-2 border border-gray-300 rounded-lg"
+                      className="ml-6 w-24 px-3 py-2 border border-gray-300 rounded-lg uppercase"
                     />
                   )}
+                  <p className="text-xs text-gray-500 ml-6 mt-1">
+                    Note: Check the appropriate box in the line above for the tax classification of the single-member owner. Do not check LLC if the LLC is classified as a single-member LLC that is disregarded from the owner unless the owner of the LLC is another LLC that is not disregarded from the owner for U.S. federal tax purposes. Otherwise, a single-member LLC that is disregarded from the owner should check the appropriate box for the tax classification of its owner.
+                  </p>
                 </div>
+
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="taxClass"
+                    value="other"
+                    checked={taxClassification === 'other'}
+                    onChange={(e) => setTaxClassification(e.target.value)}
+                    className="w-4 h-4 text-[#14235C]"
+                  />
+                  <span>Other (see instructions) ▶</span>
+                </label>
               </div>
             </div>
 
@@ -279,30 +295,40 @@ export default function W9FormPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  4. Exempt payee code (if any)
+                  4. Exemptions (codes apply only to certain entities, not individuals; see instructions on page 3):
                 </label>
-                <input
-                  type="text"
-                  value={exemptPayeeCode}
-                  onChange={(e) => setExemptPayeeCode(e.target.value)}
-                  placeholder="Optional"
-                  maxLength={10}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  FATCA exemption code (if any)
-                </label>
-                <input
-                  type="text"
-                  value={fatcaCode}
-                  onChange={(e) => setFatcaCode(e.target.value)}
-                  placeholder="Optional"
-                  maxLength={10}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                />
+                <div className="flex items-center gap-4">
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Exempt payee code (if any)
+                    </label>
+                    <input
+                      type="text"
+                      value={exemptPayeeCode}
+                      onChange={(e) => setExemptPayeeCode(e.target.value)}
+                      placeholder="Leave blank if not exempt"
+                      maxLength={10}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    />
+                  </div>
+                  
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Exemption from FATCA reporting code (if any)
+                    </label>
+                    <input
+                      type="text"
+                      value={fatcaCode}
+                      onChange={(e) => setFatcaCode(e.target.value)}
+                      placeholder="Leave blank if not exempt"
+                      maxLength={10}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  (Applies to accounts maintained outside the U.S.)
+                </p>
               </div>
             </div>
 
@@ -355,27 +381,72 @@ export default function W9FormPage() {
               </div>
             </div>
 
+            {/* Line 7: List account number(s) */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                7. List account number(s) here (optional)
+              </label>
+              <input
+                type="text"
+                placeholder="List account number(s) here (optional)"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent bg-gray-100"
+                disabled
+              />
+            </div>
+
             {/* Part I: TIN */}
             <div className="border-t pt-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">
-                Part I - Taxpayer Identification Number (TIN)
+                Part I — Taxpayer Identification Number (TIN)
               </h3>
               
+              <p className="text-sm text-gray-700 mb-4">
+                Enter your TIN in the appropriate box. The TIN provided must match the name given on line 1 to avoid backup withholding. For individuals, this is generally your social security number (SSN). However, for a resident alien, sole proprietor, or disregarded entity, see the instructions for Part I, later. For other entities, it is your employer identification number (EIN). If you do not have a number, see How to get a TIN, later.
+              </p>
+              
+              <p className="text-sm text-gray-700 mb-4 font-medium">
+                Note: If the account is in more than one name, see the instructions for line 1. Also see What Name and Number To Give the Requester for guidelines on whose number to enter.
+              </p>
+              
               <div className="space-y-4">
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="tinType"
-                      value="ssn"
-                      checked={tinType === 'ssn'}
-                      onChange={() => setTinType('ssn')}
-                      className="w-4 h-4 text-[#14235C]"
-                    />
-                    <span>Social Security Number (SSN)</span>
-                  </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="flex items-center gap-2 cursor-pointer mb-2">
+                      <input
+                        type="radio"
+                        name="tinType"
+                        value="ssn"
+                        checked={tinType === 'ssn'}
+                        onChange={() => setTinType('ssn')}
+                        className="w-4 h-4 text-[#14235C]"
+                      />
+                      <span className="font-medium">Social security number</span>
+                    </label>
+                    {tinType === 'ssn' && (
+                      <input
+                        type="text"
+                        value={tinEin}
+                        onChange={(e) => {
+                          let value = e.target.value.replace(/\D/g, '');
+                          if (value.length > 9) value = value.slice(0, 9);
+                          setTinEin(value);
+                        }}
+                        placeholder="___-__-____"
+                        required
+                        className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent font-mono text-lg"
+                      />
+                    )}
+                  </div>
                   
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  <div>
+                    <label className="flex items-center gap-2 cursor-pointer mb-2">
+                      <span className="text-sm">or</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-2 cursor-pointer mb-2">
                     <input
                       type="radio"
                       name="tinType"
@@ -384,56 +455,83 @@ export default function W9FormPage() {
                       onChange={() => setTinType('ein')}
                       className="w-4 h-4 text-[#14235C]"
                     />
-                    <span>Employer ID Number (EIN)</span>
+                    <span className="font-medium">Employer identification number</span>
                   </label>
+                  {tinType === 'ein' && (
+                    <input
+                      type="text"
+                      value={tinEin}
+                      onChange={(e) => {
+                        let value = e.target.value.replace(/\D/g, '');
+                        if (value.length > 9) value = value.slice(0, 9);
+                        setTinEin(value);
+                      }}
+                      placeholder="__-_______"
+                      required
+                      className="w-full max-w-xs px-4 py-2 border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent font-mono text-lg"
+                    />
+                  )}
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {tinType === 'ssn' ? 'Social Security Number' : 'Employer Identification Number'} <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={tinEin}
-                    onChange={(e) => {
-                      let value = e.target.value.replace(/\D/g, '');
-                      if (tinType === 'ssn' && value.length > 9) value = value.slice(0, 9);
-                      if (tinType === 'ein' && value.length > 9) value = value.slice(0, 9);
-                      setTinEin(value);
-                    }}
-                    placeholder={tinType === 'ssn' ? 'XXX-XX-XXXX' : 'XX-XXXXXXX'}
-                    required
-                    className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14235C] focus:border-transparent"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Enter digits only (hyphens will be added automatically)
-                  </p>
-                </div>
+                <p className="text-xs text-gray-500">
+                  Enter digits only (no dashes or spaces). The format will be applied automatically on the generated PDF.
+                </p>
               </div>
             </div>
 
             {/* Part II: Certification */}
             <div className="border-t pt-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">
-                Part II - Certification
+                Part II — Certification
               </h3>
               
               <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-700 space-y-2 mb-4">
-                <p>Under penalties of perjury, I certify that:</p>
+                <p className="font-medium">Under penalties of perjury, I certify that:</p>
                 <ol className="list-decimal list-inside space-y-1 ml-2">
-                  <li>The number shown on this form is my correct taxpayer identification number, and</li>
-                  <li>I am not subject to backup withholding, and</li>
-                  <li>I am a U.S. citizen or other U.S. person, and</li>
+                  <li>The number shown on this form is my correct taxpayer identification number (or I am waiting for a number to be issued to me); and</li>
+                  <li>I am not subject to backup withholding because: (a) I am exempt from backup withholding, or (b) I have not been notified by the Internal Revenue Service (IRS) that I am subject to backup withholding as a result of a failure to report all interest or dividends, or (c) the IRS has notified me that I am no longer subject to backup withholding; and</li>
+                  <li>I am a U.S. citizen or other U.S. person (defined below); and</li>
                   <li>The FATCA code(s) entered on this form (if any) indicating that I am exempt from FATCA reporting is correct.</li>
                 </ol>
+                <p className="text-xs mt-3 font-medium">
+                  Certification instructions. You must cross out item 2 above if you have been notified by the IRS that you are currently subject to backup withholding because you have failed to report all interest and dividends on your tax return. For real estate transactions, item 2 does not apply. For mortgage interest paid, acquisition or abandonment of secured property, cancellation of debt, contributions to an individual retirement arrangement (IRA), and generally, payments other than interest and dividends, you are not required to sign the certification, but you must provide your correct TIN. See the instructions for Part II, later.
+                </p>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-sm text-blue-900 mb-2">
-                  <strong>Signature:</strong> We will use the signature you provided when accepting the partnership agreement.
-                </p>
-                <p className="text-sm text-blue-900">
-                  <strong>Date:</strong> {partnerData?.latestAgreement?.acceptedAt ? new Date(partnerData.latestAgreement.acceptedAt).toLocaleDateString() : ''}
+              <div className="bg-white border-2 border-gray-300 rounded-lg p-4">
+                <div className="mb-3">
+                  <p className="text-sm font-medium text-gray-900 mb-2">
+                    Sign Here
+                  </p>
+                  <p className="text-xs text-gray-600 mb-3">
+                    Signature of U.S. person ▶
+                  </p>
+                  {partnerData?.latestAgreement?.signatureDataUrl ? (
+                    <div className="border border-gray-300 rounded-lg p-2 bg-white inline-block">
+                      <img 
+                        src={partnerData.latestAgreement.signatureDataUrl} 
+                        alt="Signature" 
+                        className="h-16 max-w-md"
+                      />
+                    </div>
+                  ) : (
+                    <div className="border border-gray-300 rounded-lg p-4 bg-gray-50 text-gray-600 text-sm">
+                      Signature from agreement will be used
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600 mb-1">Date ▶</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {partnerData?.latestAgreement?.acceptedAt ? new Date(partnerData.latestAgreement.acceptedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-4 text-xs text-blue-900">
+                <p className="font-medium mb-1">General Instructions</p>
+                <p>
+                  Section references are to the Internal Revenue Code unless otherwise noted. Future developments. For the latest information about developments related to Form W-9 and its instructions, such as legislation enacted after they were published, go to www.irs.gov/FormW9.
                 </p>
               </div>
             </div>
