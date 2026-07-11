@@ -148,7 +148,9 @@ export default function OnboardingPage() {
       const uploadUrlResponse = await partnerService.requestUploadUrl({
         fileName: w9File!.name,
         fileType: w9File!.type,
-        documentType: 'w9',
+        mimeType: w9File!.type,
+        fileSizeBytes: w9File!.size,
+        documentType: 'W9_FORM',
       });
 
       // Upload file to S3
