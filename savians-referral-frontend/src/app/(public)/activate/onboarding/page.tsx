@@ -153,8 +153,10 @@ export default function OnboardingPage() {
         documentType: 'W9_FORM',
       });
 
+      console.log('Upload URL response:', uploadUrlResponse);
+
       // Upload file to S3
-      await fetch(uploadUrlResponse.uploadUrl, {
+      await fetch(uploadUrlResponse.data.uploadUrl, {
         method: 'PUT',
         body: w9File,
         headers: {
@@ -162,9 +164,11 @@ export default function OnboardingPage() {
         },
       });
 
+      console.log('File uploaded to S3, s3Key:', uploadUrlResponse.data.s3Key);
+
       // Step 2: Submit W-9 completion (with S3 key)
       await partnerService.submitW9Upload({
-        w9DocumentS3Key: uploadUrlResponse.s3Key,
+        w9DocumentS3Key: uploadUrlResponse.data.s3Key,
         fileName: w9File!.name,
       });
 
