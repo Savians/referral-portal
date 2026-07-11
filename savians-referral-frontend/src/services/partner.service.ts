@@ -147,8 +147,20 @@ export const partnerService = {
   },
 
   /**
+   * POST /api/partner/w9/submit (Upload version)
+   * Submit W-9 form completion with uploaded file
+   */
+  submitW9Upload: async (data: {
+    w9DocumentS3Key: string;
+    fileName: string;
+  }): Promise<{ message: string }> => {
+    const response = await api.post('/api/partner/w9/submit-upload', data);
+    return response.data;
+  },
+
+  /**
    * POST /api/partner/w9/submit
-   * Submit W-9 form
+   * Submit W-9 form (legacy - for generated PDFs)
    */
   submitW9: async (data: {
     taxClassification: string;

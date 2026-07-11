@@ -47,37 +47,23 @@ export default function PartnerAgreementPage() {
       
       // If already accepted, check W-9 and banking status
       if (response.data.hasAccepted) {
-        // Check W-9 status
+        // Check W-9 and Banking status - redirect to combined onboarding
         try {
           const w9Response = await api.get('/api/partner/w9/status');
+          const hasBanking = profile.hasBankingDetails || false;
           
-          if (!w9Response.data.w9Completed) {
-            // Has agreement but no W-9, go to W-9
-            router.push('/activate/w9');
+          if (!w9Response.data.w9Completed || !hasBanking) {
+            // Missing W-9 or banking, go to combined onboarding
+            router.push('/activate/onboarding');
             return;
           }
           
-          // Has W-9, check banking
-          try {
-            const bankingResponse = await api.get('/api/partner/banking/details');
-            
-            if (!bankingResponse.data.hasBankingDetails) {
-              // Has W-9 but no banking, go to banking
-              router.push('/activate/banking');
-              return;
-            }
-            
-            // Has everything, go to dashboard
-            router.push('/partner/dashboard');
-            return;
-          } catch (bankingError) {
-            // No banking details, go to banking
-            router.push('/activate/banking');
-            return;
-          }
-        } catch (w9Error) {
-          // No W-9, go to W-9
-          router.push('/activate/w9');
+          // Has everything, go to dashboard
+          router.push('/partner/dashboard');
+          return;
+        } catch (error) {
+          // No W-9, go to onboarding
+          router.push('/activate/onboarding');
           return;
         }
       }
@@ -127,9 +113,9 @@ export default function PartnerAgreementPage() {
 
       toast.success('Agreement accepted successfully!');
       
-      // Small delay to show success message, then redirect to W-9 form
+      // Small delay to show success message, then redirect to onboarding
       setTimeout(() => {
-        router.push('/activate/w9');
+        router.push('/activate/onboarding');
       }, 1000);
     } catch (error: any) {
       console.error('Failed to accept agreement:', error);
