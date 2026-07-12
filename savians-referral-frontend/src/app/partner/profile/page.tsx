@@ -65,8 +65,13 @@ function W9Section() {
   const handleViewW9 = async () => {
     try {
       const response = await partnerService.downloadW9();
-      setPdfUrl(response.downloadUrl);
-      setIsPdfModalOpen(true);
+      // Use viewUrl for inline display in modal
+      if (response.data.viewUrl) {
+        setPdfUrl(response.data.viewUrl);
+        setIsPdfModalOpen(true);
+      } else {
+        toast.error('View URL not available');
+      }
     } catch (error: any) {
       toast.error('Failed to load W-9 form');
     }
@@ -75,8 +80,13 @@ function W9Section() {
   const handleDownloadW9 = async () => {
     try {
       const response = await partnerService.downloadW9();
-      window.open(response.downloadUrl, '_blank');
-      toast.success('W-9 download started');
+      // Use downloadUrl for file download
+      if (response.data.downloadUrl) {
+        window.open(response.data.downloadUrl, '_blank');
+        toast.success('W-9 download started');
+      } else {
+        toast.error('Download URL not available');
+      }
     } catch (error: any) {
       toast.error('Failed to download W-9');
     }
