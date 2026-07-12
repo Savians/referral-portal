@@ -65,14 +65,21 @@ function W9Section() {
   const handleViewW9 = async () => {
     try {
       const response = await partnerService.downloadW9();
+      console.log('W-9 response:', response);
       // Use viewUrl for inline display in modal
-      if (response.data.viewUrl) {
+      if (response.data?.viewUrl) {
         setPdfUrl(response.data.viewUrl);
         setIsPdfModalOpen(true);
+      } else if (response.viewUrl) {
+        // Try without .data nesting
+        setPdfUrl(response.viewUrl);
+        setIsPdfModalOpen(true);
       } else {
+        console.error('No viewUrl in response:', response);
         toast.error('View URL not available');
       }
     } catch (error: any) {
+      console.error('Failed to load W-9 form:', error);
       toast.error('Failed to load W-9 form');
     }
   };
@@ -80,14 +87,21 @@ function W9Section() {
   const handleDownloadW9 = async () => {
     try {
       const response = await partnerService.downloadW9();
+      console.log('W-9 download response:', response);
       // Use downloadUrl for file download
-      if (response.data.downloadUrl) {
+      if (response.data?.downloadUrl) {
         window.open(response.data.downloadUrl, '_blank');
         toast.success('W-9 download started');
+      } else if (response.downloadUrl) {
+        // Try without .data nesting
+        window.open(response.downloadUrl, '_blank');
+        toast.success('W-9 download started');
       } else {
+        console.error('No downloadUrl in response:', response);
         toast.error('Download URL not available');
       }
     } catch (error: any) {
+      console.error('Failed to download W-9:', error);
       toast.error('Failed to download W-9');
     }
   };
