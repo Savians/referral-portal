@@ -186,7 +186,10 @@ export default function PartnerDashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Referrals */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#14235C] dark:border-blue-500">
+          <Link
+            href="/partner/referrals"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#14235C] dark:border-blue-500 hover:shadow-lg transition-shadow cursor-pointer"
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="bg-blue-100 rounded-full p-3">
                 <Users className="w-6 h-6 text-[#14235C]" />
@@ -197,10 +200,13 @@ export default function PartnerDashboardPage() {
             <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               {dashboard.referrals.total}
             </p>
-          </div>
+          </Link>
 
           {/* Qualified Referrals */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-green-500">
+          <Link
+            href="/partner/referrals?status=ELIGIBLE_FOR_PAYOUT"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-green-500 hover:shadow-lg transition-shadow cursor-pointer"
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="bg-green-100 rounded-full p-3">
                 <CheckCircle className="w-6 h-6 text-green-600" />
@@ -208,12 +214,15 @@ export default function PartnerDashboardPage() {
             </div>
             <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Qualified</h3>
             <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
-              {dashboard.referrals.byStatus['QUALIFIED']?.count || 0}
+              {dashboard.referrals.byStatus['ELIGIBLE_FOR_PAYOUT']?.count || 0}
             </p>
-          </div>
+          </Link>
 
           {/* Total Payments */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#F4C64E]">
+          <Link
+            href="/partner/payments"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-[#F4C64E] hover:shadow-lg transition-shadow cursor-pointer"
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="bg-yellow-100 rounded-full p-3">
                 <DollarSign className="w-6 h-6 text-yellow-600" />
@@ -223,10 +232,13 @@ export default function PartnerDashboardPage() {
             <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               ${dashboard.payments.totalApprovedAmount?.toLocaleString() || '0'}
             </p>
-          </div>
+          </Link>
 
           {/* Documents */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-purple-500">
+          <Link
+            href="/partner/profile"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-purple-500 hover:shadow-lg transition-shadow cursor-pointer"
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="bg-purple-100 rounded-full p-3">
                 <FileText className="w-6 h-6 text-purple-600" />
@@ -236,7 +248,7 @@ export default function PartnerDashboardPage() {
             <p className="text-3xl font-bold text-[#2C2C2C] dark:text-white">
               {dashboard.documents.total}
             </p>
-          </div>
+          </Link>
         </div>
 
         {/* Two Column Layout */}
