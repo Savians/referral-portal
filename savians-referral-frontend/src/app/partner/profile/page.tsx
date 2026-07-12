@@ -41,6 +41,8 @@ import { PARTNER_TYPES, US_STATES, PHONE_REGEX } from '@/lib/constants';
 function W9Section() {
   const [isLoading, setIsLoading] = useState(true);
   const [w9Data, setW9Data] = useState<any>(null);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchW9Data = async () => {
@@ -60,6 +62,16 @@ function W9Section() {
     fetchW9Data();
   }, []);
 
+  const handleViewW9 = async () => {
+    try {
+      const response = await partnerService.downloadW9();
+      setPdfUrl(response.downloadUrl);
+      setIsPdfModalOpen(true);
+    } catch (error: any) {
+      toast.error('Failed to load W-9 form');
+    }
+  };
+
   const handleDownloadW9 = async () => {
     try {
       const response = await partnerService.downloadW9();
@@ -68,6 +80,11 @@ function W9Section() {
     } catch (error: any) {
       toast.error('Failed to download W-9');
     }
+  };
+
+  const closePdfModal = () => {
+    setIsPdfModalOpen(false);
+    setPdfUrl(null);
   };
 
   if (isLoading) {
@@ -79,45 +96,83 @@ function W9Section() {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
-      <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
-        <FileText className="w-5 h-5" />
-        W-9 Tax Information
-      </h2>
-      
-      <div className="space-y-4">
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <CheckCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
-                W-9 Form Submitted
-              </p>
-              <p className="text-sm text-blue-800 dark:text-blue-200">
-                Your W-9 form was submitted on {new Date(w9Data.w9CompletedAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}. All your tax information is securely stored in your uploaded W-9 document.
-              </p>
+    <>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+        <h2 className="text-xl font-bold text-[#2C2C2C] dark:text-white mb-4 flex items-center gap-2">
+          <FileText className="w-5 h-5" />
+          W-9 Tax Information
+        </h2>
+        
+        <div className="space-y-4">
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
+                  W-9 Form Submitted
+                </p>
+                <p className="text-sm text-blue-800 dark:text-blue-200">
+                  Your W-9 form was submitted on {new Date(w9Data.w9CompletedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}. All your tax information is securely stored in your uploaded W-9 document.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 pt-2">
+            <button
+              onClick={handleViewW9}
+              className="btn-primary flex items-center gap-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              View W-9 Form
+            </button>
+            <button
+              onClick={handleDownloadW9}
+              className="btn-outline flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Download PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* W-9 PDF Modal */}
+      {isPdfModalOpen && pdfUrl && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
+          onClick={closePdfModal}
+        >
+          <div 
+            className="relative bg-white dark:bg-gray-800 rounded-lg w-full max-w-6xl h-[90vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                W-9 Form
+              </h3>
+              <button
+                onClick={closePdfModal}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <iframe
+                src={pdfUrl}
+                className="w-full h-full"
+                title="W-9 Form"
+              />
             </div>
           </div>
         </div>
-
-        <div className="flex items-center gap-3 pt-2">
-          <button
-            onClick={handleDownloadW9}
-            className="btn-primary flex items-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            Download W-9 Form
-          </button>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Download your submitted W-9 form to view your tax classification and TIN/EIN
-          </p>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
