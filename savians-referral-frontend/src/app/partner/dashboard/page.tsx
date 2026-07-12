@@ -33,6 +33,7 @@ export default function PartnerDashboardPage() {
   const { user, isLoading: authLoading } = useProtectedRoute(['PARTNER']);
   const [dashboard, setDashboard] = useState<PartnerDashboard | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false);
 
@@ -42,13 +43,32 @@ export default function PartnerDashboardPage() {
     }
   }, [authLoading, user]);
 
+  // Timeout fallback - if loading takes more than 10 seconds, show error
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isLoading && !dashboard) {
+        setIsLoading(false);
+        setError('Dashboard is taking too long to load. Please refresh the page.');
+        console.error('Dashboard loading timeout after 10 seconds');
+      }
+    }, 10000);
+
+    return () => clearTimeout(timeout);
+  }, [isLoading, dashboard]);
+
   const loadDashboard = async () => {
     try {
+      console.log('Loading dashboard data...');
       const data = await partnerService.getDashboard();
+      console.log('Dashboard data loaded:', data);
       setDashboard(data);
-    } catch (error) {
+      setError(null);
+    } catch (error: any) {
       console.error('Failed to load dashboard:', error);
-      toast.error('Failed to load dashboard data');
+      console.error('Error details:', JSON.stringify(error, null, 2));
+      const errorMessage = error?.message || 'Failed to load dashboard data';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -79,8 +99,15 @@ export default function PartnerDashboardPage() {
   if (!dashboard) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600 dark:text-gray-300">Failed to load dashboard</p>
+        <div className="text-center max-w-md mx-auto px-4">
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            {error || 'Failed to load dashboard'}
+          </p>
+          {error && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+              Check your browser console for more details
+            </p>
+          )}
           <button onClick={loadDashboard} className="btn-primary mt-4">
             Retry
           </button>
