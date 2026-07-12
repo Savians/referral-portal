@@ -86,35 +86,21 @@ function W9Section() {
       </h2>
       
       <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
-              Tax Classification
-            </label>
-            <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg capitalize">
-              {w9Data.w9TaxClassification?.replace('_', ' ')}
-            </p>
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1">
-              TIN/EIN
-            </label>
-            <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg font-mono">
-              ***-**-{w9Data.w9TinEin?.slice(-4) || '****'}
-            </p>
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-600 dark:text-gray-400 block mb-1 flex items-center gap-1">
-              <Calendar className="w-4 h-4" />
-              Completed On
-            </label>
-            <p className="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">
-              {new Date(w9Data.w9CompletedAt).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </p>
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
+                W-9 Form Submitted
+              </p>
+              <p className="text-sm text-blue-800 dark:text-blue-200">
+                Your W-9 form was submitted on {new Date(w9Data.w9CompletedAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}. All your tax information is securely stored in your uploaded W-9 document.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -126,6 +112,9 @@ function W9Section() {
             <Download className="w-4 h-4" />
             Download W-9 Form
           </button>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Download your submitted W-9 form to view your tax classification and TIN/EIN
+          </p>
         </div>
       </div>
     </div>
