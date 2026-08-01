@@ -181,7 +181,7 @@ export default function ApplyPage() {
                 href="/login"
                 className="px-3 md:px-6 py-2.5 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold transition-all shadow-md hover:shadow-lg text-sm"
               >
-                Sign In
+                Sign On
               </Link>
             </div>
           </div>

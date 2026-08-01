@@ -30,9 +30,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const theme = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                  ? 'dark'
-                  : 'light'
+                const theme = localStorage.theme === 'light' ? 'light' : 'dark'
                 document.documentElement.classList.toggle('dark', theme === 'dark')
                 document.documentElement.style.colorScheme = theme
               } catch (_) {}
