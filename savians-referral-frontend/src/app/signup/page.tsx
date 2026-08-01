@@ -21,6 +21,7 @@ import { signIn } from '@/lib/cognito';
 import { toast } from 'sonner';
 import { PASSWORD_REGEX } from '@/lib/constants';
 import { useAuth } from '@/providers/AuthProvider';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 
 // Validation schema matching backend
 const signupSchema = z.object({
@@ -207,12 +208,7 @@ function SignupForm() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-savians-yellow rounded-lg flex items-center justify-center">
-                <span className="text-savians-navy text-xl font-bold">S</span>
-              </div>
-              <span className="text-2xl font-bold text-savians-navy">Savians</span>
-            </Link>
+            <SaviansLogoLink priority />
           </div>
         </div>
       </header>

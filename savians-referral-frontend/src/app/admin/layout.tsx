@@ -12,6 +12,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/providers/AuthProvider';
 import { authService } from '@/services/auth.service';
 import ThemeToggle from '@/components/ThemeToggle';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 import { toast } from 'sonner';
 import {
   LayoutDashboard,
@@ -116,28 +117,7 @@ export default function AdminLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a
-              href="https://savians.com"
-              className="flex items-center gap-3 hover:opacity-90 transition-opacity mr-8"
-            >
-              <img 
-                src="/savians-logo.png" 
-                alt="Savians Tax Advisors" 
-                className="h-8 w-auto object-contain"
-                style={{ maxWidth: '200px' }}
-                onError={(e) => {
-                  // Fallback to text if image fails to load
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                }}
-              />
-              <div className="hidden text-2xl font-bold">
-                Savians
-                <span className="text-xs bg-[#F4C64E] dark:bg-yellow-500 text-[#14235C] dark:text-gray-900 px-2 py-1 rounded-full font-semibold ml-2">
-                  ADMIN
-                </span>
-              </div>
-            </a>
+            <SaviansLogoLink className="mr-4 sm:mr-8" priority />
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1 flex-1">

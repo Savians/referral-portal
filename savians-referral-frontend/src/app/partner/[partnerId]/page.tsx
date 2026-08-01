@@ -20,6 +20,7 @@ import { Loader2, CheckCircle, AlertCircle, UserCheck } from 'lucide-react';
 import { publicService } from '@/services/public.service';
 import { toast } from 'sonner';
 import type { CreateReferralInput, ReferralFormData } from '@/types/api.types';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 
 // Validation schema matching backend
 const referralSchema = z.object({
@@ -320,13 +321,8 @@ export default function PublicReferralFormPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center h-20">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-savians-yellow rounded-lg flex items-center justify-center">
-                <span className="text-savians-navy text-xl font-bold">S</span>
-              </div>
-              <span className="text-2xl font-bold text-savians-navy">Savians</span>
-            </div>
+          <div className="flex items-center h-20">
+            <SaviansLogoLink priority />
           </div>
         </div>
       </header>

@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/providers/AuthProvider';
 import ThemeToggle from '@/components/ThemeToggle';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 import {
   LayoutDashboard,
   Users,
@@ -113,16 +114,7 @@ export default function PartnerLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a
-              href="https://savians.com"
-              className="hover:opacity-90 transition-opacity"
-            >
-              <img 
-                src="/savians-logo.png" 
-                alt="Savians Logo" 
-                className="h-10 w-auto"
-              />
-            </a>
+            <SaviansLogoLink priority />
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1">

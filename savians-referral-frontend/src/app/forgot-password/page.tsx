@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import { KeyRound, ArrowLeft, Mail, CheckCircle } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/providers/AuthProvider';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 
 const forgotPasswordSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -76,9 +77,7 @@ export default function ForgotPasswordPage() {
         {/* Header */}
         <header className="bg-[#14235C] text-white py-4 px-6">
           <div className="max-w-7xl mx-auto">
-            <Link href="/" className="text-2xl font-bold hover:opacity-90 transition-opacity">
-              Savians
-            </Link>
+            <SaviansLogoLink priority />
           </div>
         </header>
 
@@ -149,9 +148,7 @@ export default function ForgotPasswordPage() {
       {/* Header */}
       <header className="bg-[#14235C] text-white py-4 px-6">
         <div className="max-w-7xl mx-auto">
-          <Link href="/" className="text-2xl font-bold hover:opacity-90 transition-opacity">
-            Savians
-          </Link>
+          <SaviansLogoLink priority />
         </div>
       </header>
 

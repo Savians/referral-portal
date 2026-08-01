@@ -17,6 +17,7 @@ import { publicService } from '@/services/public.service';
 import { toast } from 'sonner';
 import type { CreateApplicationInput } from '@/types/api.types';
 import ThemeToggle from '@/components/ThemeToggle';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 
 // Validation schema
 const applicationSchema = z.object({
@@ -164,44 +165,21 @@ export default function ApplyPage() {
       {/* Modern Navigation - Fully Responsive */}
       <header className="bg-white/10 dark:bg-gray-900/20 backdrop-blur-md border-b border-white/10 dark:border-gray-700/30 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-end items-center h-16 sm:h-20">
+          <div className="flex items-center justify-between gap-3 h-16 sm:h-20">
+            <SaviansLogoLink priority />
 
-            {/* Desktop Navigation — ThemeToggle | Home | Sign In | Logo */}
-            <div className="hidden sm:flex items-center gap-4 md:gap-6">
+            {/* Theme and account actions */}
+            <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
               <ThemeToggle />
               <a
                 href="https://savians.com"
-                className="text-white/80 hover:text-white font-medium transition-colors"
+                className="hidden text-white/80 hover:text-white font-medium transition-colors sm:inline"
               >
                 Home
               </a>
               <Link
                 href="/login"
-                className="px-4 md:px-6 py-2.5 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold transition-all shadow-md hover:shadow-lg"
-              >
-                Sign In
-              </Link>
-              <a href="https://savians.com" className="flex items-center hover:opacity-90 transition-opacity flex-shrink-0 ml-1">
-                <img
-                  src="/savians-logo.png"
-                  alt="Savians Logo"
-                  className="h-9 sm:h-11 w-auto"
-                />
-              </a>
-            </div>
-
-            {/* Mobile Navigation */}
-            <div className="flex sm:hidden items-center gap-2">
-              <ThemeToggle />
-              <a
-                href="https://savians.com"
-                className="text-xs text-white/80 hover:text-white font-medium px-2 py-1"
-              >
-                Home
-              </a>
-              <Link
-                href="/login"
-                className="px-3 py-2 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold transition-all shadow-md text-sm"
+                className="px-3 md:px-6 py-2.5 bg-[#14235C] dark:bg-[#F4C64E] text-white dark:text-gray-900 rounded-lg hover:bg-[#1a2d75] dark:hover:bg-[#f5d264] font-semibold transition-all shadow-md hover:shadow-lg text-sm"
               >
                 Sign In
               </Link>

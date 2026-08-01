@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import { KeyRound, Eye, EyeOff, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/providers/AuthProvider';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 
 const resetPasswordSchema = z.object({
   password: z
@@ -184,9 +185,7 @@ function ResetPasswordForm() {
         {/* Header */}
         <header className="bg-[#14235C] text-white py-4 px-6">
           <div className="max-w-7xl mx-auto">
-            <Link href="/" className="text-2xl font-bold hover:opacity-90 transition-opacity">
-              Savians
-            </Link>
+            <SaviansLogoLink priority />
           </div>
         </header>
 
@@ -244,9 +243,7 @@ function ResetPasswordForm() {
         {/* Header */}
         <header className="bg-[#14235C] text-white py-4 px-6">
           <div className="max-w-7xl mx-auto">
-            <Link href="/" className="text-2xl font-bold hover:opacity-90 transition-opacity">
-              Savians
-            </Link>
+            <SaviansLogoLink priority />
           </div>
         </header>
 
@@ -296,9 +293,7 @@ function ResetPasswordForm() {
       {/* Header */}
       <header className="bg-[#14235C] text-white py-4 px-6">
         <div className="max-w-7xl mx-auto">
-          <Link href="/" className="text-2xl font-bold hover:opacity-90 transition-opacity">
-            Savians
-          </Link>
+          <SaviansLogoLink priority />
         </div>
       </header>
 

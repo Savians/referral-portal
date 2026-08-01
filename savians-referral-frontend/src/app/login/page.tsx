@@ -16,6 +16,7 @@ import { useAuth } from '@/providers/AuthProvider';
 import { toast } from 'sonner';
 import { Eye, EyeOff, LogIn, ArrowRight } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
+import SaviansLogoLink from '@/components/SaviansLogoLink';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -111,13 +112,7 @@ function LoginForm() {
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-4 px-6 transition-colors">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <a href="https://savians.com" className="hover:opacity-90 transition-opacity">
-            <img
-              src="/savians-logo.png"
-              alt="Savians Logo"
-              className="h-12 w-auto"
-            />
-          </a>
+          <SaviansLogoLink priority />
           <ThemeToggle />
         </div>
       </header>
